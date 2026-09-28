@@ -105,10 +105,10 @@ Public Class InventorySol
         Dim rc As Integer = 0
         rc = Me.MobileInvDS.MobileInv.Rows.Count
 
-        If rc = 0 Then
-            MessageBox.Show("Please select your record to edit!", "Mobile - Inventory Solution", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Exit Sub
-        End If
+        'If rc = 0 Then
+        '    MessageBox.Show("Please select your record to edit!", "Mobile - Inventory Solution", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        '    Exit Sub
+        'End If
 
         MessageBox.Show("Edit mode is enabled!", "Mobile - Inventory Solution", MessageBoxButtons.OK, MessageBoxIcon.Information)
         MobileInv_DGV.EditMode = DataGridViewEditMode.EditOnKeystrokeOrF2
