@@ -279,7 +279,11 @@ Public Class SaleList
                         Next
 
                         Dim updateMSQuery As String = "UPDATE MobileSaleList SET BillNo=param1, Party=@param2, [Date]=@param3, Remarks=@param4 WHERE EntryNo = @entryNo"
-                        Dim updateDTQuery As String = "UPDATE MobileSaleItem SET BillNo=param1, Party=@param2, [Date]=@param3, Remarks=@param4 WHERE EntryNo = @entryNo"
+                        Dim updateDTQuery As String = "UPDATE MobileSaleItem SET Item=param1, Qty=@param2, Rate=@param3, Amount=@param4 WHERE EntryNo = @entryNo"
+
+                        Using cmd As New SqlCommand(updateMSQuery, conn)
+
+                        End Using
 
                         transaction.Commit()
 
