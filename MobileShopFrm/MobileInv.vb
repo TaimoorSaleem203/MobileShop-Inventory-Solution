@@ -105,63 +105,62 @@ Public Class InventorySol
         Dim rc As Integer = 0
         rc = Me.MobileInvDS.MobileInv.Rows.Count
 
-        'If rc = 0 Then
-        '    MessageBox.Show("Please select your record to edit!", "Mobile - Inventory Solution", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        '    Exit Sub
-        'End If
+        If rc = 0 Then
+            MessageBox.Show("Please select your record to edit!", "Mobile - Inventory Solution", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Exit Sub
+        End If
 
         MessageBox.Show("Edit mode is enabled!", "Mobile - Inventory Solution", MessageBoxButtons.OK, MessageBoxIcon.Information)
         MobileInv_DGV.EditMode = DataGridViewEditMode.EditOnKeystrokeOrF2
     End Sub
 
-    Private Function IsInputValid() As Boolean
-        Dim currentRow As DataRowView =
-            TryCast(Me.MobileInvBindingSource.Current, DataRowView)
+    'Private Function IsInputValid() As Boolean
+    '    Dim currentRow As DataRowView =
+    '        TryCast(Me.MobileInvBindingSource.Current, DataRowView)
 
-        Dim requiredFields As String() = {
-            "Brand",
-            "Category",
-            "Product",
-            "Model",
-            "Color",
-            "Storage",
-            "Unit",
-            "RAM",
-            "PurchasePrice",
-            "SalePrice",
-            "TaxRate",
-            "ReorderLevel",
-            "WarrantyMonths",
-            "IsActive"
-        }
+    '    Dim requiredFields As String() = {
+    '        "Brand",
+    '        "Category",
+    '        "Product",
+    '        "Model",
+    '        "Color",
+    '        "Storage",
+    '        "Unit",
+    '        "RAM",
+    '        "PurchasePrice",
+    '        "SalePrice",
+    '        "TaxRate",
+    '        "ReorderLevel",
+    '        "WarrantyMonths",
+    '        "IsActive"
+    '    }
 
-        For Each field As String In requiredFields
-            If currentRow(field) Is DBNull.Value OrElse String.IsNullOrWhiteSpace(currentRow(field).ToString) Then
-                MessageBox.Show(field & " is required.",
-                "Validation",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Warning)
+    '    For Each field As String In requiredFields
+    '        If currentRow(field) Is DBNull.Value OrElse String.IsNullOrWhiteSpace(currentRow(field).ToString) Then
+    '            MessageBox.Show(field & " is required.",
+    '            "Validation",
+    '            MessageBoxButtons.OK,
+    '            MessageBoxIcon.Warning)
 
-                Select Case field
-                    Case "Category"
-                        categoryCbBox.Focus()
-                    Case "Brand"
-                        brandCbBox.Focus()
-                End Select
+    '            Select Case field
+    '                Case "Category"
+    '                    categoryCbBox.Focus()
+    '                Case "Brand"
+    '                    brandCbBox.Focus()
+    '            End Select
 
-                Return False
-            End If
-        Next
+    '            Return False
+    '        End If
+    '    Next
 
-        Return True
-    End Function
+    '    Return True
+    'End Function
 
-    'Private Sub MobileInv_DGV_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles MobileInv_DGV.CellEndEdit
-    '    If e.RowIndex < 0 Then Exit Sub
+    Private Sub MobileInv_DGV_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles MobileInv_DGV.DataError
+        e.ThrowException = False
 
-    '    If Not IsInputValid() Then Exit Sub
-    '    If Not CellValidation() Then Exit Sub
-    'End Sub
+        MessageBox.Show("Enter a valid input!", "Mobile Form", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+    End Sub
 
     Private Function CellValidation() As Boolean
         Dim rowIndx As Integer = MobileInv_DGV.CurrentCell.RowIndex
@@ -185,7 +184,7 @@ Public Class InventorySol
 
     Private Sub Save_Btn_Click(sender As System.Object, e As System.EventArgs) Handles Save_Btn.Click
         Try
-            If Not IsInputValid() Then Exit Sub
+            'If Not IsInputValid() Then Exit Sub
             If Not CellValidation() Then Exit Sub
 
             enable_add_edit_delete()
@@ -255,7 +254,6 @@ Public Class InventorySol
 
             moveNextBtn.Enabled = True
             moveLastBtn.Enabled = True
-
         End If
 
         If Me.MobileInv_DGV.RowCount = MobileInv_DGV.CurrentRow.Index + 1 Then

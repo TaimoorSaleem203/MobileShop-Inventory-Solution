@@ -9,8 +9,8 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("MobileShopFrm")> 
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("")> 
+<Assembly: AssemblyDescription("Track Of Your Mobile Business")> 
+<Assembly: AssemblyCompany("SerenaMobile")> 
 <Assembly: AssemblyProduct("MobileShopFrm")> 
 <Assembly: AssemblyCopyright("Copyright ©  2026")> 
 <Assembly: AssemblyTrademark("")> 

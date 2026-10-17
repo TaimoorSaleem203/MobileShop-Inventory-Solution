@@ -74,16 +74,65 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
     <Compile Include="Dataset\MobileInvDS.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MobileInvDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Dataset\MobilePartyDS.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MobilePartyDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Dataset\MobilePartyDS.vb">
+      <DependentUpon>MobilePartyDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Dataset\MobileSaleDS.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MobileSaleDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Dataset\MobileSaleDS.vb">
+      <DependentUpon>MobileSaleDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Dataset\MobileUserDS.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MobileUserDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Dataset\MobileUserDS.vb">
+      <DependentUpon>MobileUserDS.xsd</DependentUpon>
     </Compile>
     <Compile Include="MobileInv.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MobileInv.Designer.vb">
       <DependentUpon>MobileInv.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MobileMain.Designer.vb">
+      <DependentUpon>MobileMain.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MobileMain.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MobilePartytList.Designer.vb">
+      <DependentUpon>MobilePartytList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MobilePartytList.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MobileSaleList.Designer.vb">
+      <DependentUpon>MobileSaleList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MobileSaleList.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MobileUserManage.Designer.vb">
+      <DependentUpon>MobileUserManage.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MobileUserManage.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -101,16 +150,37 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="SplashScreen.Designer.vb">
+      <DependentUpon>SplashScreen.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SplashScreen.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MobileInv.resx">
       <DependentUpon>MobileInv.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MobileMain.resx">
+      <DependentUpon>MobileMain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MobilePartytList.resx">
+      <DependentUpon>MobilePartytList.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MobileSaleList.resx">
+      <DependentUpon>MobileSaleList.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MobileUserManage.resx">
+      <DependentUpon>MobileUserManage.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SplashScreen.resx">
+      <DependentUpon>SplashScreen.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -125,6 +195,39 @@
     </None>
     <None Include="Dataset\MobileInvDS.xss">
       <DependentUpon>MobileInvDS.xsd</DependentUpon>
+    </None>
+    <None Include="Dataset\MobilePartyDS.xsc">
+      <DependentUpon>MobilePartyDS.xsd</DependentUpon>
+    </None>
+    <None Include="Dataset\MobilePartyDS.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>MobilePartyDS.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="Dataset\MobilePartyDS.xss">
+      <DependentUpon>MobilePartyDS.xsd</DependentUpon>
+    </None>
+    <None Include="Dataset\MobileSaleDS.xsc">
+      <DependentUpon>MobileSaleDS.xsd</DependentUpon>
+    </None>
+    <None Include="Dataset\MobileSaleDS.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>MobileSaleDS.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="Dataset\MobileSaleDS.xss">
+      <DependentUpon>MobileSaleDS.xsd</DependentUpon>
+    </None>
+    <None Include="Dataset\MobileUserDS.xsc">
+      <DependentUpon>MobileUserDS.xsd</DependentUpon>
+    </None>
+    <None Include="Dataset\MobileUserDS.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>MobileUserDS.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="Dataset\MobileUserDS.xss">
+      <DependentUpon>MobileUserDS.xsd</DependentUpon>
     </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
@@ -147,6 +250,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\prev.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MainBG.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -119,6 +119,15 @@ SELECT Product, ProductID, Category, Brand, Model, Color, Storage, Unit, RAM, Pu
               <Mapping SourceColumn="IsActive" DataSetColumn="IsActive" />
             </Mappings>
             <Sources>
+              <DbSource ConnectionRef="MobileShopConnectionString (MySettings)" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="CountQuery" Modifier="Public" Name="CountQuery" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="CountQuery">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT        COUNT(*) AS TOTAL_COUNT
+FROM            MobileInv</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
               <DbSource ConnectionRef="MobileShopConnectionString (MySettings)" DbObjectName="MobileShop.dbo.MobileInv" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="FillBy_BrandNCategory" GenerateMethods="Fill" GenerateShortCommands="true" GeneratorSourceName="FillBy_BrandNCategory" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="FillBy_BrandNCategory">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
@@ -141,7 +150,7 @@ FROM            MobileInv WHERE Brand = @Brand AND Category = @Category</Command
   <xs:element name="MobileInvDS" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="MobileInvDS" msprop:Generator_UserDSName="MobileInvDS">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="MobileInv" msprop:Generator_TableClassName="MobileInvDataTable" msprop:Generator_TableVarName="tableMobileInv" msprop:Generator_TablePropName="MobileInv" msprop:Generator_RowDeletingName="MobileInvRowDeleting" msprop:Generator_RowChangingName="MobileInvRowChanging" msprop:Generator_RowEvHandlerName="MobileInvRowChangeEventHandler" msprop:Generator_RowDeletedName="MobileInvRowDeleted" msprop:Generator_UserTableName="MobileInv" msprop:Generator_RowChangedName="MobileInvRowChanged" msprop:Generator_RowEvArgName="MobileInvRowChangeEvent" msprop:Generator_RowClassName="MobileInvRow">
+        <xs:element name="MobileInv" msprop:Generator_TableClassName="MobileInvDataTable" msprop:Generator_TableVarName="tableMobileInv" msprop:Generator_RowChangedName="MobileInvRowChanged" msprop:Generator_TablePropName="MobileInv" msprop:Generator_RowDeletingName="MobileInvRowDeleting" msprop:Generator_RowChangingName="MobileInvRowChanging" msprop:Generator_RowEvHandlerName="MobileInvRowChangeEventHandler" msprop:Generator_RowDeletedName="MobileInvRowDeleted" msprop:Generator_RowClassName="MobileInvRow" msprop:Generator_UserTableName="MobileInv" msprop:Generator_RowEvArgName="MobileInvRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Product" msprop:Generator_ColumnVarNameInTable="columnProduct" msprop:Generator_ColumnPropNameInRow="Product" msprop:Generator_ColumnPropNameInTable="ProductColumn" msprop:Generator_UserColumnName="Product" minOccurs="0">
