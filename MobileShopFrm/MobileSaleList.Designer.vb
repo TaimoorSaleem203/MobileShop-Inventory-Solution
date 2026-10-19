@@ -29,10 +29,10 @@ Partial Class SaleList
         Dim RemarksLabel As System.Windows.Forms.Label
         Dim PartyLabel As System.Windows.Forms.Label
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(SaleList))
-        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.RectangleShape1 = New Microsoft.VisualBasic.PowerPacks.RectangleShape()
         Me.ShapeContainer1 = New Microsoft.VisualBasic.PowerPacks.ShapeContainer()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -51,7 +51,7 @@ Partial Class SaleList
         Me.Update_Btn = New System.Windows.Forms.Button()
         Me.Add_Btn = New System.Windows.Forms.Button()
         Me.MobileSaleList_DGV = New System.Windows.Forms.DataGridView()
-        Me.idno = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgv_idno = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dgv_item_id = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dgv_entry = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dgv_item_name = New System.Windows.Forms.DataGridViewComboBoxColumn()
@@ -65,6 +65,14 @@ Partial Class SaleList
         Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
+        Me.currEntryLbl = New System.Windows.Forms.Label()
+        Me.firstBtn = New System.Windows.Forms.Button()
+        Me.prevBtn = New System.Windows.Forms.Button()
+        Me.lastBtn = New System.Windows.Forms.Button()
+        Me.nextBtn = New System.Windows.Forms.Button()
+        Me.totalEntryLbl = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         EntryNoLabel = New System.Windows.Forms.Label()
         BillNoLabel = New System.Windows.Forms.Label()
         DateLabel = New System.Windows.Forms.Label()
@@ -75,6 +83,7 @@ Partial Class SaleList
         CType(Me.MobileSaleListBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.InfoBox.SuspendLayout()
         CType(Me.MobileSaleList_DGV, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'EntryNoLabel
@@ -253,7 +262,7 @@ Partial Class SaleList
         Me.Undo_Btn.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
         Me.Undo_Btn.ForeColor = System.Drawing.Color.White
         Me.Undo_Btn.Image = CType(resources.GetObject("Undo_Btn.Image"), System.Drawing.Image)
-        Me.Undo_Btn.Location = New System.Drawing.Point(792, 0)
+        Me.Undo_Btn.Location = New System.Drawing.Point(803, 0)
         Me.Undo_Btn.Name = "Undo_Btn"
         Me.Undo_Btn.Size = New System.Drawing.Size(84, 43)
         Me.Undo_Btn.TabIndex = 14
@@ -270,7 +279,7 @@ Partial Class SaleList
         Me.Delete_Btn.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
         Me.Delete_Btn.ForeColor = System.Drawing.Color.White
         Me.Delete_Btn.Image = CType(resources.GetObject("Delete_Btn.Image"), System.Drawing.Image)
-        Me.Delete_Btn.Location = New System.Drawing.Point(711, 0)
+        Me.Delete_Btn.Location = New System.Drawing.Point(722, 0)
         Me.Delete_Btn.Name = "Delete_Btn"
         Me.Delete_Btn.Size = New System.Drawing.Size(84, 43)
         Me.Delete_Btn.TabIndex = 13
@@ -289,7 +298,7 @@ Partial Class SaleList
         Me.Save_Btn.Image = CType(resources.GetObject("Save_Btn.Image"), System.Drawing.Image)
         Me.Save_Btn.Location = New System.Drawing.Point(634, 0)
         Me.Save_Btn.Name = "Save_Btn"
-        Me.Save_Btn.Size = New System.Drawing.Size(84, 43)
+        Me.Save_Btn.Size = New System.Drawing.Size(91, 43)
         Me.Save_Btn.TabIndex = 11
         Me.Save_Btn.Text = "F4"
         Me.Save_Btn.TextAlign = System.Drawing.ContentAlignment.BottomLeft
@@ -333,35 +342,35 @@ Partial Class SaleList
         '
         Me.MobileSaleList_DGV.AllowUserToResizeColumns = False
         Me.MobileSaleList_DGV.AllowUserToResizeRows = False
-        DataGridViewCellStyle13.BackColor = System.Drawing.Color.PapayaWhip
-        DataGridViewCellStyle13.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
-        DataGridViewCellStyle13.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.PeachPuff
-        DataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.Black
-        Me.MobileSaleList_DGV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle13
+        DataGridViewCellStyle17.BackColor = System.Drawing.Color.PapayaWhip
+        DataGridViewCellStyle17.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
+        DataGridViewCellStyle17.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle17.SelectionBackColor = System.Drawing.Color.PeachPuff
+        DataGridViewCellStyle17.SelectionForeColor = System.Drawing.Color.Black
+        Me.MobileSaleList_DGV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle17
         Me.MobileSaleList_DGV.AutoGenerateColumns = False
         Me.MobileSaleList_DGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.MobileSaleList_DGV.BackgroundColor = System.Drawing.Color.WhiteSmoke
         Me.MobileSaleList_DGV.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle14.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold)
-        DataGridViewCellStyle14.ForeColor = System.Drawing.Color.White
-        DataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle14.SelectionForeColor = System.Drawing.Color.White
-        DataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.MobileSaleList_DGV.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle14
+        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle18.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold)
+        DataGridViewCellStyle18.ForeColor = System.Drawing.Color.White
+        DataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle18.SelectionForeColor = System.Drawing.Color.White
+        DataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.MobileSaleList_DGV.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle18
         Me.MobileSaleList_DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.MobileSaleList_DGV.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.idno, Me.dgv_item_id, Me.dgv_entry, Me.dgv_item_name, Me.dgv_qty_rate, Me.dgv_price_rate, Me.dgv_amt_rate})
+        Me.MobileSaleList_DGV.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.dgv_idno, Me.dgv_item_id, Me.dgv_entry, Me.dgv_item_name, Me.dgv_qty_rate, Me.dgv_price_rate, Me.dgv_amt_rate})
         Me.MobileSaleList_DGV.DataSource = Me.MobileSaleItemBindingSource1
-        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle15.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold)
-        DataGridViewCellStyle15.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle15.SelectionBackColor = System.Drawing.Color.PeachPuff
-        DataGridViewCellStyle15.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.MobileSaleList_DGV.DefaultCellStyle = DataGridViewCellStyle15
+        DataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle19.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold)
+        DataGridViewCellStyle19.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle19.SelectionBackColor = System.Drawing.Color.PeachPuff
+        DataGridViewCellStyle19.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.MobileSaleList_DGV.DefaultCellStyle = DataGridViewCellStyle19
         Me.MobileSaleList_DGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
         Me.MobileSaleList_DGV.EnableHeadersVisualStyles = False
         Me.MobileSaleList_DGV.GridColor = System.Drawing.Color.Silver
@@ -369,18 +378,18 @@ Partial Class SaleList
         Me.MobileSaleList_DGV.Name = "MobileSaleList_DGV"
         Me.MobileSaleList_DGV.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
         Me.MobileSaleList_DGV.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
-        DataGridViewCellStyle16.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
-        Me.MobileSaleList_DGV.RowsDefaultCellStyle = DataGridViewCellStyle16
+        DataGridViewCellStyle20.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
+        Me.MobileSaleList_DGV.RowsDefaultCellStyle = DataGridViewCellStyle20
         Me.MobileSaleList_DGV.Size = New System.Drawing.Size(931, 397)
         Me.MobileSaleList_DGV.TabIndex = 16
         '
-        'idno
+        'dgv_idno
         '
-        Me.idno.DataPropertyName = "idno"
-        Me.idno.HeaderText = "ID"
-        Me.idno.Name = "idno"
-        Me.idno.ReadOnly = True
-        Me.idno.Visible = False
+        Me.dgv_idno.DataPropertyName = "idno"
+        Me.dgv_idno.HeaderText = "ID"
+        Me.dgv_idno.Name = "dgv_idno"
+        Me.dgv_idno.ReadOnly = True
+        Me.dgv_idno.Visible = False
         '
         'dgv_item_id
         '
@@ -446,9 +455,9 @@ Partial Class SaleList
         Me.search_Btn.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
         Me.search_Btn.ForeColor = System.Drawing.Color.White
         Me.search_Btn.Image = CType(resources.GetObject("search_Btn.Image"), System.Drawing.Image)
-        Me.search_Btn.Location = New System.Drawing.Point(876, 0)
+        Me.search_Btn.Location = New System.Drawing.Point(887, 0)
         Me.search_Btn.Name = "search_Btn"
-        Me.search_Btn.Size = New System.Drawing.Size(84, 43)
+        Me.search_Btn.Size = New System.Drawing.Size(74, 43)
         Me.search_Btn.TabIndex = 17
         Me.search_Btn.Text = "F7"
         Me.search_Btn.TextAlign = System.Drawing.ContentAlignment.BottomLeft
@@ -504,12 +513,110 @@ Partial Class SaleList
         Me.Label3.TabIndex = 21
         Me.Label3.Text = "Net Amt."
         '
+        'currEntryLbl
+        '
+        Me.currEntryLbl.AutoSize = True
+        Me.currEntryLbl.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
+        Me.currEntryLbl.ForeColor = System.Drawing.Color.DimGray
+        Me.currEntryLbl.Location = New System.Drawing.Point(57, 19)
+        Me.currEntryLbl.Name = "currEntryLbl"
+        Me.currEntryLbl.Size = New System.Drawing.Size(15, 17)
+        Me.currEntryLbl.TabIndex = 22
+        Me.currEntryLbl.Text = "0"
+        '
+        'firstBtn
+        '
+        Me.firstBtn.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.firstBtn.FlatAppearance.BorderSize = 0
+        Me.firstBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.firstBtn.Image = Global.MobileShopFrm.My.Resources.Resources.first
+        Me.firstBtn.Location = New System.Drawing.Point(1, 16)
+        Me.firstBtn.Name = "firstBtn"
+        Me.firstBtn.Size = New System.Drawing.Size(28, 23)
+        Me.firstBtn.TabIndex = 23
+        Me.firstBtn.UseVisualStyleBackColor = True
+        '
+        'prevBtn
+        '
+        Me.prevBtn.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.prevBtn.FlatAppearance.BorderSize = 0
+        Me.prevBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.prevBtn.Image = Global.MobileShopFrm.My.Resources.Resources.prev
+        Me.prevBtn.Location = New System.Drawing.Point(26, 16)
+        Me.prevBtn.Name = "prevBtn"
+        Me.prevBtn.Size = New System.Drawing.Size(28, 23)
+        Me.prevBtn.TabIndex = 24
+        Me.prevBtn.UseVisualStyleBackColor = True
+        '
+        'lastBtn
+        '
+        Me.lastBtn.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.lastBtn.FlatAppearance.BorderSize = 0
+        Me.lastBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.lastBtn.Image = Global.MobileShopFrm.My.Resources.Resources.last
+        Me.lastBtn.Location = New System.Drawing.Point(149, 16)
+        Me.lastBtn.Name = "lastBtn"
+        Me.lastBtn.Size = New System.Drawing.Size(28, 23)
+        Me.lastBtn.TabIndex = 26
+        Me.lastBtn.UseVisualStyleBackColor = True
+        '
+        'nextBtn
+        '
+        Me.nextBtn.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.nextBtn.FlatAppearance.BorderSize = 0
+        Me.nextBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.nextBtn.Image = Global.MobileShopFrm.My.Resources.Resources._next
+        Me.nextBtn.Location = New System.Drawing.Point(124, 16)
+        Me.nextBtn.Name = "nextBtn"
+        Me.nextBtn.Size = New System.Drawing.Size(28, 23)
+        Me.nextBtn.TabIndex = 25
+        Me.nextBtn.UseVisualStyleBackColor = True
+        '
+        'totalEntryLbl
+        '
+        Me.totalEntryLbl.AutoSize = True
+        Me.totalEntryLbl.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
+        Me.totalEntryLbl.ForeColor = System.Drawing.Color.DimGray
+        Me.totalEntryLbl.Location = New System.Drawing.Point(106, 19)
+        Me.totalEntryLbl.Name = "totalEntryLbl"
+        Me.totalEntryLbl.Size = New System.Drawing.Size(15, 17)
+        Me.totalEntryLbl.TabIndex = 27
+        Me.totalEntryLbl.Text = "0"
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
+        Me.Label5.ForeColor = System.Drawing.Color.DimGray
+        Me.Label5.Location = New System.Drawing.Point(78, 19)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(22, 17)
+        Me.Label5.TabIndex = 28
+        Me.Label5.Text = "To"
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.BackColor = System.Drawing.Color.Transparent
+        Me.GroupBox1.Controls.Add(Me.Label5)
+        Me.GroupBox1.Controls.Add(Me.currEntryLbl)
+        Me.GroupBox1.Controls.Add(Me.totalEntryLbl)
+        Me.GroupBox1.Controls.Add(Me.firstBtn)
+        Me.GroupBox1.Controls.Add(Me.lastBtn)
+        Me.GroupBox1.Controls.Add(Me.prevBtn)
+        Me.GroupBox1.Controls.Add(Me.nextBtn)
+        Me.GroupBox1.Location = New System.Drawing.Point(29, 552)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(184, 47)
+        Me.GroupBox1.TabIndex = 29
+        Me.GroupBox1.TabStop = False
+        '
         'SaleList
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Snow
         Me.ClientSize = New System.Drawing.Size(994, 609)
+        Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.TextBox2)
@@ -537,6 +644,8 @@ Partial Class SaleList
         Me.InfoBox.ResumeLayout(False)
         Me.InfoBox.PerformLayout()
         CType(Me.MobileSaleList_DGV, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -574,17 +683,25 @@ Partial Class SaleList
     Friend WithEvents MobileSaleListBindingSource As System.Windows.Forms.BindingSource
     Friend WithEvents MobileSaleListTableAdapter As MobileShopFrm.MobileSaleDSTableAdapters.MobileSaleListTableAdapter
     Friend WithEvents search_Btn As System.Windows.Forms.Button
-    Friend WithEvents idno As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents totalAmtBox As System.Windows.Forms.TextBox
+    Friend WithEvents TextBox2 As System.Windows.Forms.TextBox
+    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents dgv_idno As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents dgv_item_id As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents dgv_entry As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents dgv_item_name As System.Windows.Forms.DataGridViewComboBoxColumn
     Friend WithEvents dgv_qty_rate As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents dgv_price_rate As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents dgv_amt_rate As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents totalAmtBox As System.Windows.Forms.TextBox
-    Friend WithEvents TextBox2 As System.Windows.Forms.TextBox
-    Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents currEntryLbl As System.Windows.Forms.Label
+    Friend WithEvents firstBtn As System.Windows.Forms.Button
+    Friend WithEvents prevBtn As System.Windows.Forms.Button
+    Friend WithEvents lastBtn As System.Windows.Forms.Button
+    Friend WithEvents nextBtn As System.Windows.Forms.Button
+    Friend WithEvents totalEntryLbl As System.Windows.Forms.Label
+    Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     'Friend WithEvents MobileSaleItemDS As MobileShopFrm.MobileSaleItemDS
     'Friend WithEvents MobileSaleItemTableAdapter As MobileShopFrm.MobileSaleItemDSTableAdapters.MobileSaleItemTableAdapter
 End Class
