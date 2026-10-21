@@ -15,11 +15,11 @@ Public Class SaleList
     'Insert, update, or delete records with ExecuteNonQuery().
 
     Private Sub SaleList_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
-        Me.returnCount()
         Me.SaleMS_PartyCmbLoad()
 
-        entryNo = Me.returnMaxNo()
+        entryNo = GetLastEntryNo()
         Me.SaleItem_DataLoad(entryNo)
+        Me.RefreshEntryCounters()
 
         Me.KeyPreview = True
         enable_add_edit_delete()
@@ -393,7 +393,6 @@ Public Class SaleList
                             Dim itemIDValue As Object =
                                 row.Cells("dgv_item_id").Value
 
-
                             If itemValue Is Nothing OrElse
                                itemValue Is DBNull.Value OrElse
                                String.IsNullOrWhiteSpace(
@@ -403,7 +402,6 @@ Public Class SaleList
 
                             End If
 
-
                             If qtyValue Is Nothing OrElse
                                qtyValue Is DBNull.Value Then
 
@@ -411,14 +409,12 @@ Public Class SaleList
 
                             End If
 
-
                             If rateValue Is Nothing OrElse
                                rateValue Is DBNull.Value Then
 
                                 Continue For
 
                             End If
-
 
                             Dim itemID As Integer
 
@@ -570,7 +566,7 @@ Public Class SaleList
 
                     Using cmd As New SqlCommand(itemQuery, conn, transaction)
                         cmd.Parameters.Add("@find", System.Data.SqlDbType.Int).Value = Trim(EntryNoTextBox.Text)
-                        rowAffected = cmd.ExecuteNonQuery()
+                        cmd.ExecuteNonQuery()
                     End Using
 
                     Dim listQuery As String = "DELETE FROM [MobileShop].[dbo].[MobileSaleList] WHERE EntryNo = @find;"
@@ -748,10 +744,8 @@ Public Class SaleList
             enable_add_edit_delete()
             Me.clearEntries()
 
-            Me.returnCount()
-            entryNo = returnMaxNo()
+            entryNo = GetLastEntryNo()
             Me.SaleItem_DataLoad(entryNo)
-
 
             MobileSaleList_DGV.EditMode = DataGridViewEditMode.EditProgrammatically
         Catch ex As Exception
@@ -909,72 +903,70 @@ Public Class SaleList
         MsgBox("Show Search Window")
     End Sub
 
-    Private Function returnMaxNo() As Integer
+    Private Function ScalarInt(query As String, Optional entryNo As Integer = 0)
         Using conn As New SqlConnection(connection)
             conn.Open()
-
-            Dim query As String = "SELECT ISNULL(MAX(EntryNo),0) FROM MobileSaleItem"
-
             Using cmd As New SqlCommand(query, conn)
-                Return CInt(cmd.ExecuteScalar())
+                cmd.Parameters.Add("@entryNo", SqlDbType.Int).Value = entryNo
+                Return Convert.ToInt32(cmd.ExecuteScalar())
             End Using
         End Using
     End Function
 
-    Private Function returnMinNo() As Integer
-        Using conn As New SqlConnection(connection)
-            conn.Open()
-
-            Dim query As String = "SELECT ISNULL(MIN(EntryNo),0) FROM MobileSaleItem"
-
-            Using cmd As New SqlCommand(query, conn)
-                Return CInt(cmd.ExecuteScalar())
-            End Using
-        End Using
+    Private Function GetLastEntryNo() As Integer
+        Return (ScalarInt("SELECT ISNULL(MAX(EntryNo),0) FROM MobileSaleItem"))
     End Function
 
-    Private Sub returnCount()
-        totalEntryLbl.Text = Convert.ToInt32(Me.returnMaxNo() - Me.returnMinNo()).ToString
-        currEntryLbl.Text = If(returnMinNo() = returnMaxNo(), Convert.ToString(returnMaxNo()), Convert.ToString(CInt(totalEntryLbl.Text) - 1))
+    Private Function GetFirstEntryNo() As Integer
+        Return ScalarInt("SELECT ISNULL(MIN(EntryNo),0) FROM MobileSaleItem")
+    End Function
+
+    Private Function GetNextEntryNo(ByVal current As Integer) As Integer
+        Return ScalarInt("SELECT ISNULL(MIN(EntryNo), 0) FROM MobileSaleItem WHERE EntryNo > @EntryNo", current)
+    End Function
+
+    Private Function GetPrevEntryNo(ByVal current As Integer) As Integer
+        Return ScalarInt("SELECT ISNULL(MAX(EntryNo), 0) FROM MobileSaleItem WHERE EntryNo < @EntryNo", current)
+    End Function
+
+    Private Sub RefreshEntryCounters()
+        Dim total As Integer = ScalarInt("SELECT COUNT(*) FROM MobileSaleList")
+        Dim position As Integer = 0
+
+        If total > 0 Then
+            position = ScalarInt("SELECT COUNT(*) FROM MobileSaleList WHERE EntryNo <= @EntryNo", entryNo)
+        End If
+
+        totalEntryLbl.Text = total.ToString
+        currEntryLbl.Text = position.ToString
+
+        firstBtn.Enabled = position > 1
+        prevBtn.Enabled = position > 1
+        nextBtn.Enabled = position < total
+        lastBtn.Enabled = position < total
+    End Sub
+
+    Private Sub ShowEntry(ByVal target As Integer)
+        If target <= 0 Then Exit Sub
+        entryNo = target
+        Me.SaleItem_DataLoad(entryNo)
+        RefreshEntryCounters()
     End Sub
 
     Private Sub nextBtn_Click(sender As System.Object, e As System.EventArgs) Handles nextBtn.Click
-        Dim maxNo As Integer = returnMaxNo()
-
-        If maxNo <= entryNo Then
-            entryNo = maxNo
-            Exit Sub
-        End If
-
-        entryNo += 1
-
-        returnCount()
-        Me.SaleItem_DataLoad(entryNo)
+        ShowEntry(GetNextEntryNo(entryNo))
     End Sub
 
     Private Sub lastBtn_Click(sender As System.Object, e As System.EventArgs) Handles lastBtn.Click
-        entryNo = returnMaxNo()
-        Me.SaleItem_DataLoad(entryNo)
+        ShowEntry(GetLastEntryNo())
     End Sub
 
     Private Sub prevBtn_Click(sender As System.Object, e As System.EventArgs) Handles prevBtn.Click
-        Dim minNo As Integer = returnMinNo()
-
-        If minNo >= entryNo Then
-            entryNo = minNo
-            Exit Sub
-        End If
-
-        entryNo -= 1
-
-        returnCount()
-        Me.SaleItem_DataLoad(entryNo)
+        ShowEntry(GetPrevEntryNo(entryNo))
     End Sub
 
     Private Sub firstBtn_Click(sender As System.Object, e As System.EventArgs) Handles firstBtn.Click
-        entryNo = returnMinNo()
-        returnCount()
-        Me.SaleItem_DataLoad(entryNo)
+        ShowEntry(GetFirstEntryNo())
     End Sub
 
 End Class
