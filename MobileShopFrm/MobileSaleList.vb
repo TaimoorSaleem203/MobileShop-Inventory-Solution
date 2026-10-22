@@ -10,10 +10,6 @@ Public Class SaleList
 
     Dim entryNo As Integer
 
-    'Retrieve data with ExecuteReader().
-    'Retrieve a single value with ExecuteScalar().
-    'Insert, update, or delete records with ExecuteNonQuery().
-
     Private Sub SaleList_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Me.SaleMS_PartyCmbLoad()
 
@@ -26,7 +22,7 @@ Public Class SaleList
     End Sub
 
     Private Sub clearEntries()
-        BillNoTextBox.Text = ""
+        'BillNoTextBox.Text = ""
         PartyComboBox.Text = ""
         RemarksTextBox.Text = ""
     End Sub
@@ -69,16 +65,17 @@ Public Class SaleList
         Save_Btn.Enabled = True
         InfoBox.Enabled = True
 
+        navBox.Enabled = False
         Add_Btn.Enabled = False
         Update_Btn.Enabled = False
         Delete_Btn.Enabled = False
     End Sub
 
     Private Sub enable_add_edit_delete()
-
         Save_Btn.Enabled = False
         InfoBox.Enabled = False
 
+        navBox.Enabled = True
         Add_Btn.Enabled = True
         Update_Btn.Enabled = True
         Delete_Btn.Enabled = True
@@ -91,7 +88,8 @@ Public Class SaleList
             Using conn As New SqlConnection(connection)
                 conn.Open()
                 Dim query As String =
-                "SELECT SaleItem.ItemID, " &
+                "SELECT SaleItem.idno, " &
+                "SaleItem.ItemID, " &
                 "SaleList.EntryNo, " &
                 "SaleList.BillNo, " &
                 "SaleList.Party, " &
@@ -117,10 +115,10 @@ Public Class SaleList
                     End Using
 
                     MobileSaleList_DGV.DataSource = saleItemTbl
-                    cmd.ExecuteNonQuery()
                 End Using
             End Using
 
+            MobileSaleItem_Amt(entryNo)
         Catch ex As Exception
             MessageBox.Show("Error: " & ex.Message, "Mobile Form", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
@@ -154,48 +152,33 @@ Public Class SaleList
 
     Private Sub SaleListAdd()
 
+        Dim entryVal As Integer
+        Dim billVal As Integer
+
         Using conn As New SqlConnection(connection)
             conn.Open()
-            Dim entryVal As Object
 
             Using transaction As SqlTransaction = conn.BeginTransaction()
                 Try
-                    Dim entryQuery As String = "SELECT MAX(EntryNo) FROM [MobileShop].[dbo].[MobileSaleList]"
+                    Dim listQuery As String = "SELECT ISNULL(MAX(EntryNo),1) As MAX_ENTRY, ISNULL(MAX(BillNo),100) AS MAX_BILL FROM [MobileShop].[dbo].[MobileSaleList]"
 
-                    Using cmd As New SqlCommand(entryQuery, conn, transaction)
-                        entryVal = cmd.ExecuteScalar()
-                    End Using
-
-                    If entryVal Is DBNull.Value OrElse entryVal Is Nothing Then
-                        EntryNoTextBox.Text = "1"
-                        disable_add_edit_delete()
-                        MobileSaleList_DGV.EditMode = DataGridViewEditMode.EditOnKeystrokeOrF2
-                        Exit Sub
-                    End If
-
-                    Dim entryNo As Integer
-                    Integer.TryParse(entryVal, entryNo)
-
-                    Dim itemQuery As String = "SELECT * FROM [MobileShop].[dbo].[MobileSaleItem] WHERE EntryNo = @find"
-
-                    Using cmd As New SqlCommand(itemQuery, conn, transaction)
-                        cmd.Parameters.Add("@find", SqlDbType.Int).Value = entryNo
-
-                        Dim saleItemTbl As New DataTable()
-
-                        Using adapter As New SqlDataAdapter(cmd)
-                            adapter.Fill(saleItemTbl)
+                    Using cmd As New SqlCommand(listQuery, conn, transaction)
+                        Using rdr As SqlDataReader = cmd.ExecuteReader()
+                            If rdr.Read() Then
+                                entryVal = rdr("MAX_ENTRY")
+                                billVal = rdr("MAX_BILL")
+                            End If
                         End Using
-
-                        saleItemTbl.Clear()
-                        MobileSaleList_DGV.DataSource = saleItemTbl
-
-                        cmd.ExecuteNonQuery()
                     End Using
 
-                    EntryNoTextBox.Text = (entryNo + 1).ToString
-                    transaction.Commit()
+                    Dim saleItemTbl As New DataTable()
+                    MobileSaleList_DGV.DataSource = saleItemTbl
 
+                    totalAmtBox.Text = "0.00"
+                    EntryNoTextBox.Text = (entryVal + 1).ToString()
+                    BillNoTextBox.Text = (billVal + 1).ToString()
+
+                    transaction.Commit()
                 Catch ex As Exception
                     transaction.Rollback()
                     MessageBox.Show("Error: " & ex.Message, "Error Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -219,8 +202,6 @@ Public Class SaleList
 
                     Try
 
-                        Dim entryNo As Integer = 0
-
                         If Not String.IsNullOrWhiteSpace(EntryNoTextBox.Text) Then
 
                             If Not Integer.TryParse(
@@ -233,24 +214,23 @@ Public Class SaleList
 
                         End If
 
-
                         Dim saleExists As Boolean =
                             SaleListExist(entryNo, conn, transaction)
-
 
                         If Not saleExists Then
 
                             Dim insertHeaderQuery As String =
                                 "INSERT INTO MobileSaleList " &
                                 "(BillNo, Party, [Date], Remarks) " &
-                                "VALUES (@BillNo, @Party, @SaleDate, @Remarks); " &
-                                "SELECT CAST(SCOPE_IDENTITY() AS INT);"
+                                "VALUES (@BillNo, @Party, @SaleDate, @Remarks);" &
+                                "SELECT CAST(SCOPE_IDENTITY() AS INT);"   'Execute the INSERT and retrieve the newly generated EntryNo
 
 
                             Using cmd As New SqlCommand(
                                 insertHeaderQuery,
                                 conn,
                                 transaction)
+
 
                                 cmd.Parameters.Add(
                                     "@BillNo",
@@ -340,7 +320,7 @@ Public Class SaleList
                                     "@EntryNo",
                                     SqlDbType.Int
                                 ).Value =
-                                    entryNo
+                                    Convert.ToInt32(EntryNoTextBox.Text)
 
 
                                 cmd.ExecuteNonQuery()
@@ -381,6 +361,9 @@ Public Class SaleList
 
                             If row.IsNewRow Then Continue For
 
+                            Dim entryValue As Object =
+                                row.Cells("dgv_entry").Value
+
                             Dim itemValue As Object =
                                 row.Cells("dgv_item_name").Value
 
@@ -392,6 +375,13 @@ Public Class SaleList
 
                             Dim itemIDValue As Object =
                                 row.Cells("dgv_item_id").Value
+
+                            'If entryValue Is Nothing OrElse
+                            '    entryValue Is DBNull.Value Then
+
+                            '    Continue For
+
+                            'End If
 
                             If itemValue Is Nothing OrElse
                                itemValue Is DBNull.Value OrElse
@@ -476,7 +466,7 @@ Public Class SaleList
                                     "@EntryNo",
                                     SqlDbType.Int
                                 ).Value =
-                                    entryNo
+                                    Val(EntryNoTextBox.Text.Trim())
 
 
                                 cmd.Parameters.Add(
@@ -562,18 +552,11 @@ Public Class SaleList
 
             Using transaction As SqlTransaction = conn.BeginTransaction()
                 Try
-                    Dim itemQuery As String = "DELETE FROM [MobileShop].[dbo].[MobileSaleItem] WHERE EntryNo = @find;"
+                    Dim itemQuery As String = "DELETE FROM [MobileShop].[dbo].[MobileSaleItem] WHERE idno = @find;"
 
                     Using cmd As New SqlCommand(itemQuery, conn, transaction)
-                        cmd.Parameters.Add("@find", System.Data.SqlDbType.Int).Value = Trim(EntryNoTextBox.Text)
-                        cmd.ExecuteNonQuery()
-                    End Using
-
-                    Dim listQuery As String = "DELETE FROM [MobileShop].[dbo].[MobileSaleList] WHERE EntryNo = @find;"
-
-                    Using cmd As New SqlCommand(listQuery, conn, transaction)
-                        cmd.Parameters.Add("@find", System.Data.SqlDbType.Int).Value = Trim(EntryNoTextBox.Text)
-                        cmd.ExecuteNonQuery()
+                        cmd.Parameters.Add("@find", System.Data.SqlDbType.Int).Value = Val(MobileSaleList_DGV.Rows(MobileSaleList_DGV.CurrentCell.RowIndex).Cells("dgv_idno").Value)
+                        rowAffected = cmd.ExecuteNonQuery()
                     End Using
 
                     If rowAffected > 0 Then
@@ -602,72 +585,22 @@ Public Class SaleList
 
     End Function
 
-    Private Sub SaleTotalAmt(entryNo As Integer)
-
-        Try
-            Dim total As Decimal = 0D
-
-            For Each row As DataGridViewRow In MobileSaleList_DGV.Rows
-
-                If row.IsNewRow Then Continue For
-
-                Dim entryValue As Object =
-                    row.Cells("dgv_entry").Value
-
-                Dim amountValue As Object =
-                    row.Cells("dgv_amt_rate").Value
-
-                If amountValue Is Nothing OrElse
-                amountValue Is DBNull.Value Then
-                    Continue For
-                End If
-
-                Dim amount As Decimal
-
-                If Not Decimal.TryParse(amountValue.ToString(), amount) Then
-                    Continue For
-                End If
-
-                If entryValue IsNot Nothing AndAlso
-                        entryValue IsNot DBNull.Value AndAlso Not String.IsNullOrWhiteSpace(entryValue.ToString) Then
-
-                    Dim rowEntryNo As Integer
-
-                    If Integer.TryParse(entryValue.ToString, rowEntryNo) Then
-                        If rowEntryNo = entryNo Then
-                            total += amount
-                        End If
-                    End If
-
-                Else
-                    total += amount
-                End If
-            Next
-
-            totalAmtBox.Text = total.ToString("N2")
-
-        Catch ex As Exception
-
-            MessageBox.Show(
-                "Error: " & ex.Message,
-                "Error Alert!",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Error
-            )
-
-        End Try
-
-    End Sub
-
     Private Sub MobileSaleList_DGV_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles MobileSaleList_DGV.DataError
         e.ThrowException = False 'Don't re-throw the exception
 
-        MessageBox.Show("Enter a valid input!", "Mobile Form", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        MsgBox(
+    "DataError: " &
+    e.Exception.Message &
+    " | Row: " &
+    e.RowIndex.ToString() &
+    " | Column: " &
+    e.ColumnIndex.ToString()
+)
     End Sub
 
     Private Sub Add_Btn_Click(sender As System.Object, e As System.EventArgs) Handles Add_Btn.Click
-        clearEntries()
         Me.SaleListAdd()
+        clearEntries()
         disable_add_edit_delete()
         MobileSaleList_DGV.EditMode = DataGridViewEditMode.EditOnKeystrokeOrF2
     End Sub
@@ -729,6 +662,7 @@ Public Class SaleList
 
             If confirm = Windows.Forms.DialogResult.Yes Then
                 Me.SaleListDelete()
+                Me.SaleItem_DataLoad(entryNo)
                 MobileSaleList_DGV.EditMode = DataGridViewEditMode.EditProgrammatically
             End If
 
@@ -739,7 +673,6 @@ Public Class SaleList
     End Sub
 
     Private Sub Undo_Btn_Click(sender As System.Object, e As System.EventArgs) Handles Undo_Btn.Click
-
         Try
             enable_add_edit_delete()
             Me.clearEntries()
@@ -751,7 +684,6 @@ Public Class SaleList
         Catch ex As Exception
             MessageBox.Show("Error: " & ex.Message, "Error Alert!", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End Try
-
     End Sub
 
     Private Sub SaleList_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles MobileSaleList_DGV.CellValueChanged
@@ -808,28 +740,112 @@ Public Class SaleList
                     Exit Sub
                 End If
 
-                calculateAmt(e.RowIndex)
+                MobileSaleItem_Amt(entryNo)
             End If
 
             If MobileSaleList_DGV.Columns(e.ColumnIndex).HeaderText = "Qty" Then
-                calculateAmt(e.RowIndex)
+                MobileSaleItem_Amt(entryNo)
             End If
+
         Catch ex As Exception
             MessageBox.Show("Error: " & ex.Message, "Error Alert!", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End Try
     End Sub
 
-    Private Sub calculateAmt(indx As Integer)
-        If indx < 0 Then Exit Sub
-        Dim item As Object = MobileSaleList_DGV.Rows(indx).Cells("dgv_item_name").Value
+    Private Sub MobileSaleItem_Amt(entryNo As Integer)
 
-        If item IsNot Nothing OrElse item IsNot DBNull.Value Then
-            Dim qty As Integer = CInt(MobileSaleList_DGV.Rows(indx).Cells("dgv_qty_rate").Value)
-            Dim rate As Decimal = CDec(MobileSaleList_DGV.Rows(indx).Cells("dgv_price_rate").Value)
+        Try
 
-            Dim amt As Decimal = CDec(qty * rate)
-            MobileSaleList_DGV.Rows(indx).Cells("dgv_amt_rate").Value = amt.ToString
-        End If
+            Dim total As Decimal = 0D
+
+            For Each row As DataGridViewRow In MobileSaleList_DGV.Rows
+
+                If row.IsNewRow Then Continue For
+
+                Dim entryValue As Object =
+                    row.Cells("dgv_entry").Value
+
+                Dim itemValue As Object =
+                    row.Cells("dgv_item_name").Value
+
+                Dim qtyValue As Object =
+                    row.Cells("dgv_qty_rate").Value
+
+                Dim rateValue As Object =
+                    row.Cells("dgv_price_rate").Value
+
+                Dim amtValue As Object =
+                    row.Cells("dgv_amt_rate").Value
+
+                If itemValue Is Nothing OrElse
+                   itemValue Is DBNull.Value OrElse
+                   String.IsNullOrWhiteSpace(itemValue.ToString()) Then
+                    Continue For
+                End If
+
+                Dim qty As Integer
+
+                If qtyValue Is Nothing OrElse
+                   qtyValue Is DBNull.Value OrElse
+                   Not Integer.TryParse(qtyValue.ToString(), qty) OrElse
+                   qty <= 0 Then
+
+                    Continue For
+
+                End If
+
+                Dim rate As Decimal
+                Dim amount As Decimal
+
+                If rateValue Is Nothing OrElse
+                   rateValue Is DBNull.Value OrElse
+                   Not Decimal.TryParse(rateValue.ToString(), rate) OrElse
+                   rate <= 0 Then
+
+                    Continue For
+
+                End If
+
+                amount = qty * rate
+                row.Cells("dgv_amt_rate").Value = amount
+
+                If entryValue Is Nothing OrElse
+                   entryValue Is DBNull.Value OrElse
+                   String.IsNullOrWhiteSpace(entryValue.ToString()) Then
+
+                    total += amount
+
+                Else
+
+                    Dim rowEntryNo As Integer
+
+                    If Integer.TryParse(
+                        entryValue.ToString(),
+                        rowEntryNo) Then
+
+                        If rowEntryNo = entryNo Then
+                            total += amount
+                        End If
+
+                    End If
+
+                End If
+
+            Next
+
+            totalAmtBox.Text =
+                total.ToString("N2")
+
+        Catch ex As Exception
+
+            MessageBox.Show(
+                "Error: " & ex.Message,
+                "Error Alert!",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error
+            )
+
+        End Try
 
     End Sub
 
@@ -866,8 +882,7 @@ Public Class SaleList
 
             Dim entryVal As Object = MobileSaleList_DGV.Rows(rowIndx).Cells("dgv_entry").Value
 
-            If entryVal Is Nothing AndAlso entryVal Is DBNull.Value AndAlso String.IsNullOrWhiteSpace(entryVal.ToString) Then
-                SaleTotalAmt(CInt(EntryNoTextBox.Text.ToString))
+            If entryVal Is Nothing OrElse entryVal Is DBNull.Value OrElse String.IsNullOrWhiteSpace(entryVal.ToString) Then
                 Exit Sub
             End If
 
@@ -893,7 +908,6 @@ Public Class SaleList
             End Using
 
             EntryNoTextBox.Text = entryNo.ToString
-            SaleTotalAmt(entryNo)
         Catch ex As Exception
             MessageBox.Show("Error: " & ex.Message, "Mobile Form", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try

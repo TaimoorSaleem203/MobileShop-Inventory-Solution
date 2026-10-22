@@ -445,7 +445,7 @@ Partial Public Class MobileSaleDS
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddMobileSaleListRow(ByVal BillNo As Long, ByVal _Date As Date, ByVal Remarks As String, ByVal Party As String) As MobileSaleListRow
+        Public Overloads Function AddMobileSaleListRow(ByVal BillNo As Integer, ByVal _Date As Date, ByVal Remarks As String, ByVal Party As String) As MobileSaleListRow
             Dim rowMobileSaleListRow As MobileSaleListRow = CType(Me.NewRow,MobileSaleListRow)
             Dim columnValuesArray() As Object = New Object() {Nothing, BillNo, _Date, Remarks, Party}
             rowMobileSaleListRow.ItemArray = columnValuesArray
@@ -488,7 +488,7 @@ Partial Public Class MobileSaleDS
         Private Sub InitClass()
             Me.columnEntryNo = New Global.System.Data.DataColumn("EntryNo", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnEntryNo)
-            Me.columnBillNo = New Global.System.Data.DataColumn("BillNo", GetType(Long), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnBillNo = New Global.System.Data.DataColumn("BillNo", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnBillNo)
             Me.columnDate = New Global.System.Data.DataColumn("Date", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
             Me.columnDate.ExtendedProperties.Add("Generator_ColumnPropNameInTable", "DateColumn")
@@ -505,6 +505,8 @@ Partial Public Class MobileSaleDS
             Me.columnEntryNo.AllowDBNull = false
             Me.columnEntryNo.ReadOnly = true
             Me.columnEntryNo.Unique = true
+            Me.columnBillNo.AutoIncrementSeed = 1
+            Me.columnBillNo.ReadOnly = true
             Me.columnRemarks.MaxLength = 120
         End Sub
         
@@ -1013,10 +1015,10 @@ Partial Public Class MobileSaleDS
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property BillNo() As Long
+        Public Property BillNo() As Integer
             Get
                 Try 
-                    Return CType(Me(Me.tableMobileSaleList.BillNoColumn),Long)
+                    Return CType(Me(Me.tableMobileSaleList.BillNoColumn),Integer)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("The value for column 'BillNo' in table 'MobileSaleList' is DBNull.", e)
                 End Try
