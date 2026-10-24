@@ -3,153 +3,13 @@
 Public Class SaleList
 
     Dim connection As String = My.Settings.MobileShopConnectionString
+    Dim entryNo As Integer
 
     Dim rdr As SqlDataReader = Nothing 'Reads records returned by a SQL query, one row at a time.
     Dim adpt As SqlDataAdapter 'Transfers data between SQL Server and in-memory data objects such as a DataTable or DataSet.
     Dim cmd As SqlCommand = Nothing  'Represents a SQL statement or stored procedure to execute against a SQL Server database
 
-    Dim entryNo As Integer
-
-    Private Sub SaleList_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
-        Me.SaleMS_PartyCmbLoad()
-
-        entryNo = GetLastEntryNo()
-        Me.SaleItem_DataLoad(entryNo)
-        Me.RefreshEntryCounters()
-
-        Me.KeyPreview = True
-        enable_add_edit_delete()
-    End Sub
-
-    Private Sub clearEntries()
-        'BillNoTextBox.Text = ""
-        PartyComboBox.Text = ""
-        RemarksTextBox.Text = ""
-    End Sub
-
-    Private Sub Action_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
-
-        If e.KeyCode = Keys.F2 Then
-            Add_Btn.PerformClick()
-            e.Handled = True
-        End If
-
-        If e.KeyCode = Keys.F3 Then
-            Update_Btn.PerformClick()
-            e.Handled = True
-        End If
-
-        If e.KeyCode = Keys.F4 Then
-            Save_Btn.PerformClick()
-            e.Handled = True
-        End If
-
-        If e.KeyCode = Keys.F5 Then
-            Delete_Btn.PerformClick()
-            e.Handled = True
-        End If
-
-        If e.KeyCode = Keys.F6 Then
-            Undo_Btn.PerformClick()
-            e.Handled = True 'do not process it normally 
-        End If
-
-        If e.KeyCode = Keys.F7 Then
-            search_Btn.PerformClick()
-            e.Handled = True
-        End If
-
-    End Sub
-
-    Private Sub disable_add_edit_delete()
-        Save_Btn.Enabled = True
-        InfoBox.Enabled = True
-
-        navBox.Enabled = False
-        Add_Btn.Enabled = False
-        Update_Btn.Enabled = False
-        Delete_Btn.Enabled = False
-    End Sub
-
-    Private Sub enable_add_edit_delete()
-        Save_Btn.Enabled = False
-        InfoBox.Enabled = False
-
-        navBox.Enabled = True
-        Add_Btn.Enabled = True
-        Update_Btn.Enabled = True
-        Delete_Btn.Enabled = True
-        Undo_Btn.Enabled = True
-    End Sub
-
-    Private Sub SaleItem_DataLoad(entryNo As Integer)
-        Try
-
-            Using conn As New SqlConnection(connection)
-                conn.Open()
-                Dim query As String =
-                "SELECT SaleItem.idno, " &
-                "SaleItem.ItemID, " &
-                "SaleList.EntryNo, " &
-                "SaleList.BillNo, " &
-                "SaleList.Party, " &
-                "SaleList.[Date], " &
-                "SaleList.Remarks, " &
-                "SaleItem.Item, " &
-                "SaleItem.Qty, " &
-                "SaleItem.Rate, " &
-                "SaleItem.Amount " &
-                "FROM MobileSaleItem AS SaleItem " &
-                "INNER JOIN MobileSaleList AS SaleList " &
-                "ON SaleItem.EntryNo = SaleList.EntryNo " &
-                "WHERE SaleList.EntryNo = @EntryNo"
-
-                Using cmd As New SqlCommand(query, conn)
-
-                    cmd.Parameters.Add("@EntryNo", SqlDbType.Int).Value = entryNo
-
-                    Dim saleItemTbl As New DataTable()
-
-                    Using adapter As New SqlDataAdapter(cmd)
-                        adapter.Fill(saleItemTbl)
-                    End Using
-
-                    MobileSaleList_DGV.DataSource = saleItemTbl
-                End Using
-            End Using
-
-            MobileSaleItem_Amt(entryNo)
-        Catch ex As Exception
-            MessageBox.Show("Error: " & ex.Message, "Mobile Form", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
-
-    Private Sub SaleMS_PartyCmbLoad()
-        Try
-
-            Using conn As New SqlConnection(connection)
-                conn.Open()
-
-                Dim query As String = "SELECT Party FROM [MobileShop].[dbo].[MobileParty] WHERE Party IS NOT NULL"
-
-                Using cmd As New SqlCommand(query, conn)
-
-                    Using adp As New SqlDataAdapter(cmd)
-                        Dim dt As New DataTable()
-                        adp.Fill(dt)
-
-                        PartyComboBox.DataSource = dt
-                        cmd.ExecuteNonQuery()
-                    End Using
-                End Using
-
-            End Using
-
-        Catch ex As Exception
-            MessageBox.Show("Error: " & ex.Message, "Mobile Form", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
-
+#Region "CRUD Region"
     Private Sub SaleListAdd()
 
         Dim entryVal As Integer
@@ -376,13 +236,6 @@ Public Class SaleList
                             Dim itemIDValue As Object =
                                 row.Cells("dgv_item_id").Value
 
-                            'If entryValue Is Nothing OrElse
-                            '    entryValue Is DBNull.Value Then
-
-                            '    Continue For
-
-                            'End If
-
                             If itemValue Is Nothing OrElse
                                itemValue Is DBNull.Value OrElse
                                String.IsNullOrWhiteSpace(
@@ -483,20 +336,14 @@ Public Class SaleList
                                 ).Value =
                                     qty
 
+                                cmd.Parameters.Add(
+                                    "@Rate",
+                                    SqlDbType.Decimal).Value = rate
 
-                                Dim rateParameter =
-                                    cmd.Parameters.Add(
-                                        "@Rate",
-                                        SqlDbType.Decimal)
 
-                                rateParameter.Value = rate
-
-                                Dim amountParameter =
-                                    cmd.Parameters.Add(
-                                        "@Amount",
-                                        SqlDbType.Decimal)
-
-                                amountParameter.Value = amount
+                                cmd.Parameters.Add(
+                                    "@Amount",
+                                    SqlDbType.Decimal).Value = amount
 
 
                                 cmd.ExecuteNonQuery()
@@ -505,7 +352,7 @@ Public Class SaleList
 
                         Next
 
-                        transaction.Commit()
+                        transaction.Commit() 'Everything worked. Permanently save all the changes.
 
 
                         MessageBox.Show(
@@ -520,7 +367,7 @@ Public Class SaleList
 
                     Catch
 
-                        transaction.Rollback()
+                        transaction.Rollback() 'Something failed. Undo all changes made during this transaction.
 
                         Throw
 
@@ -573,29 +420,46 @@ Public Class SaleList
             End Using
         End Using
     End Sub
+#End Region
 
-    Private Function SaleListExist(entryNo As Integer, conn As SqlConnection, transaction As SqlTransaction)
+#Region "Button Region"
+    Private Sub Action_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
 
-        Dim query As String = "SELECT COUNT(*) FROM MobileSaleList WHERE EntryNo = @entryNo"
+        If e.KeyCode = Keys.F2 Then
+            Add_Btn.PerformClick()
+            e.Handled = True
+        End If
 
-        Using cmd As New SqlCommand(query, conn, transaction)
-            cmd.Parameters.Add("@entryNo", SqlDbType.Int).Value = entryNo
-            Return Convert.ToInt32(cmd.ExecuteScalar()) > 0
-        End Using
+        If e.KeyCode = Keys.F3 Then
+            Update_Btn.PerformClick()
+            e.Handled = True
+        End If
 
-    End Function
+        If e.KeyCode = Keys.F4 Then
+            Save_Btn.PerformClick()
+            e.Handled = True
+        End If
 
-    Private Sub MobileSaleList_DGV_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles MobileSaleList_DGV.DataError
-        e.ThrowException = False 'Don't re-throw the exception
+        If e.KeyCode = Keys.F5 Then
+            Delete_Btn.PerformClick()
+            e.Handled = True
+        End If
 
-        MsgBox(
-    "DataError: " &
-    e.Exception.Message &
-    " | Row: " &
-    e.RowIndex.ToString() &
-    " | Column: " &
-    e.ColumnIndex.ToString()
-)
+        If e.KeyCode = Keys.F6 Then
+            Undo_Btn.PerformClick()
+            e.Handled = True 'do not process it normally 
+        End If
+
+        If e.KeyCode = Keys.F7 Then
+            search_Btn.PerformClick()
+            e.Handled = True
+        End If
+
+        If e.KeyCode = Keys.Delete Then
+            SaleItem_Delete()
+            e.Handled = True
+        End If
+
     End Sub
 
     Private Sub Add_Btn_Click(sender As System.Object, e As System.EventArgs) Handles Add_Btn.Click
@@ -686,10 +550,170 @@ Public Class SaleList
         End Try
     End Sub
 
-    Private Sub SaleList_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles MobileSaleList_DGV.CellValueChanged
+    Private Sub search_Btn_Click(sender As System.Object, e As System.EventArgs) Handles search_Btn.Click
+        MsgBox("Show Search Window")
+    End Sub
+
+
+    Private Sub nextBtn_Click(sender As System.Object, e As System.EventArgs) Handles nextBtn.Click
+        ShowEntry(GetNextEntryNo(entryNo))
+    End Sub
+
+    Private Sub lastBtn_Click(sender As System.Object, e As System.EventArgs) Handles lastBtn.Click
+        ShowEntry(GetLastEntryNo())
+    End Sub
+
+    Private Sub prevBtn_Click(sender As System.Object, e As System.EventArgs) Handles prevBtn.Click
+        ShowEntry(GetPrevEntryNo(entryNo))
+    End Sub
+
+    Private Sub firstBtn_Click(sender As System.Object, e As System.EventArgs) Handles firstBtn.Click
+        ShowEntry(GetFirstEntryNo())
+    End Sub
+
+#End Region
+
+#Region "DataLoad Region"
+    Private Sub SaleList_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+        Me.SaleMS_PartyCmbLoad()
+
+        entryNo = GetLastEntryNo()
+        Me.SaleItem_DataLoad(entryNo)
+        Me.RefreshEntryCounters()
+
+        Me.KeyPreview = True
+        enable_add_edit_delete()
+    End Sub
+
+    Private Sub SaleItem_DataLoad(entryNo As Integer)
+        Try
+
+            Using conn As New SqlConnection(connection)
+                conn.Open()
+                Dim query As String =
+                "SELECT SaleItem.idno, " &
+                "SaleItem.ItemID, " &
+                "SaleList.EntryNo, " &
+                "SaleList.BillNo, " &
+                "SaleList.Party, " &
+                "SaleList.[Date], " &
+                "SaleList.Remarks, " &
+                "SaleItem.Item, " &
+                "SaleItem.Qty, " &
+                "SaleItem.Rate, " &
+                "SaleItem.Amount " &
+                "FROM MobileSaleItem AS SaleItem " &
+                "INNER JOIN MobileSaleList AS SaleList " &
+                "ON SaleItem.EntryNo = SaleList.EntryNo " &
+                "WHERE SaleList.EntryNo = @EntryNo"
+
+                Using cmd As New SqlCommand(query, conn)
+
+                    cmd.Parameters.Add("@EntryNo", SqlDbType.Int).Value = entryNo
+
+                    Dim saleItemTbl As New DataTable()
+
+                    Using adapter As New SqlDataAdapter(cmd)
+                        adapter.Fill(saleItemTbl)
+                    End Using
+
+                    MobileSaleList_DGV.DataSource = saleItemTbl
+                End Using
+            End Using
+
+            MobileSaleItem_Amt(entryNo)
+        Catch ex As Exception
+            MessageBox.Show("Error: " & ex.Message, "Mobile Form", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub SaleMS_PartyCmbLoad()
+        Try
+
+            Using conn As New SqlConnection(connection)
+                conn.Open()
+
+                Dim query As String = "SELECT Party FROM [MobileShop].[dbo].[MobileParty] WHERE Party IS NOT NULL"
+
+                Using cmd As New SqlCommand(query, conn)
+
+                    Using adp As New SqlDataAdapter(cmd)
+                        Dim dt As New DataTable()
+                        adp.Fill(dt)
+
+                        PartyComboBox.DataSource = dt
+                        cmd.ExecuteNonQuery()
+                    End Using
+                End Using
+
+            End Using
+
+        Catch ex As Exception
+            MessageBox.Show("Error: " & ex.Message, "Mobile Form", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub clearEntries()
+        'BillNoTextBox.Text = ""
+        PartyComboBox.Text = ""
+        RemarksTextBox.Text = ""
+    End Sub
+
+    Private Sub disable_add_edit_delete()
+        Save_Btn.Enabled = True
+        InfoBox.Enabled = True
+
+        navBox.Enabled = False
+        Add_Btn.Enabled = False
+        Update_Btn.Enabled = False
+        Delete_Btn.Enabled = False
+    End Sub
+
+    Private Sub enable_add_edit_delete()
+        Save_Btn.Enabled = False
+        InfoBox.Enabled = False
+
+        navBox.Enabled = True
+        Add_Btn.Enabled = True
+        Update_Btn.Enabled = True
+        Delete_Btn.Enabled = True
+        Undo_Btn.Enabled = True
+    End Sub
+#End Region
+
+#Region "DGV OPs Region"
+    Private Sub SaleItem_Delete()
+        If MobileSaleList_DGV.EditMode = DataGridViewEditMode.EditOnKeystrokeOrF2 Then
+            Dim rowIndx As Integer = MobileSaleList_DGV.CurrentCell.RowIndex
+
+            If rowIndx < 0 Then Exit Sub
+
+            MobileSaleList_DGV.Rows.RemoveAt(rowIndx)
+        End If
+    End Sub
+
+    Private Function SaleListExist(entryNo As Integer, conn As SqlConnection, transaction As SqlTransaction)
+
+        Dim listQuery As String = "SELECT COUNT(*) FROM MobileSaleList WHERE EntryNo = @entryNo"
+
+        Using cmd As New SqlCommand(listQuery, conn, transaction)
+            cmd.Parameters.Add("@entryNo", SqlDbType.Int).Value = entryNo
+            Return Convert.ToInt32(cmd.ExecuteScalar()) > 0
+        End Using
+
+    End Function
+
+    Private Sub MobileSaleList_DGV_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles MobileSaleList_DGV.DataError
+        e.ThrowException = False 'Don't re-throw the exception
+
+        MessageBox.Show("Error: " & e.Exception.Message, "Data Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+    End Sub
+
+    Private Sub MobileSaleList_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles MobileSaleList_DGV.CellValueChanged
         Try
             If e.RowIndex < 0 Then Exit Sub
             Dim productValue As Object = MobileSaleList_DGV.Rows(e.RowIndex).Cells("dgv_item_name").Value
+            Dim amtValue As Object = MobileSaleList_DGV.Rows(e.RowIndex).Cells("dgv_amt_rate").Value
 
             If productValue Is Nothing OrElse productValue Is DBNull.Value Then
                 Exit Sub
@@ -745,13 +769,127 @@ Public Class SaleList
 
             If MobileSaleList_DGV.Columns(e.ColumnIndex).HeaderText = "Qty" Then
                 MobileSaleItem_Amt(entryNo)
+                GSTAmtChanged(e.RowIndex)
             End If
+
 
         Catch ex As Exception
             MessageBox.Show("Error: " & ex.Message, "Error Alert!", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End Try
     End Sub
 
+    Private Sub MobileSaleList_DGV_CellValidating(sender As System.Object, e As System.Windows.Forms.DataGridViewCellValidatingEventArgs) Handles MobileSaleList_DGV.CellValidating
+
+        If e.RowIndex < 0 OrElse e.ColumnIndex < 0 Then Exit Sub
+
+        If MobileSaleList_DGV.Columns(e.ColumnIndex).HeaderText = "Qty" Then
+
+            If MobileSaleList_DGV.Rows(e.RowIndex).Cells("dgv_qty_rate") Is Nothing OrElse MobileSaleList_DGV.Rows(e.RowIndex).Cells("dgv_qty_rate") Is DBNull.Value Then Exit Sub
+
+            Dim qtyVal As String = CStr(e.FormattedValue).Trim()
+
+            If String.IsNullOrWhiteSpace(qtyVal) Then Exit Sub
+
+            Dim qty As Integer
+            If Not Integer.TryParse(qtyVal, qty) OrElse qty <= 0 Then
+                MessageBox.Show("Qty must be a valid integer greater than 0", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                e.Cancel = True
+            End If
+        End If
+
+    End Sub
+
+    Private Sub MobileSaleList_DGV_SelectionChanged(sender As System.Object, e As EventArgs) Handles MobileSaleList_DGV.SelectionChanged
+        Try
+            If MobileSaleList_DGV.CurrentCell.RowIndex < 0 OrElse MobileSaleList_DGV.CurrentCell.ColumnIndex < 0 Then Exit Sub
+
+            Dim rowIndx As Integer = MobileSaleList_DGV.CurrentCell.RowIndex
+            Dim row As DataGridViewRow = MobileSaleList_DGV.Rows(rowIndx)
+
+            If row.IsNewRow Then Exit Sub
+            If row Is DBNull.Value OrElse row Is Nothing Then Exit Sub
+
+            Dim entryVal As Object = MobileSaleList_DGV.Rows(rowIndx).Cells("dgv_entry").Value
+
+            If entryVal Is Nothing OrElse entryVal Is DBNull.Value OrElse String.IsNullOrWhiteSpace(entryVal.ToString) Then
+                Exit Sub
+            End If
+
+            Dim entryNo As Integer
+            If Not Integer.TryParse(entryVal.ToString, entryNo) Then
+                Exit Sub
+            End If
+
+            Using conn As New SqlConnection(connection)
+                conn.Open()
+                Dim query As String = "SELECT * FROM MobileSaleList WHERE EntryNo = " & entryNo.ToString
+
+                Using cmd As New SqlCommand(query, conn)
+                    rdr = cmd.ExecuteReader()
+
+                    If rdr.Read() Then
+                        BillNoTextBox.Text = CInt(rdr("BillNo"))
+                        PartyComboBox.Text = rdr("Party")
+                        DateTimePicker.Text = rdr("Date")
+                        RemarksTextBox.Text = rdr("Remarks")
+                    End If
+                End Using
+            End Using
+
+            EntryNoTextBox.Text = entryNo.ToString
+            GSTAmtChanged(rowIndx)
+        Catch ex As Exception
+            MessageBox.Show("Error: " & ex.Message, "Mobile Form", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub MobileSaleList_DGV_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles MobileSaleList_DGV.CellEndEdit
+
+        Try
+            If e.RowIndex < 0 OrElse e.ColumnIndex < 0 Then Exit Sub
+
+            Dim itemVal As Object = MobileSaleList_DGV.Rows(e.RowIndex).Cells("dgv_item_name").Value
+
+            If itemVal Is Nothing OrElse itemVal Is DBNull.Value OrElse String.IsNullOrWhiteSpace(itemVal.ToString) Then
+                Exit Sub
+            End If
+
+            Dim itemName As String = itemVal.ToString().Trim()
+
+            For Each row As DataGridViewRow In MobileSaleList_DGV.Rows
+                If row.IsNewRow Then Continue For
+
+                If row.Index = e.RowIndex Then Continue For
+
+                Dim existingVal As Object = row.Cells("dgv_item_name").Value
+
+                Dim existingName As String = existingVal.ToString().Trim()
+
+                If String.Equals(existingName, itemName, StringComparison.OrdinalIgnoreCase) Then
+                    MessageBox.Show(
+                        "The item '" & itemName & "' has already been added.",
+                        "Mobile Form",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    )
+                    MobileSaleList_DGV.Rows.RemoveAt(e.RowIndex)
+                    Exit Sub
+                End If
+            Next
+        Catch ex As Exception
+            MessageBox.Show(
+                "Error: " & ex.Message,
+                "Error Alert!",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error
+            )
+        End Try
+
+
+    End Sub
+#End Region
+
+#Region "Sale Amount Region"
     Private Sub MobileSaleItem_Amt(entryNo As Integer)
 
         Try
@@ -849,74 +987,26 @@ Public Class SaleList
 
     End Sub
 
-    Private Sub MobileSaleList_DGV_CellValidating(sender As System.Object, e As System.Windows.Forms.DataGridViewCellValidatingEventArgs) Handles MobileSaleList_DGV.CellValidating
+    Private Sub GSTAmtChanged(rowIndx As Integer)
+        Dim row As DataGridViewRow = MobileSaleList_DGV.Rows(rowIndx)
+        Dim amtVal As Object = row.Cells("dgv_amt_rate").Value
 
-        If e.RowIndex < 0 OrElse e.ColumnIndex < 0 Then Exit Sub
+        If amtVal IsNot Nothing OrElse Not String.IsNullOrWhiteSpace(GSTTextBox.Text) Then
 
-        If MobileSaleList_DGV.Columns(e.ColumnIndex).HeaderText = "Qty" Then
+            Dim GST As Decimal
+            Dim amt As Decimal
 
-            If MobileSaleList_DGV.Rows(e.RowIndex).Cells("dgv_qty_rate") Is Nothing OrElse MobileSaleList_DGV.Rows(e.RowIndex).Cells("dgv_qty_rate") Is DBNull.Value Then Exit Sub
+            Decimal.TryParse(amtVal, amt)
+            Decimal.TryParse(GSTTextBox.Text, GST)
 
-            Dim qtyVal As String = CStr(e.FormattedValue).Trim()
+            Dim gstVal As Decimal = amt * (GST / 100)
 
-            If String.IsNullOrWhiteSpace(qtyVal) Then Exit Sub
-
-            Dim qty As Integer
-            If Not Integer.TryParse(qtyVal, qty) OrElse qty <= 0 Then
-                MessageBox.Show("Qty must be a valid integer greater than 0", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                e.Cancel = True
-            End If
+            valueBox_1.Text = gstVal.ToString("N2")
         End If
-
     End Sub
+#End Region
 
-    Private Sub MobileSaleList_DGV_SelectionChanged(sender As System.Object, e As EventArgs) Handles MobileSaleList_DGV.SelectionChanged
-        Try
-            If MobileSaleList_DGV.CurrentCell.RowIndex < 0 OrElse MobileSaleList_DGV.CurrentCell.ColumnIndex < 0 Then Exit Sub
-
-            Dim rowIndx As Integer = MobileSaleList_DGV.CurrentCell.RowIndex
-            Dim row As DataGridViewRow = MobileSaleList_DGV.Rows(rowIndx)
-
-            If row.IsNewRow Then Exit Sub
-            If row Is DBNull.Value OrElse row Is Nothing Then Exit Sub
-
-            Dim entryVal As Object = MobileSaleList_DGV.Rows(rowIndx).Cells("dgv_entry").Value
-
-            If entryVal Is Nothing OrElse entryVal Is DBNull.Value OrElse String.IsNullOrWhiteSpace(entryVal.ToString) Then
-                Exit Sub
-            End If
-
-            Dim entryNo As Integer
-            If Not Integer.TryParse(entryVal.ToString, entryNo) Then
-                Exit Sub
-            End If
-
-            Using conn As New SqlConnection(connection)
-                conn.Open()
-                Dim query As String = "SELECT * FROM MobileSaleList WHERE EntryNo = " & entryNo.ToString
-
-                Using cmd As New SqlCommand(query, conn)
-                    rdr = cmd.ExecuteReader()
-
-                    If rdr.Read() Then
-                        BillNoTextBox.Text = CInt(rdr("BillNo"))
-                        PartyComboBox.Text = rdr("Party")
-                        DateTimePicker.Text = rdr("Date")
-                        RemarksTextBox.Text = rdr("Remarks")
-                    End If
-                End Using
-            End Using
-
-            EntryNoTextBox.Text = entryNo.ToString
-        Catch ex As Exception
-            MessageBox.Show("Error: " & ex.Message, "Mobile Form", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
-
-    Private Sub search_Btn_Click(sender As System.Object, e As System.EventArgs) Handles search_Btn.Click
-        MsgBox("Show Search Window")
-    End Sub
-
+#Region "Navigation Region"
     Private Function ScalarInt(query As String, Optional entryNo As Integer = 0)
         Using conn As New SqlConnection(connection)
             conn.Open()
@@ -967,20 +1057,6 @@ Public Class SaleList
         RefreshEntryCounters()
     End Sub
 
-    Private Sub nextBtn_Click(sender As System.Object, e As System.EventArgs) Handles nextBtn.Click
-        ShowEntry(GetNextEntryNo(entryNo))
-    End Sub
-
-    Private Sub lastBtn_Click(sender As System.Object, e As System.EventArgs) Handles lastBtn.Click
-        ShowEntry(GetLastEntryNo())
-    End Sub
-
-    Private Sub prevBtn_Click(sender As System.Object, e As System.EventArgs) Handles prevBtn.Click
-        ShowEntry(GetPrevEntryNo(entryNo))
-    End Sub
-
-    Private Sub firstBtn_Click(sender As System.Object, e As System.EventArgs) Handles firstBtn.Click
-        ShowEntry(GetFirstEntryNo())
-    End Sub
+#End Region
 
 End Class

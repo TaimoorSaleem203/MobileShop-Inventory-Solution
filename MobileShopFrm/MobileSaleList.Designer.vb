@@ -28,19 +28,30 @@ Partial Class SaleList
         Dim DateLabel As System.Windows.Forms.Label
         Dim RemarksLabel As System.Windows.Forms.Label
         Dim PartyLabel As System.Windows.Forms.Label
+        Dim GSTLabel As System.Windows.Forms.Label
+        Dim FTaxLabel As System.Windows.Forms.Label
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(SaleList))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim valueLbl_1 As System.Windows.Forms.Label
+        Dim valueLbl_2 As System.Windows.Forms.Label
         Me.RectangleShape1 = New Microsoft.VisualBasic.PowerPacks.RectangleShape()
         Me.ShapeContainer1 = New Microsoft.VisualBasic.PowerPacks.ShapeContainer()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.EntryNoTextBox = New System.Windows.Forms.TextBox()
+        Me.MobileSaleItemBindingSource1 = New System.Windows.Forms.BindingSource(Me.components)
+        Me.MobileSaleDS = New MobileShopFrm.MobileSaleDS()
         Me.BillNoTextBox = New System.Windows.Forms.TextBox()
+        Me.MobileSaleListBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.DateTimePicker = New System.Windows.Forms.DateTimePicker()
         Me.RemarksTextBox = New System.Windows.Forms.TextBox()
         Me.InfoBox = New System.Windows.Forms.GroupBox()
+        Me.FTaxTextBox = New System.Windows.Forms.TextBox()
+        Me.valueBox_2 = New System.Windows.Forms.TextBox()
+        Me.valueBox_1 = New System.Windows.Forms.TextBox()
+        Me.GSTTextBox = New System.Windows.Forms.TextBox()
         Me.PartyComboBox = New System.Windows.Forms.ComboBox()
         Me.Undo_Btn = New System.Windows.Forms.Button()
         Me.Delete_Btn = New System.Windows.Forms.Button()
@@ -49,7 +60,12 @@ Partial Class SaleList
         Me.Add_Btn = New System.Windows.Forms.Button()
         Me.MobileSaleList_DGV = New System.Windows.Forms.DataGridView()
         Me.dgv_idno = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgv_item_id = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dgv_entry = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgv_item_name = New System.Windows.Forms.DataGridViewComboBoxColumn()
+        Me.dgv_qty_rate = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgv_price_rate = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgv_amt_rate = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.search_Btn = New System.Windows.Forms.Button()
         Me.totalAmtBox = New System.Windows.Forms.TextBox()
         Me.TextBox2 = New System.Windows.Forms.TextBox()
@@ -63,34 +79,31 @@ Partial Class SaleList
         Me.totalEntryLbl = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.navBox = New System.Windows.Forms.GroupBox()
-        Me.dgv_item_id = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dgv_item_name = New System.Windows.Forms.DataGridViewComboBoxColumn()
-        Me.dgv_qty_rate = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dgv_price_rate = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dgv_amt_rate = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.MobileSaleItemBindingSource1 = New System.Windows.Forms.BindingSource(Me.components)
-        Me.MobileSaleDS = New MobileShopFrm.MobileSaleDS()
-        Me.MobileSaleListBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.MobileSaleItemTableAdapter = New MobileShopFrm.MobileSaleDSTableAdapters.MobileSaleItemTableAdapter()
         Me.MobileSaleListTableAdapter = New MobileShopFrm.MobileSaleDSTableAdapters.MobileSaleListTableAdapter()
+        Me.TableAdapterManager = New MobileShopFrm.MobileSaleDSTableAdapters.TableAdapterManager()
         EntryNoLabel = New System.Windows.Forms.Label()
         BillNoLabel = New System.Windows.Forms.Label()
         DateLabel = New System.Windows.Forms.Label()
         RemarksLabel = New System.Windows.Forms.Label()
         PartyLabel = New System.Windows.Forms.Label()
-        Me.InfoBox.SuspendLayout()
-        CType(Me.MobileSaleList_DGV, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.navBox.SuspendLayout()
+        GSTLabel = New System.Windows.Forms.Label()
+        FTaxLabel = New System.Windows.Forms.Label()
+        valueLbl_1 = New System.Windows.Forms.Label()
+        valueLbl_2 = New System.Windows.Forms.Label()
         CType(Me.MobileSaleItemBindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.MobileSaleDS, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.MobileSaleListBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.InfoBox.SuspendLayout()
+        CType(Me.MobileSaleList_DGV, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.navBox.SuspendLayout()
         Me.SuspendLayout()
         '
         'EntryNoLabel
         '
         EntryNoLabel.AutoSize = True
         EntryNoLabel.ForeColor = System.Drawing.Color.DimGray
-        EntryNoLabel.Location = New System.Drawing.Point(8, 30)
+        EntryNoLabel.Location = New System.Drawing.Point(22, 30)
         EntryNoLabel.Name = "EntryNoLabel"
         EntryNoLabel.Size = New System.Drawing.Size(66, 17)
         EntryNoLabel.TabIndex = 0
@@ -100,7 +113,7 @@ Partial Class SaleList
         '
         BillNoLabel.AutoSize = True
         BillNoLabel.ForeColor = System.Drawing.Color.DimGray
-        BillNoLabel.Location = New System.Drawing.Point(126, 30)
+        BillNoLabel.Location = New System.Drawing.Point(140, 30)
         BillNoLabel.Name = "BillNoLabel"
         BillNoLabel.Size = New System.Drawing.Size(50, 17)
         BillNoLabel.TabIndex = 2
@@ -110,7 +123,7 @@ Partial Class SaleList
         '
         DateLabel.AutoSize = True
         DateLabel.ForeColor = System.Drawing.Color.DimGray
-        DateLabel.Location = New System.Drawing.Point(460, 31)
+        DateLabel.Location = New System.Drawing.Point(22, 85)
         DateLabel.Name = "DateLabel"
         DateLabel.Size = New System.Drawing.Size(39, 17)
         DateLabel.TabIndex = 4
@@ -120,7 +133,7 @@ Partial Class SaleList
         '
         RemarksLabel.AutoSize = True
         RemarksLabel.ForeColor = System.Drawing.Color.DimGray
-        RemarksLabel.Location = New System.Drawing.Point(703, 30)
+        RemarksLabel.Location = New System.Drawing.Point(258, 84)
         RemarksLabel.Name = "RemarksLabel"
         RemarksLabel.Size = New System.Drawing.Size(63, 17)
         RemarksLabel.TabIndex = 6
@@ -130,11 +143,31 @@ Partial Class SaleList
         '
         PartyLabel.AutoSize = True
         PartyLabel.ForeColor = System.Drawing.Color.DimGray
-        PartyLabel.Location = New System.Drawing.Point(244, 30)
+        PartyLabel.Location = New System.Drawing.Point(258, 30)
         PartyLabel.Name = "PartyLabel"
         PartyLabel.Size = New System.Drawing.Size(43, 17)
         PartyLabel.TabIndex = 8
         PartyLabel.Text = "Party:"
+        '
+        'GSTLabel
+        '
+        GSTLabel.AutoSize = True
+        GSTLabel.ForeColor = System.Drawing.Color.DimGray
+        GSTLabel.Location = New System.Drawing.Point(620, 30)
+        GSTLabel.Name = "GSTLabel"
+        GSTLabel.Size = New System.Drawing.Size(45, 17)
+        GSTLabel.TabIndex = 10
+        GSTLabel.Text = "GST%:"
+        '
+        'FTaxLabel
+        '
+        FTaxLabel.AutoSize = True
+        FTaxLabel.ForeColor = System.Drawing.Color.DimGray
+        FTaxLabel.Location = New System.Drawing.Point(620, 85)
+        FTaxLabel.Name = "FTaxLabel"
+        FTaxLabel.Size = New System.Drawing.Size(49, 17)
+        FTaxLabel.TabIndex = 14
+        FTaxLabel.Text = "FTax%:"
         '
         'RectangleShape1
         '
@@ -151,7 +184,7 @@ Partial Class SaleList
         Me.ShapeContainer1.Margin = New System.Windows.Forms.Padding(0)
         Me.ShapeContainer1.Name = "ShapeContainer1"
         Me.ShapeContainer1.Shapes.AddRange(New Microsoft.VisualBasic.PowerPacks.Shape() {Me.RectangleShape1})
-        Me.ShapeContainer1.Size = New System.Drawing.Size(994, 609)
+        Me.ShapeContainer1.Size = New System.Drawing.Size(1004, 609)
         Me.ShapeContainer1.TabIndex = 0
         Me.ShapeContainer1.TabStop = False
         '
@@ -171,27 +204,42 @@ Partial Class SaleList
         '
         Me.EntryNoTextBox.BackColor = System.Drawing.Color.White
         Me.EntryNoTextBox.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.MobileSaleItemBindingSource1, "EntryNo", True))
-        Me.EntryNoTextBox.Location = New System.Drawing.Point(11, 50)
+        Me.EntryNoTextBox.Location = New System.Drawing.Point(25, 50)
         Me.EntryNoTextBox.Name = "EntryNoTextBox"
         Me.EntryNoTextBox.ReadOnly = True
         Me.EntryNoTextBox.Size = New System.Drawing.Size(96, 25)
         Me.EntryNoTextBox.TabIndex = 1
         '
+        'MobileSaleItemBindingSource1
+        '
+        Me.MobileSaleItemBindingSource1.DataMember = "MobileSaleItem"
+        Me.MobileSaleItemBindingSource1.DataSource = Me.MobileSaleDS
+        '
+        'MobileSaleDS
+        '
+        Me.MobileSaleDS.DataSetName = "MobileSaleDS"
+        Me.MobileSaleDS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        '
         'BillNoTextBox
         '
         Me.BillNoTextBox.BackColor = System.Drawing.Color.White
         Me.BillNoTextBox.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.MobileSaleListBindingSource, "BillNo", True))
-        Me.BillNoTextBox.Location = New System.Drawing.Point(129, 50)
+        Me.BillNoTextBox.Location = New System.Drawing.Point(143, 50)
         Me.BillNoTextBox.Name = "BillNoTextBox"
         Me.BillNoTextBox.ReadOnly = True
         Me.BillNoTextBox.Size = New System.Drawing.Size(96, 25)
         Me.BillNoTextBox.TabIndex = 3
         '
+        'MobileSaleListBindingSource
+        '
+        Me.MobileSaleListBindingSource.DataMember = "MobileSaleList"
+        Me.MobileSaleListBindingSource.DataSource = Me.MobileSaleDS
+        '
         'DateTimePicker
         '
         Me.DateTimePicker.Cursor = System.Windows.Forms.Cursors.Hand
         Me.DateTimePicker.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.MobileSaleListBindingSource, "Date", True))
-        Me.DateTimePicker.Location = New System.Drawing.Point(463, 50)
+        Me.DateTimePicker.Location = New System.Drawing.Point(25, 104)
         Me.DateTimePicker.Name = "DateTimePicker"
         Me.DateTimePicker.Size = New System.Drawing.Size(218, 25)
         Me.DateTimePicker.TabIndex = 5
@@ -200,7 +248,7 @@ Partial Class SaleList
         '
         Me.RemarksTextBox.BackColor = System.Drawing.Color.White
         Me.RemarksTextBox.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.MobileSaleListBindingSource, "Remarks", True))
-        Me.RemarksTextBox.Location = New System.Drawing.Point(706, 50)
+        Me.RemarksTextBox.Location = New System.Drawing.Point(261, 104)
         Me.RemarksTextBox.Name = "RemarksTextBox"
         Me.RemarksTextBox.Size = New System.Drawing.Size(215, 25)
         Me.RemarksTextBox.TabIndex = 7
@@ -209,6 +257,14 @@ Partial Class SaleList
         '
         Me.InfoBox.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.InfoBox.Controls.Add(valueLbl_2)
+        Me.InfoBox.Controls.Add(valueLbl_1)
+        Me.InfoBox.Controls.Add(FTaxLabel)
+        Me.InfoBox.Controls.Add(Me.FTaxTextBox)
+        Me.InfoBox.Controls.Add(Me.valueBox_2)
+        Me.InfoBox.Controls.Add(Me.valueBox_1)
+        Me.InfoBox.Controls.Add(GSTLabel)
+        Me.InfoBox.Controls.Add(Me.GSTTextBox)
         Me.InfoBox.Controls.Add(PartyLabel)
         Me.InfoBox.Controls.Add(Me.PartyComboBox)
         Me.InfoBox.Controls.Add(Me.RemarksTextBox)
@@ -222,10 +278,44 @@ Partial Class SaleList
         Me.InfoBox.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.InfoBox.Location = New System.Drawing.Point(29, 51)
         Me.InfoBox.Name = "InfoBox"
-        Me.InfoBox.Size = New System.Drawing.Size(931, 92)
+        Me.InfoBox.Size = New System.Drawing.Size(932, 145)
         Me.InfoBox.TabIndex = 8
         Me.InfoBox.TabStop = False
         Me.InfoBox.Text = "Sale Info"
+        '
+        'FTaxTextBox
+        '
+        Me.FTaxTextBox.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.MobileSaleListBindingSource, "FTax", True))
+        Me.FTaxTextBox.Location = New System.Drawing.Point(623, 104)
+        Me.FTaxTextBox.Name = "FTaxTextBox"
+        Me.FTaxTextBox.Size = New System.Drawing.Size(131, 25)
+        Me.FTaxTextBox.TabIndex = 15
+        '
+        'valueBox_2
+        '
+        Me.valueBox_2.BackColor = System.Drawing.Color.White
+        Me.valueBox_2.Location = New System.Drawing.Point(774, 104)
+        Me.valueBox_2.Name = "valueBox_2"
+        Me.valueBox_2.ReadOnly = True
+        Me.valueBox_2.Size = New System.Drawing.Size(131, 25)
+        Me.valueBox_2.TabIndex = 13
+        '
+        'valueBox_1
+        '
+        Me.valueBox_1.BackColor = System.Drawing.Color.White
+        Me.valueBox_1.Location = New System.Drawing.Point(774, 50)
+        Me.valueBox_1.Name = "valueBox_1"
+        Me.valueBox_1.ReadOnly = True
+        Me.valueBox_1.Size = New System.Drawing.Size(131, 25)
+        Me.valueBox_1.TabIndex = 12
+        '
+        'GSTTextBox
+        '
+        Me.GSTTextBox.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.MobileSaleItemBindingSource1, "GST", True))
+        Me.GSTTextBox.Location = New System.Drawing.Point(623, 50)
+        Me.GSTTextBox.Name = "GSTTextBox"
+        Me.GSTTextBox.Size = New System.Drawing.Size(131, 25)
+        Me.GSTTextBox.TabIndex = 11
         '
         'PartyComboBox
         '
@@ -233,9 +323,9 @@ Partial Class SaleList
         Me.PartyComboBox.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.MobileSaleListBindingSource, "Party", True))
         Me.PartyComboBox.DisplayMember = "Party"
         Me.PartyComboBox.FormattingEnabled = True
-        Me.PartyComboBox.Location = New System.Drawing.Point(247, 50)
+        Me.PartyComboBox.Location = New System.Drawing.Point(261, 50)
         Me.PartyComboBox.Name = "PartyComboBox"
-        Me.PartyComboBox.Size = New System.Drawing.Size(193, 25)
+        Me.PartyComboBox.Size = New System.Drawing.Size(215, 25)
         Me.PartyComboBox.TabIndex = 9
         Me.PartyComboBox.ValueMember = "Party"
         '
@@ -328,45 +418,45 @@ Partial Class SaleList
         '
         Me.MobileSaleList_DGV.AllowUserToResizeColumns = False
         Me.MobileSaleList_DGV.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.PapayaWhip
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.PeachPuff
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        Me.MobileSaleList_DGV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.PapayaWhip
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.PeachPuff
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        Me.MobileSaleList_DGV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle5
         Me.MobileSaleList_DGV.AutoGenerateColumns = False
         Me.MobileSaleList_DGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.MobileSaleList_DGV.BackgroundColor = System.Drawing.Color.WhiteSmoke
         Me.MobileSaleList_DGV.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold)
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.MobileSaleList_DGV.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold)
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.White
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.White
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.MobileSaleList_DGV.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.MobileSaleList_DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.MobileSaleList_DGV.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.dgv_idno, Me.dgv_item_id, Me.dgv_entry, Me.dgv_item_name, Me.dgv_qty_rate, Me.dgv_price_rate, Me.dgv_amt_rate})
         Me.MobileSaleList_DGV.DataSource = Me.MobileSaleItemBindingSource1
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold)
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.PeachPuff
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.MobileSaleList_DGV.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold)
+        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.PeachPuff
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.MobileSaleList_DGV.DefaultCellStyle = DataGridViewCellStyle7
         Me.MobileSaleList_DGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
         Me.MobileSaleList_DGV.EnableHeadersVisualStyles = False
         Me.MobileSaleList_DGV.GridColor = System.Drawing.Color.Silver
-        Me.MobileSaleList_DGV.Location = New System.Drawing.Point(29, 149)
+        Me.MobileSaleList_DGV.Location = New System.Drawing.Point(29, 202)
         Me.MobileSaleList_DGV.Name = "MobileSaleList_DGV"
         Me.MobileSaleList_DGV.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
         Me.MobileSaleList_DGV.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
-        Me.MobileSaleList_DGV.RowsDefaultCellStyle = DataGridViewCellStyle4
-        Me.MobileSaleList_DGV.Size = New System.Drawing.Size(931, 397)
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
+        Me.MobileSaleList_DGV.RowsDefaultCellStyle = DataGridViewCellStyle8
+        Me.MobileSaleList_DGV.Size = New System.Drawing.Size(931, 344)
         Me.MobileSaleList_DGV.TabIndex = 16
         '
         'dgv_idno
@@ -377,6 +467,15 @@ Partial Class SaleList
         Me.dgv_idno.ReadOnly = True
         Me.dgv_idno.Visible = False
         '
+        'dgv_item_id
+        '
+        Me.dgv_item_id.DataPropertyName = "ItemID"
+        Me.dgv_item_id.FillWeight = 12.69035!
+        Me.dgv_item_id.HeaderText = "ItemID"
+        Me.dgv_item_id.MinimumWidth = 80
+        Me.dgv_item_id.Name = "dgv_item_id"
+        Me.dgv_item_id.ReadOnly = True
+        '
         'dgv_entry
         '
         Me.dgv_entry.DataPropertyName = "EntryNo"
@@ -385,6 +484,44 @@ Partial Class SaleList
         Me.dgv_entry.Name = "dgv_entry"
         Me.dgv_entry.ReadOnly = True
         Me.dgv_entry.Visible = False
+        '
+        'dgv_item_name
+        '
+        Me.dgv_item_name.DataPropertyName = "Item"
+        Me.dgv_item_name.FillWeight = 449.2386!
+        Me.dgv_item_name.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.dgv_item_name.HeaderText = "Item"
+        Me.dgv_item_name.Items.AddRange(New Object() {"iPhone 15 128GB", "iPhone 15 Pro 256GB", "iPhone 16 128GB", "Samsung Galaxy S24 256GB", "Samsung Galaxy A55 256GB", "Samsung Galaxy A15 128GB", "Xiaomi Redmi Note 14 256GB", "Xiaomi Redmi 13 128GB", "Oppo Reno 12 256GB", "Vivo V40 256GB", "OnePlus 12 256GB", "Realme 13 Pro 256GB", "Apple 20W USB-C Charger", "Samsung 25W Fast Charger", "Anker USB-C Cable", "Baseus Lightning Cable", "Tempered Glass Screen Protector", "iPhone 15 Silicone Case", "Samsung S24 Silicone Case", "Anker Power Bank 10000mAh", "Apple Charger", "Apple Phone Cover", "Samsung 2026", "Apple 2026", "Iphone 203", "Shampoo"})
+        Me.dgv_item_name.MinimumWidth = 200
+        Me.dgv_item_name.Name = "dgv_item_name"
+        Me.dgv_item_name.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgv_item_name.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        '
+        'dgv_qty_rate
+        '
+        Me.dgv_qty_rate.DataPropertyName = "Qty"
+        Me.dgv_qty_rate.FillWeight = 12.69035!
+        Me.dgv_qty_rate.HeaderText = "Qty"
+        Me.dgv_qty_rate.MinimumWidth = 80
+        Me.dgv_qty_rate.Name = "dgv_qty_rate"
+        '
+        'dgv_price_rate
+        '
+        Me.dgv_price_rate.DataPropertyName = "Rate"
+        Me.dgv_price_rate.FillWeight = 12.69035!
+        Me.dgv_price_rate.HeaderText = "Rate"
+        Me.dgv_price_rate.MinimumWidth = 120
+        Me.dgv_price_rate.Name = "dgv_price_rate"
+        Me.dgv_price_rate.ReadOnly = True
+        '
+        'dgv_amt_rate
+        '
+        Me.dgv_amt_rate.DataPropertyName = "Amount"
+        Me.dgv_amt_rate.FillWeight = 12.69035!
+        Me.dgv_amt_rate.HeaderText = "Amount"
+        Me.dgv_amt_rate.MinimumWidth = 120
+        Me.dgv_amt_rate.Name = "dgv_amt_rate"
+        Me.dgv_amt_rate.ReadOnly = True
         '
         'search_Btn
         '
@@ -542,68 +679,6 @@ Partial Class SaleList
         Me.navBox.TabIndex = 29
         Me.navBox.TabStop = False
         '
-        'dgv_item_id
-        '
-        Me.dgv_item_id.DataPropertyName = "ItemID"
-        Me.dgv_item_id.FillWeight = 12.69035!
-        Me.dgv_item_id.HeaderText = "ItemID"
-        Me.dgv_item_id.MinimumWidth = 80
-        Me.dgv_item_id.Name = "dgv_item_id"
-        Me.dgv_item_id.ReadOnly = True
-        '
-        'dgv_item_name
-        '
-        Me.dgv_item_name.DataPropertyName = "Item"
-        Me.dgv_item_name.FillWeight = 449.2386!
-        Me.dgv_item_name.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.dgv_item_name.HeaderText = "Item"
-        Me.dgv_item_name.Items.AddRange(New Object() {"iPhone 15 128GB", "iPhone 15 Pro 256GB", "iPhone 16 128GB", "Samsung Galaxy S24 256GB", "Samsung Galaxy A55 256GB", "Samsung Galaxy A15 128GB", "Xiaomi Redmi Note 14 256GB", "Xiaomi Redmi 13 128GB", "Oppo Reno 12 256GB", "Vivo V40 256GB", "OnePlus 12 256GB", "Realme 13 Pro 256GB", "Apple 20W USB-C Charger", "Samsung 25W Fast Charger", "Anker USB-C Cable", "Baseus Lightning Cable", "Tempered Glass Screen Protector", "iPhone 15 Silicone Case", "Samsung S24 Silicone Case", "Anker Power Bank 10000mAh", "Apple Charger", "Apple Phone Cover", "Samsung 2026", "Apple 2026", "Iphone 203", "Shampoo"})
-        Me.dgv_item_name.MinimumWidth = 200
-        Me.dgv_item_name.Name = "dgv_item_name"
-        Me.dgv_item_name.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgv_item_name.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        '
-        'dgv_qty_rate
-        '
-        Me.dgv_qty_rate.DataPropertyName = "Qty"
-        Me.dgv_qty_rate.FillWeight = 12.69035!
-        Me.dgv_qty_rate.HeaderText = "Qty"
-        Me.dgv_qty_rate.MinimumWidth = 80
-        Me.dgv_qty_rate.Name = "dgv_qty_rate"
-        '
-        'dgv_price_rate
-        '
-        Me.dgv_price_rate.DataPropertyName = "Rate"
-        Me.dgv_price_rate.FillWeight = 12.69035!
-        Me.dgv_price_rate.HeaderText = "Rate"
-        Me.dgv_price_rate.MinimumWidth = 120
-        Me.dgv_price_rate.Name = "dgv_price_rate"
-        Me.dgv_price_rate.ReadOnly = True
-        '
-        'dgv_amt_rate
-        '
-        Me.dgv_amt_rate.DataPropertyName = "Amount"
-        Me.dgv_amt_rate.FillWeight = 12.69035!
-        Me.dgv_amt_rate.HeaderText = "Amount"
-        Me.dgv_amt_rate.MinimumWidth = 120
-        Me.dgv_amt_rate.Name = "dgv_amt_rate"
-        Me.dgv_amt_rate.ReadOnly = True
-        '
-        'MobileSaleItemBindingSource1
-        '
-        Me.MobileSaleItemBindingSource1.DataMember = "MobileSaleItem"
-        Me.MobileSaleItemBindingSource1.DataSource = Me.MobileSaleDS
-        '
-        'MobileSaleDS
-        '
-        Me.MobileSaleDS.DataSetName = "MobileSaleDS"
-        Me.MobileSaleDS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
-        'MobileSaleListBindingSource
-        '
-        Me.MobileSaleListBindingSource.DataMember = "MobileSaleList"
-        Me.MobileSaleListBindingSource.DataSource = Me.MobileSaleDS
-        '
         'MobileSaleItemTableAdapter
         '
         Me.MobileSaleItemTableAdapter.ClearBeforeFill = True
@@ -612,12 +687,38 @@ Partial Class SaleList
         '
         Me.MobileSaleListTableAdapter.ClearBeforeFill = True
         '
+        'TableAdapterManager
+        '
+        Me.TableAdapterManager.BackupDataSetBeforeUpdate = False
+        Me.TableAdapterManager.Connection = Nothing
+        Me.TableAdapterManager.UpdateOrder = MobileShopFrm.MobileSaleDSTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete
+        '
+        'valueLbl_1
+        '
+        valueLbl_1.AutoSize = True
+        valueLbl_1.ForeColor = System.Drawing.Color.DimGray
+        valueLbl_1.Location = New System.Drawing.Point(771, 30)
+        valueLbl_1.Name = "valueLbl_1"
+        valueLbl_1.Size = New System.Drawing.Size(43, 17)
+        valueLbl_1.TabIndex = 16
+        valueLbl_1.Text = "Value:"
+        '
+        'valueLbl_2
+        '
+        valueLbl_2.AutoSize = True
+        valueLbl_2.ForeColor = System.Drawing.Color.DimGray
+        valueLbl_2.Location = New System.Drawing.Point(771, 85)
+        valueLbl_2.Name = "valueLbl_2"
+        valueLbl_2.Size = New System.Drawing.Size(43, 17)
+        valueLbl_2.TabIndex = 17
+        valueLbl_2.Text = "Value:"
+        '
         'SaleList
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Snow
-        Me.ClientSize = New System.Drawing.Size(994, 609)
+        Me.ClientSize = New System.Drawing.Size(1004, 609)
         Me.Controls.Add(Me.navBox)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
@@ -636,18 +737,19 @@ Partial Class SaleList
         Me.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.MinimumSize = New System.Drawing.Size(1000, 600)
         Me.Name = "SaleList"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Mobile - Sale List"
+        CType(Me.MobileSaleItemBindingSource1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.MobileSaleDS, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.MobileSaleListBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.InfoBox.ResumeLayout(False)
         Me.InfoBox.PerformLayout()
         CType(Me.MobileSaleList_DGV, System.ComponentModel.ISupportInitialize).EndInit()
         Me.navBox.ResumeLayout(False)
         Me.navBox.PerformLayout()
-        CType(Me.MobileSaleItemBindingSource1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.MobileSaleDS, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.MobileSaleListBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -704,6 +806,11 @@ Partial Class SaleList
     Friend WithEvents dgv_qty_rate As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents dgv_price_rate As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents dgv_amt_rate As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents GSTTextBox As System.Windows.Forms.TextBox
+    Friend WithEvents TableAdapterManager As MobileShopFrm.MobileSaleDSTableAdapters.TableAdapterManager
+    Friend WithEvents valueBox_2 As System.Windows.Forms.TextBox
+    Friend WithEvents valueBox_1 As System.Windows.Forms.TextBox
+    Friend WithEvents FTaxTextBox As System.Windows.Forms.TextBox
     'Friend WithEvents MobileSaleItemDS As MobileShopFrm.MobileSaleItemDS
     'Friend WithEvents MobileSaleItemTableAdapter As MobileShopFrm.MobileSaleItemDSTableAdapters.MobileSaleItemTableAdapter
 End Class

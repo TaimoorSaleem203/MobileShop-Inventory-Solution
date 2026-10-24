@@ -333,6 +333,10 @@ Partial Public Class MobileSaleDS
         
         Private columnParty As Global.System.Data.DataColumn
         
+        Private columnBillNo1 As Global.System.Data.DataColumn
+        
+        Private columnFTax As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub New()
@@ -409,6 +413,22 @@ Partial Public Class MobileSaleDS
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property BillNo1Column() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnBillNo1
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property FTaxColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnFTax
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -445,9 +465,9 @@ Partial Public Class MobileSaleDS
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddMobileSaleListRow(ByVal BillNo As Integer, ByVal _Date As Date, ByVal Remarks As String, ByVal Party As String) As MobileSaleListRow
+        Public Overloads Function AddMobileSaleListRow(ByVal BillNo As Integer, ByVal _Date As Date, ByVal Remarks As String, ByVal Party As String, ByVal BillNo1 As Long, ByVal FTax As Integer) As MobileSaleListRow
             Dim rowMobileSaleListRow As MobileSaleListRow = CType(Me.NewRow,MobileSaleListRow)
-            Dim columnValuesArray() As Object = New Object() {Nothing, BillNo, _Date, Remarks, Party}
+            Dim columnValuesArray() As Object = New Object() {Nothing, BillNo, _Date, Remarks, Party, BillNo1, FTax}
             rowMobileSaleListRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowMobileSaleListRow)
             Return rowMobileSaleListRow
@@ -481,6 +501,8 @@ Partial Public Class MobileSaleDS
             Me.columnDate = MyBase.Columns("Date")
             Me.columnRemarks = MyBase.Columns("Remarks")
             Me.columnParty = MyBase.Columns("Party")
+            Me.columnBillNo1 = MyBase.Columns("BillNo1")
+            Me.columnFTax = MyBase.Columns("FTax")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -499,6 +521,10 @@ Partial Public Class MobileSaleDS
             MyBase.Columns.Add(Me.columnRemarks)
             Me.columnParty = New Global.System.Data.DataColumn("Party", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnParty)
+            Me.columnBillNo1 = New Global.System.Data.DataColumn("BillNo1", GetType(Long), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnBillNo1)
+            Me.columnFTax = New Global.System.Data.DataColumn("FTax", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnFTax)
             Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnEntryNo}, true))
             Me.columnEntryNo.AutoIncrement = true
             Me.columnEntryNo.AutoIncrementSeed = 1
@@ -508,6 +534,7 @@ Partial Public Class MobileSaleDS
             Me.columnBillNo.AutoIncrementSeed = 1
             Me.columnBillNo.ReadOnly = true
             Me.columnRemarks.MaxLength = 120
+            Me.columnBillNo1.Caption = "BillNo"
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -659,6 +686,8 @@ Partial Public Class MobileSaleDS
         
         Private columnItemID As Global.System.Data.DataColumn
         
+        Private columnGST As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub New()
@@ -751,6 +780,14 @@ Partial Public Class MobileSaleDS
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property GSTColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnGST
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -787,9 +824,9 @@ Partial Public Class MobileSaleDS
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddMobileSaleItemRow(ByVal parentMobileSaleListRowByFK_MobileSaleItem_MobileSaleList As MobileSaleListRow, ByVal Item As String, ByVal Qty As Integer, ByVal Rate As Decimal, ByVal Amount As Decimal, ByVal ItemID As Integer) As MobileSaleItemRow
+        Public Overloads Function AddMobileSaleItemRow(ByVal parentMobileSaleListRowByFK_MobileSaleItem_MobileSaleList As MobileSaleListRow, ByVal Item As String, ByVal Qty As Integer, ByVal Rate As Decimal, ByVal Amount As Decimal, ByVal ItemID As Integer, ByVal GST As Integer) As MobileSaleItemRow
             Dim rowMobileSaleItemRow As MobileSaleItemRow = CType(Me.NewRow,MobileSaleItemRow)
-            Dim columnValuesArray() As Object = New Object() {Nothing, Item, Qty, Rate, Amount, Nothing, ItemID}
+            Dim columnValuesArray() As Object = New Object() {Nothing, Item, Qty, Rate, Amount, Nothing, ItemID, GST}
             If (Not (parentMobileSaleListRowByFK_MobileSaleItem_MobileSaleList) Is Nothing) Then
                 columnValuesArray(0) = parentMobileSaleListRowByFK_MobileSaleItem_MobileSaleList(0)
             End If
@@ -828,6 +865,7 @@ Partial Public Class MobileSaleDS
             Me.columnAmount = MyBase.Columns("Amount")
             Me.columnidno = MyBase.Columns("idno")
             Me.columnItemID = MyBase.Columns("ItemID")
+            Me.columnGST = MyBase.Columns("GST")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -851,6 +889,8 @@ Partial Public Class MobileSaleDS
             MyBase.Columns.Add(Me.columnidno)
             Me.columnItemID = New Global.System.Data.DataColumn("ItemID", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnItemID)
+            Me.columnGST = New Global.System.Data.DataColumn("GST", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnGST)
             Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint2", New Global.System.Data.DataColumn() {Me.columnidno}, true))
             Me.columnItem.MaxLength = 150
             Me.columnidno.AutoIncrement = true
@@ -1075,6 +1115,36 @@ Partial Public Class MobileSaleDS
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property BillNo1() As Long
+            Get
+                Try 
+                    Return CType(Me(Me.tableMobileSaleList.BillNo1Column),Long)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'BillNo1' in table 'MobileSaleList' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableMobileSaleList.BillNo1Column) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property FTax() As Integer
+            Get
+                Try 
+                    Return CType(Me(Me.tableMobileSaleList.FTaxColumn),Integer)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'FTax' in table 'MobileSaleList' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableMobileSaleList.FTaxColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Function IsBillNoNull() As Boolean
             Return Me.IsNull(Me.tableMobileSaleList.BillNoColumn)
         End Function
@@ -1119,6 +1189,30 @@ Partial Public Class MobileSaleDS
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetPartyNull()
             Me(Me.tableMobileSaleList.PartyColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsBillNo1Null() As Boolean
+            Return Me.IsNull(Me.tableMobileSaleList.BillNo1Column)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetBillNo1Null()
+            Me(Me.tableMobileSaleList.BillNo1Column) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsFTaxNull() As Boolean
+            Return Me.IsNull(Me.tableMobileSaleList.FTaxColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetFTaxNull()
+            Me(Me.tableMobileSaleList.FTaxColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -1250,6 +1344,21 @@ Partial Public Class MobileSaleDS
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property GST() As Integer
+            Get
+                Try 
+                    Return CType(Me(Me.tableMobileSaleItem.GSTColumn),Integer)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'GST' in table 'MobileSaleItem' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableMobileSaleItem.GSTColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Property MobileSaleListRow() As MobileSaleListRow
             Get
                 Return CType(Me.GetParentRow(Me.Table.ParentRelations("FK_MobileSaleItem_MobileSaleList")),MobileSaleListRow)
@@ -1329,6 +1438,18 @@ Partial Public Class MobileSaleDS
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetItemIDNull()
             Me(Me.tableMobileSaleItem.ItemIDColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsGSTNull() As Boolean
+            Return Me.IsNull(Me.tableMobileSaleItem.GSTColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetGSTNull()
+            Me(Me.tableMobileSaleItem.GSTColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     
@@ -1535,62 +1656,12 @@ Namespace MobileSaleDSTableAdapters
             tableMapping.SourceTable = "Table"
             tableMapping.DataSetTable = "MobileSaleList"
             tableMapping.ColumnMappings.Add("EntryNo", "EntryNo")
-            tableMapping.ColumnMappings.Add("BillNo", "BillNo")
             tableMapping.ColumnMappings.Add("Date", "Date")
             tableMapping.ColumnMappings.Add("Remarks", "Remarks")
             tableMapping.ColumnMappings.Add("Party", "Party")
+            tableMapping.ColumnMappings.Add("BillNo", "BillNo1")
+            tableMapping.ColumnMappings.Add("FTax", "FTax")
             Me._adapter.TableMappings.Add(tableMapping)
-            Me._adapter.DeleteCommand = New Global.System.Data.SqlClient.SqlCommand()
-            Me._adapter.DeleteCommand.Connection = Me.Connection
-            Me._adapter.DeleteCommand.CommandText = "DELETE FROM [MobileSaleList] WHERE (([EntryNo] = @Original_EntryNo) AND ((@IsNull"& _ 
-                "_BillNo = 1 AND [BillNo] IS NULL) OR ([BillNo] = @Original_BillNo)) AND ((@IsNul"& _ 
-                "l_Party = 1 AND [Party] IS NULL) OR ([Party] = @Original_Party)) AND ((@IsNull_D"& _ 
-                "ate = 1 AND [Date] IS NULL) OR ([Date] = @Original_Date)) AND ((@IsNull_Remarks "& _ 
-                "= 1 AND [Remarks] IS NULL) OR ([Remarks] = @Original_Remarks)))"
-            Me._adapter.DeleteCommand.CommandType = Global.System.Data.CommandType.Text
-            Me._adapter.DeleteCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_EntryNo", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "EntryNo", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.DeleteCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_BillNo", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "BillNo", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.DeleteCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_BillNo", Global.System.Data.SqlDbType.BigInt, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "BillNo", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.DeleteCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_Party", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Party", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.DeleteCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_Party", Global.System.Data.SqlDbType.NVarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Party", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.DeleteCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_Date", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Date", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.DeleteCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_Date", Global.System.Data.SqlDbType.[Date], 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Date", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.DeleteCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_Remarks", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Remarks", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.DeleteCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_Remarks", Global.System.Data.SqlDbType.NVarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Remarks", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand = New Global.System.Data.SqlClient.SqlCommand()
-            Me._adapter.InsertCommand.Connection = Me.Connection
-            Me._adapter.InsertCommand.CommandText = "INSERT INTO [MobileSaleList] ([BillNo], [Party], [Date], [Remarks]) VALUES (@Bill"& _ 
-                "No, @Party, @Date, @Remarks);"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"SELECT EntryNo, BillNo, Party, Date, Remarks FROM"& _ 
-                " MobileSaleList WHERE (EntryNo = SCOPE_IDENTITY())"
-            Me._adapter.InsertCommand.CommandType = Global.System.Data.CommandType.Text
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@BillNo", Global.System.Data.SqlDbType.BigInt, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "BillNo", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Party", Global.System.Data.SqlDbType.NVarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Party", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Date", Global.System.Data.SqlDbType.[Date], 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Date", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Remarks", Global.System.Data.SqlDbType.NVarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Remarks", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand = New Global.System.Data.SqlClient.SqlCommand()
-            Me._adapter.UpdateCommand.Connection = Me.Connection
-            Me._adapter.UpdateCommand.CommandText = "UPDATE [MobileSaleList] SET [BillNo] = @BillNo, [Party] = @Party, [Date] = @Date,"& _ 
-                " [Remarks] = @Remarks WHERE (([EntryNo] = @Original_EntryNo) AND ((@IsNull_BillN"& _ 
-                "o = 1 AND [BillNo] IS NULL) OR ([BillNo] = @Original_BillNo)) AND ((@IsNull_Part"& _ 
-                "y = 1 AND [Party] IS NULL) OR ([Party] = @Original_Party)) AND ((@IsNull_Date = "& _ 
-                "1 AND [Date] IS NULL) OR ([Date] = @Original_Date)) AND ((@IsNull_Remarks = 1 AN"& _ 
-                "D [Remarks] IS NULL) OR ([Remarks] = @Original_Remarks)));"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"SELECT EntryNo, Bill"& _ 
-                "No, Party, Date, Remarks FROM MobileSaleList WHERE (EntryNo = @EntryNo)"
-            Me._adapter.UpdateCommand.CommandType = Global.System.Data.CommandType.Text
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@BillNo", Global.System.Data.SqlDbType.BigInt, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "BillNo", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Party", Global.System.Data.SqlDbType.NVarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Party", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Date", Global.System.Data.SqlDbType.[Date], 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Date", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Remarks", Global.System.Data.SqlDbType.NVarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Remarks", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_EntryNo", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "EntryNo", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_BillNo", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "BillNo", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_BillNo", Global.System.Data.SqlDbType.BigInt, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "BillNo", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_Party", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Party", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_Party", Global.System.Data.SqlDbType.NVarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Party", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_Date", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Date", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_Date", Global.System.Data.SqlDbType.[Date], 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Date", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_Remarks", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Remarks", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_Remarks", Global.System.Data.SqlDbType.NVarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Remarks", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@EntryNo", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "EntryNo", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -1606,8 +1677,8 @@ Namespace MobileSaleDSTableAdapters
             Me._commandCollection = New Global.System.Data.SqlClient.SqlCommand(0) {}
             Me._commandCollection(0) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(0).Connection = Me.Connection
-            Me._commandCollection(0).CommandText = "SELECT        EntryNo, BillNo, Party, Date, Remarks"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"FROM            MobileSaleLi"& _ 
-                "st"
+            Me._commandCollection(0).CommandText = "SELECT        EntryNo, BillNo, Party, Date, Remarks, FTax"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"FROM            Mobile"& _ 
+                "SaleList"
             Me._commandCollection(0).CommandType = Global.System.Data.CommandType.Text
         End Sub
         
@@ -1622,201 +1693,6 @@ Namespace MobileSaleDSTableAdapters
             End If
             Dim returnValue As Integer = Me.Adapter.Fill(dataTable)
             Return returnValue
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
-        Public Overloads Overridable Function Update(ByVal dataTable As MobileSaleDS.MobileSaleListDataTable) As Integer
-            Return Me.Adapter.Update(dataTable)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
-        Public Overloads Overridable Function Update(ByVal dataSet As MobileSaleDS) As Integer
-            Return Me.Adapter.Update(dataSet, "MobileSaleList")
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
-        Public Overloads Overridable Function Update(ByVal dataRow As Global.System.Data.DataRow) As Integer
-            Return Me.Adapter.Update(New Global.System.Data.DataRow() {dataRow})
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
-        Public Overloads Overridable Function Update(ByVal dataRows() As Global.System.Data.DataRow) As Integer
-            Return Me.Adapter.Update(dataRows)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
-         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Delete, true)>  _
-        Public Overloads Overridable Function Delete(ByVal Original_EntryNo As Integer, ByVal Original_BillNo As Global.System.Nullable(Of Long), ByVal Original_Party As String, ByVal Original_Date As Global.System.Nullable(Of Date), ByVal Original_Remarks As String) As Integer
-            Me.Adapter.DeleteCommand.Parameters(0).Value = CType(Original_EntryNo,Integer)
-            If (Original_BillNo.HasValue = true) Then
-                Me.Adapter.DeleteCommand.Parameters(1).Value = CType(0,Object)
-                Me.Adapter.DeleteCommand.Parameters(2).Value = CType(Original_BillNo.Value,Long)
-            Else
-                Me.Adapter.DeleteCommand.Parameters(1).Value = CType(1,Object)
-                Me.Adapter.DeleteCommand.Parameters(2).Value = Global.System.DBNull.Value
-            End If
-            If (Original_Party Is Nothing) Then
-                Me.Adapter.DeleteCommand.Parameters(3).Value = CType(1,Object)
-                Me.Adapter.DeleteCommand.Parameters(4).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.DeleteCommand.Parameters(3).Value = CType(0,Object)
-                Me.Adapter.DeleteCommand.Parameters(4).Value = CType(Original_Party,String)
-            End If
-            If (Original_Date.HasValue = true) Then
-                Me.Adapter.DeleteCommand.Parameters(5).Value = CType(0,Object)
-                Me.Adapter.DeleteCommand.Parameters(6).Value = CType(Original_Date.Value,Date)
-            Else
-                Me.Adapter.DeleteCommand.Parameters(5).Value = CType(1,Object)
-                Me.Adapter.DeleteCommand.Parameters(6).Value = Global.System.DBNull.Value
-            End If
-            If (Original_Remarks Is Nothing) Then
-                Me.Adapter.DeleteCommand.Parameters(7).Value = CType(1,Object)
-                Me.Adapter.DeleteCommand.Parameters(8).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.DeleteCommand.Parameters(7).Value = CType(0,Object)
-                Me.Adapter.DeleteCommand.Parameters(8).Value = CType(Original_Remarks,String)
-            End If
-            Dim previousConnectionState As Global.System.Data.ConnectionState = Me.Adapter.DeleteCommand.Connection.State
-            If ((Me.Adapter.DeleteCommand.Connection.State And Global.System.Data.ConnectionState.Open)  _
-                        <> Global.System.Data.ConnectionState.Open) Then
-                Me.Adapter.DeleteCommand.Connection.Open
-            End If
-            Try 
-                Dim returnValue As Integer = Me.Adapter.DeleteCommand.ExecuteNonQuery
-                Return returnValue
-            Finally
-                If (previousConnectionState = Global.System.Data.ConnectionState.Closed) Then
-                    Me.Adapter.DeleteCommand.Connection.Close
-                End If
-            End Try
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
-         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Insert, true)>  _
-        Public Overloads Overridable Function Insert(ByVal BillNo As Global.System.Nullable(Of Long), ByVal Party As String, ByVal _Date As Global.System.Nullable(Of Date), ByVal Remarks As String) As Integer
-            If (BillNo.HasValue = true) Then
-                Me.Adapter.InsertCommand.Parameters(0).Value = CType(BillNo.Value,Long)
-            Else
-                Me.Adapter.InsertCommand.Parameters(0).Value = Global.System.DBNull.Value
-            End If
-            If (Party Is Nothing) Then
-                Me.Adapter.InsertCommand.Parameters(1).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.InsertCommand.Parameters(1).Value = CType(Party,String)
-            End If
-            If (_Date.HasValue = true) Then
-                Me.Adapter.InsertCommand.Parameters(2).Value = CType(_Date.Value,Date)
-            Else
-                Me.Adapter.InsertCommand.Parameters(2).Value = Global.System.DBNull.Value
-            End If
-            If (Remarks Is Nothing) Then
-                Me.Adapter.InsertCommand.Parameters(3).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.InsertCommand.Parameters(3).Value = CType(Remarks,String)
-            End If
-            Dim previousConnectionState As Global.System.Data.ConnectionState = Me.Adapter.InsertCommand.Connection.State
-            If ((Me.Adapter.InsertCommand.Connection.State And Global.System.Data.ConnectionState.Open)  _
-                        <> Global.System.Data.ConnectionState.Open) Then
-                Me.Adapter.InsertCommand.Connection.Open
-            End If
-            Try 
-                Dim returnValue As Integer = Me.Adapter.InsertCommand.ExecuteNonQuery
-                Return returnValue
-            Finally
-                If (previousConnectionState = Global.System.Data.ConnectionState.Closed) Then
-                    Me.Adapter.InsertCommand.Connection.Close
-                End If
-            End Try
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
-         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, true)>  _
-        Public Overloads Overridable Function Update(ByVal BillNo As Global.System.Nullable(Of Long), ByVal Party As String, ByVal _Date As Global.System.Nullable(Of Date), ByVal Remarks As String, ByVal Original_EntryNo As Integer, ByVal Original_BillNo As Global.System.Nullable(Of Long), ByVal Original_Party As String, ByVal Original_Date As Global.System.Nullable(Of Date), ByVal Original_Remarks As String, ByVal EntryNo As Integer) As Integer
-            If (BillNo.HasValue = true) Then
-                Me.Adapter.UpdateCommand.Parameters(0).Value = CType(BillNo.Value,Long)
-            Else
-                Me.Adapter.UpdateCommand.Parameters(0).Value = Global.System.DBNull.Value
-            End If
-            If (Party Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(1).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.UpdateCommand.Parameters(1).Value = CType(Party,String)
-            End If
-            If (_Date.HasValue = true) Then
-                Me.Adapter.UpdateCommand.Parameters(2).Value = CType(_Date.Value,Date)
-            Else
-                Me.Adapter.UpdateCommand.Parameters(2).Value = Global.System.DBNull.Value
-            End If
-            If (Remarks Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(3).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.UpdateCommand.Parameters(3).Value = CType(Remarks,String)
-            End If
-            Me.Adapter.UpdateCommand.Parameters(4).Value = CType(Original_EntryNo,Integer)
-            If (Original_BillNo.HasValue = true) Then
-                Me.Adapter.UpdateCommand.Parameters(5).Value = CType(0,Object)
-                Me.Adapter.UpdateCommand.Parameters(6).Value = CType(Original_BillNo.Value,Long)
-            Else
-                Me.Adapter.UpdateCommand.Parameters(5).Value = CType(1,Object)
-                Me.Adapter.UpdateCommand.Parameters(6).Value = Global.System.DBNull.Value
-            End If
-            If (Original_Party Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(7).Value = CType(1,Object)
-                Me.Adapter.UpdateCommand.Parameters(8).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.UpdateCommand.Parameters(7).Value = CType(0,Object)
-                Me.Adapter.UpdateCommand.Parameters(8).Value = CType(Original_Party,String)
-            End If
-            If (Original_Date.HasValue = true) Then
-                Me.Adapter.UpdateCommand.Parameters(9).Value = CType(0,Object)
-                Me.Adapter.UpdateCommand.Parameters(10).Value = CType(Original_Date.Value,Date)
-            Else
-                Me.Adapter.UpdateCommand.Parameters(9).Value = CType(1,Object)
-                Me.Adapter.UpdateCommand.Parameters(10).Value = Global.System.DBNull.Value
-            End If
-            If (Original_Remarks Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(11).Value = CType(1,Object)
-                Me.Adapter.UpdateCommand.Parameters(12).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.UpdateCommand.Parameters(11).Value = CType(0,Object)
-                Me.Adapter.UpdateCommand.Parameters(12).Value = CType(Original_Remarks,String)
-            End If
-            Me.Adapter.UpdateCommand.Parameters(13).Value = CType(EntryNo,Integer)
-            Dim previousConnectionState As Global.System.Data.ConnectionState = Me.Adapter.UpdateCommand.Connection.State
-            If ((Me.Adapter.UpdateCommand.Connection.State And Global.System.Data.ConnectionState.Open)  _
-                        <> Global.System.Data.ConnectionState.Open) Then
-                Me.Adapter.UpdateCommand.Connection.Open
-            End If
-            Try 
-                Dim returnValue As Integer = Me.Adapter.UpdateCommand.ExecuteNonQuery
-                Return returnValue
-            Finally
-                If (previousConnectionState = Global.System.Data.ConnectionState.Closed) Then
-                    Me.Adapter.UpdateCommand.Connection.Close
-                End If
-            End Try
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
-         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, true)>  _
-        Public Overloads Overridable Function Update(ByVal BillNo As Global.System.Nullable(Of Long), ByVal Party As String, ByVal _Date As Global.System.Nullable(Of Date), ByVal Remarks As String, ByVal Original_EntryNo As Integer, ByVal Original_BillNo As Global.System.Nullable(Of Long), ByVal Original_Party As String, ByVal Original_Date As Global.System.Nullable(Of Date), ByVal Original_Remarks As String) As Integer
-            Return Me.Update(BillNo, Party, _Date, Remarks, Original_EntryNo, Original_BillNo, Original_Party, Original_Date, Original_Remarks, Original_EntryNo)
         End Function
     End Class
     
@@ -1954,6 +1830,7 @@ Namespace MobileSaleDSTableAdapters
             tableMapping.ColumnMappings.Add("Amount", "Amount")
             tableMapping.ColumnMappings.Add("idno", "idno")
             tableMapping.ColumnMappings.Add("ItemID", "ItemID")
+            tableMapping.ColumnMappings.Add("GST", "GST")
             Me._adapter.TableMappings.Add(tableMapping)
         End Sub
         
@@ -1970,8 +1847,8 @@ Namespace MobileSaleDSTableAdapters
             Me._commandCollection = New Global.System.Data.SqlClient.SqlCommand(0) {}
             Me._commandCollection(0) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(0).Connection = Me.Connection
-            Me._commandCollection(0).CommandText = "SELECT        idno, ItemID, EntryNo, Item, Qty, Rate, Amount"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"FROM            Mob"& _ 
-                "ileSaleItem"
+            Me._commandCollection(0).CommandText = "SELECT        idno, ItemID, EntryNo, Item, Qty, Rate, Amount, GST"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"FROM          "& _ 
+                "  MobileSaleItem"
             Me._commandCollection(0).CommandType = Global.System.Data.CommandType.Text
         End Sub
         
@@ -2013,8 +1890,6 @@ Namespace MobileSaleDSTableAdapters
         
         Private _updateOrder As UpdateOrderOption
         
-        Private _mobileSaleListTableAdapter As MobileSaleListTableAdapter
-        
         Private _backupDataSetBeforeUpdate As Boolean
         
         Private _connection As Global.System.Data.IDbConnection
@@ -2027,20 +1902,6 @@ Namespace MobileSaleDSTableAdapters
             End Get
             Set
                 Me._updateOrder = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-         Global.System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso"& _ 
-            "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3"& _ 
-            "a", "System.Drawing.Design.UITypeEditor")>  _
-        Public Property MobileSaleListTableAdapter() As MobileSaleListTableAdapter
-            Get
-                Return Me._mobileSaleListTableAdapter
-            End Get
-            Set
-                Me._mobileSaleListTableAdapter = value
             End Set
         End Property
         
@@ -2063,10 +1924,6 @@ Namespace MobileSaleDSTableAdapters
                 If (Not (Me._connection) Is Nothing) Then
                     Return Me._connection
                 End If
-                If ((Not (Me._mobileSaleListTableAdapter) Is Nothing)  _
-                            AndAlso (Not (Me._mobileSaleListTableAdapter.Connection) Is Nothing)) Then
-                    Return Me._mobileSaleListTableAdapter.Connection
-                End If
                 Return Nothing
             End Get
             Set
@@ -2080,9 +1937,6 @@ Namespace MobileSaleDSTableAdapters
         Public ReadOnly Property TableAdapterInstanceCount() As Integer
             Get
                 Dim count As Integer = 0
-                If (Not (Me._mobileSaleListTableAdapter) Is Nothing) Then
-                    count = (count + 1)
-                End If
                 Return count
             End Get
         End Property
@@ -2094,15 +1948,6 @@ Namespace MobileSaleDSTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Function UpdateUpdatedRows(ByVal dataSet As MobileSaleDS, ByVal allChangedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow), ByVal allAddedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)) As Integer
             Dim result As Integer = 0
-            If (Not (Me._mobileSaleListTableAdapter) Is Nothing) Then
-                Dim updatedRows() As Global.System.Data.DataRow = dataSet.MobileSaleList.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.ModifiedCurrent)
-                updatedRows = Me.GetRealUpdatedRows(updatedRows, allAddedRows)
-                If ((Not (updatedRows) Is Nothing)  _
-                            AndAlso (0 < updatedRows.Length)) Then
-                    result = (result + Me._mobileSaleListTableAdapter.Update(updatedRows))
-                    allChangedRows.AddRange(updatedRows)
-                End If
-            End If
             Return result
         End Function
         
@@ -2113,14 +1958,6 @@ Namespace MobileSaleDSTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Function UpdateInsertedRows(ByVal dataSet As MobileSaleDS, ByVal allAddedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)) As Integer
             Dim result As Integer = 0
-            If (Not (Me._mobileSaleListTableAdapter) Is Nothing) Then
-                Dim addedRows() As Global.System.Data.DataRow = dataSet.MobileSaleList.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Added)
-                If ((Not (addedRows) Is Nothing)  _
-                            AndAlso (0 < addedRows.Length)) Then
-                    result = (result + Me._mobileSaleListTableAdapter.Update(addedRows))
-                    allAddedRows.AddRange(addedRows)
-                End If
-            End If
             Return result
         End Function
         
@@ -2131,14 +1968,6 @@ Namespace MobileSaleDSTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Function UpdateDeletedRows(ByVal dataSet As MobileSaleDS, ByVal allChangedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)) As Integer
             Dim result As Integer = 0
-            If (Not (Me._mobileSaleListTableAdapter) Is Nothing) Then
-                Dim deletedRows() As Global.System.Data.DataRow = dataSet.MobileSaleList.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Deleted)
-                If ((Not (deletedRows) Is Nothing)  _
-                            AndAlso (0 < deletedRows.Length)) Then
-                    result = (result + Me._mobileSaleListTableAdapter.Update(deletedRows))
-                    allChangedRows.AddRange(deletedRows)
-                End If
-            End If
             Return result
         End Function
         
@@ -2180,11 +2009,6 @@ Namespace MobileSaleDSTableAdapters
             If (dataSet.HasChanges = false) Then
                 Return 0
             End If
-            If ((Not (Me._mobileSaleListTableAdapter) Is Nothing)  _
-                        AndAlso (Me.MatchTableAdapterConnection(Me._mobileSaleListTableAdapter.Connection) = false)) Then
-                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s"& _ 
-                        "tring.")
-            End If
             Dim workConnection As Global.System.Data.IDbConnection = Me.Connection
             If (workConnection Is Nothing) Then
                 Throw New Global.System.ApplicationException("TableAdapterManager contains no connection information. Set each TableAdapterMana"& _ 
@@ -2217,15 +2041,6 @@ Namespace MobileSaleDSTableAdapters
             Try 
                 '---- Prepare for update -----------
                 '
-                If (Not (Me._mobileSaleListTableAdapter) Is Nothing) Then
-                    revertConnections.Add(Me._mobileSaleListTableAdapter, Me._mobileSaleListTableAdapter.Connection)
-                    Me._mobileSaleListTableAdapter.Connection = CType(workConnection,Global.System.Data.SqlClient.SqlConnection)
-                    Me._mobileSaleListTableAdapter.Transaction = CType(workTransaction,Global.System.Data.SqlClient.SqlTransaction)
-                    If Me._mobileSaleListTableAdapter.Adapter.AcceptChangesDuringUpdate Then
-                        Me._mobileSaleListTableAdapter.Adapter.AcceptChangesDuringUpdate = false
-                        adaptersWithAcceptChangesDuringUpdate.Add(Me._mobileSaleListTableAdapter.Adapter)
-                    End If
-                End If
                 '
                 '---- Perform updates -----------
                 '
@@ -2285,10 +2100,6 @@ Namespace MobileSaleDSTableAdapters
             Finally
                 If workConnOpened Then
                     workConnection.Close
-                End If
-                If (Not (Me._mobileSaleListTableAdapter) Is Nothing) Then
-                    Me._mobileSaleListTableAdapter.Connection = CType(revertConnections(Me._mobileSaleListTableAdapter),Global.System.Data.SqlClient.SqlConnection)
-                    Me._mobileSaleListTableAdapter.Transaction = Nothing
                 End If
                 If (0 < adaptersWithAcceptChangesDuringUpdate.Count) Then
                     Dim adapters((adaptersWithAcceptChangesDuringUpdate.Count) - 1) As Global.System.Data.Common.DataAdapter
