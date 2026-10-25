@@ -38,6 +38,7 @@ Public Class SaleList
                     EntryNoTextBox.Text = (entryVal + 1).ToString()
                     BillNoTextBox.Text = (billVal + 1).ToString()
 
+                    entryNo = entryVal + 1
                     transaction.Commit()
                 Catch ex As Exception
                     transaction.Rollback()
@@ -81,8 +82,8 @@ Public Class SaleList
 
                             Dim insertHeaderQuery As String =
                                 "INSERT INTO MobileSaleList " &
-                                "(BillNo, Party, [Date], Remarks) " &
-                                "VALUES (@BillNo, @Party, @SaleDate, @Remarks);" &
+                                "(BillNo, Party, [Date], Remarks, FTax) " &
+                                "VALUES (@BillNo, @Party, @SaleDate, @Remarks, @FTax);" &
                                 "SELECT CAST(SCOPE_IDENTITY() AS INT);"   'Execute the INSERT and retrieve the newly generated EntryNo
 
 
@@ -121,6 +122,13 @@ Public Class SaleList
                                 ).Value =
                                     RemarksTextBox.Text
 
+                                cmd.Parameters.Add(
+                                    "@FTax",
+                                    SqlDbType.Decimal,
+                                    20
+                                ).Value =
+                                    Convert.ToDecimal(FTaxTextBox.Text)
+
                                 entryNo =
                                     Convert.ToInt32(cmd.ExecuteScalar())
 
@@ -137,7 +145,8 @@ Public Class SaleList
                                 "SET BillNo = @BillNo, " &
                                 "    Party = @Party, " &
                                 "    [Date] = @SaleDate, " &
-                                "    Remarks = @Remarks " &
+                                "    Remarks = @Remarks, " &
+                                "    FTax = @FTax " &
                                 "WHERE EntryNo = @EntryNo"
 
 
@@ -182,6 +191,13 @@ Public Class SaleList
                                 ).Value =
                                     Convert.ToInt32(EntryNoTextBox.Text)
 
+                                cmd.Parameters.Add(
+                                    "@FTax",
+                                    SqlDbType.Decimal,
+                                    20
+                                ).Value =
+                                    Convert.ToDecimal(FTaxTextBox.Text)
+
 
                                 cmd.ExecuteNonQuery()
 
@@ -211,9 +227,9 @@ Public Class SaleList
 
                         Dim insertDetailQuery As String =
                             "INSERT INTO MobileSaleItem " &
-                            "(ItemID, EntryNo, Item, Qty, Rate, Amount) " &
+                            "(ItemID, EntryNo, Item, Qty, Rate, Amount, GST) " &
                             "VALUES " &
-                            "(@ItemID, @EntryNo, @Item, @Qty, @Rate, @Amount)"
+                            "(@ItemID, @EntryNo, @Item, @Qty, @Rate, @Amount, @GST)"
 
 
                         For Each row As DataGridViewRow In
@@ -344,6 +360,10 @@ Public Class SaleList
                                 cmd.Parameters.Add(
                                     "@Amount",
                                     SqlDbType.Decimal).Value = amount
+
+                                cmd.Parameters.Add(
+                                    "@GST",
+                                    SqlDbType.Decimal).Value = Convert.ToDecimal(GSTTextBox.Text)
 
 
                                 cmd.ExecuteNonQuery()
@@ -536,6 +556,17 @@ Public Class SaleList
 
     End Sub
 
+    Private Sub SaleItem_Delete()
+        If MobileSaleList_DGV.EditMode = DataGridViewEditMode.EditOnKeystrokeOrF2 Then
+            Dim rowIndx As Integer = MobileSaleList_DGV.CurrentCell.RowIndex
+
+            If rowIndx < 0 Then Exit Sub
+
+            MobileSaleList_DGV.Rows.RemoveAt(rowIndx)
+            MobileSaleItem_Amt(entryNo)
+        End If
+    End Sub
+
     Private Sub Undo_Btn_Click(sender As System.Object, e As System.EventArgs) Handles Undo_Btn.Click
         Try
             enable_add_edit_delete()
@@ -554,7 +585,6 @@ Public Class SaleList
         MsgBox("Show Search Window")
     End Sub
 
-
     Private Sub nextBtn_Click(sender As System.Object, e As System.EventArgs) Handles nextBtn.Click
         ShowEntry(GetNextEntryNo(entryNo))
     End Sub
@@ -571,6 +601,14 @@ Public Class SaleList
         ShowEntry(GetFirstEntryNo())
     End Sub
 
+#End Region
+
+#Region "KeyPress Region"
+    Private Sub GSTTextBox_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs) Handles GSTTextBox.KeyPress
+        If Not Char.IsDigit(e.KeyChar) AndAlso Not Char.IsControl(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
 #End Region
 
 #Region "DataLoad Region"
@@ -657,6 +695,9 @@ Public Class SaleList
         'BillNoTextBox.Text = ""
         PartyComboBox.Text = ""
         RemarksTextBox.Text = ""
+
+        GSTTextBox.Text = ""
+        FTaxTextBox.Text = ""
     End Sub
 
     Private Sub disable_add_edit_delete()
@@ -682,16 +723,6 @@ Public Class SaleList
 #End Region
 
 #Region "DGV OPs Region"
-    Private Sub SaleItem_Delete()
-        If MobileSaleList_DGV.EditMode = DataGridViewEditMode.EditOnKeystrokeOrF2 Then
-            Dim rowIndx As Integer = MobileSaleList_DGV.CurrentCell.RowIndex
-
-            If rowIndx < 0 Then Exit Sub
-
-            MobileSaleList_DGV.Rows.RemoveAt(rowIndx)
-        End If
-    End Sub
-
     Private Function SaleListExist(entryNo As Integer, conn As SqlConnection, transaction As SqlTransaction)
 
         Dim listQuery As String = "SELECT COUNT(*) FROM MobileSaleList WHERE EntryNo = @entryNo"
@@ -709,73 +740,136 @@ Public Class SaleList
         MessageBox.Show("Error: " & e.Exception.Message, "Data Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
     End Sub
 
-    Private Sub MobileSaleList_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles MobileSaleList_DGV.CellValueChanged
+    Private Sub MobileSaleList_CellValueChanged(
+        sender As Object,
+        e As DataGridViewCellEventArgs
+    ) Handles MobileSaleList_DGV.CellValueChanged
+
         Try
-            If e.RowIndex < 0 Then Exit Sub
-            Dim productValue As Object = MobileSaleList_DGV.Rows(e.RowIndex).Cells("dgv_item_name").Value
-            Dim amtValue As Object = MobileSaleList_DGV.Rows(e.RowIndex).Cells("dgv_amt_rate").Value
 
-            If productValue Is Nothing OrElse productValue Is DBNull.Value Then
-                Exit Sub
-            End If
+            If e.RowIndex < 0 OrElse e.ColumnIndex < 0 Then Exit Sub
 
-            Dim product As String = productValue.ToString().Trim()
+            Dim row As DataGridViewRow =
+                MobileSaleList_DGV.Rows(e.RowIndex)
 
-            If String.IsNullOrWhiteSpace(product) Then
-                Exit Sub
-            End If
+            If row.IsNewRow Then Exit Sub
 
-            If MobileSaleList_DGV.Columns(e.ColumnIndex).HeaderText = "Item" Then
+            Dim columnName As String =
+                MobileSaleList_DGV.Columns(e.ColumnIndex).Name
+
+            If columnName = "dgv_item_name" Then
+
+                Dim productValue As Object =
+                    row.Cells("dgv_item_name").Value
+
+                If productValue Is Nothing OrElse
+                   productValue Is DBNull.Value Then
+
+                    Exit Sub
+
+                End If
+
+                Dim product As String =
+                    productValue.ToString().Trim()
+
+                If String.IsNullOrWhiteSpace(product) Then
+                    Exit Sub
+                End If
 
                 Using conn As New SqlConnection(connection)
+
                     conn.Open()
-                    Dim filterQuery As String = "SELECT ProductID, Product, SalePrice FROM [MobileShop].[dbo].[MobileInv] WHERE Product = @product"
 
-                    Using cmd As New SqlCommand(filterQuery, conn)
-                        cmd.Parameters.Add("@product", SqlDbType.NVarChar, 120).Value = product
+                    Dim query As String =
+                        "SELECT ProductID, Product, SalePrice " &
+                        "FROM MobileInv " &
+                        "WHERE Product = @Product"
 
-                        rdr = cmd.ExecuteReader()
-                        If rdr.HasRows Then
+                    Using cmd As New SqlCommand(query, conn)
+
+                        cmd.Parameters.Add(
+                            "@Product",
+                            SqlDbType.NVarChar,
+                            120
+                        ).Value = product
+
+
+                        Using rdr As SqlDataReader =
+                            cmd.ExecuteReader()
+
                             If rdr.Read() Then
-                                MobileSaleList_DGV.Rows(e.RowIndex).Cells("dgv_item_id").Value = rdr("ProductID")
-                                MobileSaleList_DGV.Rows(e.RowIndex).Cells("dgv_price_rate").Value = rdr("SalePrice")
-                            End If
-                        Else
 
-                            MessageBox.Show(
-                                "Product not found.",
-                                "Mobile Form",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Warning
-                            )
-                        End If
+                                row.Cells("dgv_item_id").Value =
+                                    rdr("ProductID")
+
+                                row.Cells("dgv_price_rate").Value =
+                                    rdr("SalePrice")
+
+                            Else
+
+                                MessageBox.Show(
+                                    "Product not found.",
+                                    "Mobile Form",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Warning
+                                )
+
+                                row.Cells("dgv_item_id").Value = Nothing
+                                row.Cells("dgv_price_rate").Value = Nothing
+                                row.Cells("dgv_amt_rate").Value = Nothing
+
+                                Exit Sub
+
+                            End If
+
+                        End Using
+
                     End Using
+
                 End Using
 
-                Dim qtyValue As Object =
-                MobileSaleList_DGV.Rows(e.RowIndex).Cells("dgv_qty_rate").Value
-
-                If qtyValue Is Nothing OrElse qtyValue Is DBNull.Value Then
-                    Exit Sub
-                End If
-
-                Dim qty As Integer
-                If Not Integer.TryParse(qtyValue, qty) Then
-                    Exit Sub
-                End If
+                calculateGSTAmt(e.RowIndex)
 
                 MobileSaleItem_Amt(entryNo)
+
+                Exit Sub
+
             End If
 
-            If MobileSaleList_DGV.Columns(e.ColumnIndex).HeaderText = "Qty" Then
+            If columnName = "dgv_qty_rate" Then
+
+
+                calculateGSTAmt(e.RowIndex)
+
                 MobileSaleItem_Amt(entryNo)
-                GSTAmtChanged(e.RowIndex)
+
+                Exit Sub
+
+            End If
+
+            If columnName = "dgv_price_rate" Then
+
+
+                calculateGSTAmt(e.RowIndex)
+
+                MobileSaleItem_Amt(entryNo)
+
+                Exit Sub
+
             End If
 
 
         Catch ex As Exception
-            MessageBox.Show("Error: " & ex.Message, "Error Alert!", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            MessageBox.Show(
+                "Error: " & ex.Message,
+                "Error Alert!",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error
+            )
+
         End Try
+
     End Sub
 
     Private Sub MobileSaleList_DGV_CellValidating(sender As System.Object, e As System.Windows.Forms.DataGridViewCellValidatingEventArgs) Handles MobileSaleList_DGV.CellValidating
@@ -801,46 +895,111 @@ Public Class SaleList
 
     Private Sub MobileSaleList_DGV_SelectionChanged(sender As System.Object, e As EventArgs) Handles MobileSaleList_DGV.SelectionChanged
         Try
-            If MobileSaleList_DGV.CurrentCell.RowIndex < 0 OrElse MobileSaleList_DGV.CurrentCell.ColumnIndex < 0 Then Exit Sub
 
-            Dim rowIndx As Integer = MobileSaleList_DGV.CurrentCell.RowIndex
-            Dim row As DataGridViewRow = MobileSaleList_DGV.Rows(rowIndx)
+            If MobileSaleList_DGV.CurrentCell Is Nothing Then Exit Sub
 
-            If row.IsNewRow Then Exit Sub
-            If row Is DBNull.Value OrElse row Is Nothing Then Exit Sub
+            MobileSaleList_DGV.EndEdit()
 
-            Dim entryVal As Object = MobileSaleList_DGV.Rows(rowIndx).Cells("dgv_entry").Value
+            Dim rowIndx As Integer =
+                MobileSaleList_DGV.CurrentCell.RowIndex
 
-            If entryVal Is Nothing OrElse entryVal Is DBNull.Value OrElse String.IsNullOrWhiteSpace(entryVal.ToString) Then
-                Exit Sub
-            End If
+            If rowIndx < 0 Then Exit Sub
 
-            Dim entryNo As Integer
-            If Not Integer.TryParse(entryVal.ToString, entryNo) Then
+            Dim row As DataGridViewRow =
+                MobileSaleList_DGV.Rows(rowIndx)
+
+            If row.IsNewRow Then
+                valueBox_1.Text = "0.00"
+                valueBox_2.Text = "0.00"
                 Exit Sub
             End If
 
             Using conn As New SqlConnection(connection)
+
                 conn.Open()
-                Dim query As String = "SELECT * FROM MobileSaleList WHERE EntryNo = " & entryNo.ToString
 
-                Using cmd As New SqlCommand(query, conn)
-                    rdr = cmd.ExecuteReader()
+                Using transaction As SqlTransaction = conn.BeginTransaction
+                    Try
+                        Dim listQuery As String =
+                        "SELECT BillNo, Party, [Date], Remarks, FTax " &
+                        "FROM MobileSaleList " &
+                        "WHERE EntryNo = @EntryNo"
 
-                    If rdr.Read() Then
-                        BillNoTextBox.Text = CInt(rdr("BillNo"))
-                        PartyComboBox.Text = rdr("Party")
-                        DateTimePicker.Text = rdr("Date")
-                        RemarksTextBox.Text = rdr("Remarks")
-                    End If
+                        Using cmd As New SqlCommand(listQuery, conn, transaction)
+
+                            cmd.Parameters.Add(
+                                "@EntryNo",
+                                SqlDbType.Int
+                            ).Value = entryNo
+
+                            Using rdr As SqlDataReader = cmd.ExecuteReader()
+
+                                If rdr.Read() Then
+
+                                    BillNoTextBox.Text =
+                                        rdr("BillNo").ToString()
+
+                                    PartyComboBox.Text =
+                                        rdr("Party").ToString()
+
+                                    DateTimePicker.Value =
+                                        CDate(rdr("Date"))
+
+                                    RemarksTextBox.Text =
+                                        rdr("Remarks").ToString()
+
+                                    FTaxTextBox.Text = rdr("FTax").ToString()
+
+                                End If
+
+                            End Using
+
+                        End Using
+
+                        Dim itemQuery As String =
+                        "SELECT GST " &
+                        "FROM MobileSaleItem " &
+                        "WHERE EntryNo = @EntryNo"
+
+                        Using cmd As New SqlCommand(itemQuery, conn, transaction)
+
+                            cmd.Parameters.Add(
+                                "@EntryNo",
+                                SqlDbType.Int
+                            ).Value = entryNo
+
+                            Using rdr As SqlDataReader = cmd.ExecuteReader()
+                                If rdr.Read() Then
+                                    GSTTextBox.Text = (rdr("GST").ToString)
+                                End If
+                            End Using
+                        End Using
+
+                        transaction.Commit()
+
+                    Catch ex As Exception
+                        transaction.Rollback()
+                        Throw
+                    End Try
+
                 End Using
             End Using
 
-            EntryNoTextBox.Text = entryNo.ToString
-            GSTAmtChanged(rowIndx)
+
+            EntryNoTextBox.Text = entryNo.ToString()
+            calculateGSTAmt(rowIndx)
+
         Catch ex As Exception
-            MessageBox.Show("Error: " & ex.Message, "Mobile Form", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            MessageBox.Show(
+                "Error: " & ex.Message,
+                "Mobile Form",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error
+            )
+
         End Try
+
     End Sub
 
     Private Sub MobileSaleList_DGV_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles MobileSaleList_DGV.CellEndEdit
@@ -875,7 +1034,10 @@ Public Class SaleList
                     MobileSaleList_DGV.Rows.RemoveAt(e.RowIndex)
                     Exit Sub
                 End If
+
             Next
+
+
         Catch ex As Exception
             MessageBox.Show(
                 "Error: " & ex.Message,
@@ -987,22 +1149,49 @@ Public Class SaleList
 
     End Sub
 
-    Private Sub GSTAmtChanged(rowIndx As Integer)
+    Private Sub calculateGSTAmt(rowIndx As Integer)
         Dim row As DataGridViewRow = MobileSaleList_DGV.Rows(rowIndx)
+        If row.IsNewRow Then Exit Sub
+
         Dim amtVal As Object = row.Cells("dgv_amt_rate").Value
 
-        If amtVal IsNot Nothing OrElse Not String.IsNullOrWhiteSpace(GSTTextBox.Text) Then
-
-            Dim GST As Decimal
-            Dim amt As Decimal
-
-            Decimal.TryParse(amtVal, amt)
-            Decimal.TryParse(GSTTextBox.Text, GST)
-
-            Dim gstVal As Decimal = amt * (GST / 100)
-
-            valueBox_1.Text = gstVal.ToString("N2")
+        If String.IsNullOrWhiteSpace(GSTTextBox.Text) Then
+            valueBox_1.Text = "0.00"
         End If
+
+        If String.IsNullOrWhiteSpace(FTaxTextBox.Text) Then
+            valueBox_2.Text = "0.00"
+        End If
+
+        If amtVal Is Nothing OrElse amtVal Is DBNull.Value Then
+            valueBox_1.Text = "0.00"
+            valueBox_2.Text = "0.00"
+            Exit Sub
+        End If
+
+        Dim GST As Decimal = 0D
+        Dim FTAX As Decimal = 0D
+        Dim AMT As Decimal = 0D
+        Dim TOTAL As Decimal = 0D
+
+        If Not Decimal.TryParse(amtVal, AMT) Then
+            Exit Sub
+        End If
+
+        If Not Decimal.TryParse(GSTTextBox.Text, GST) Then
+            Exit Sub
+        End If
+
+        If Not Decimal.TryParse(FTaxTextBox.Text, FTAX) Then
+            Exit Sub
+        End If
+
+        Dim gstVal As Decimal = AMT * (GST / 100)
+        Dim taxVal As Decimal = Convert.ToDecimal(totalAmtBox.Text) * (FTAX / 100D)
+        TOTAL += taxVal
+
+        valueBox_1.Text = gstVal.ToString("N2")
+        valueBox_2.Text = TOTAL.ToString("N2")
     End Sub
 #End Region
 
@@ -1056,7 +1245,20 @@ Public Class SaleList
         Me.SaleItem_DataLoad(entryNo)
         RefreshEntryCounters()
     End Sub
-
 #End Region
+
+#Region "TextBox Region"
+    Private Sub GSTTextBox_TextChanged(sender As System.Object, e As System.EventArgs) Handles GSTTextBox.TextChanged
+
+        If MobileSaleList_DGV.CurrentCell Is Nothing Then Exit Sub
+        Dim rowIndx As Integer = MobileSaleList_DGV.CurrentCell.RowIndex
+
+        If rowIndx < 0 Then Exit Sub
+        If MobileSaleList_DGV.Rows(rowIndx).IsNewRow Then Exit Sub
+
+        calculateGSTAmt(rowIndx)
+    End Sub
+#End Region
+
 
 End Class
