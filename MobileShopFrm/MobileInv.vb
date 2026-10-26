@@ -1,25 +1,37 @@
-﻿
+﻿Imports System.Data.SqlClient
+
 Public Class InventorySol
 
+    Dim connection As String = My.Settings.MobileShopConnectionString
+    Dim ID As Integer
+
     Private Sub InventorySol_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
-        form_load()
+        InventoryItem_DataLoad()
     End Sub
 
-    Private Sub form_load()
-        Add_Btn.Enabled = False
-        Update_Btn.Enabled = False
-        Delete_Btn.Enabled = False
-        Save_Btn.Enabled = False
-        Undo_Btn.Enabled = False
+    Private Sub InventoryItem_DataLoad()
 
-        Me.KeyPreview = True
+        Using conn As New SqlConnection(connection)
+            conn.Open()
+            Dim dataQuery As String = "SELECT [ProductID],[Product],[Category],[Brand],[Model],[Color],[Storage],[RAM]" &
+                ",[Unit],[PurchasePrice],[SalePrice],[WarrantyMonths],[IsActive] FROM [MobileShop].[dbo].[MobileInv]"
+
+            Using cmd As New SqlCommand(dataQuery, conn)
+                Dim invTable As New DataTable()
+
+                Using adp As New SqlDataAdapter(cmd)
+                    adp.Fill(invTable)
+                End Using
+
+                MobileInv_DGV.DataSource = invTable
+                cmd.ExecuteNonQuery()
+            End Using
+
+        End Using
+
     End Sub
 
     Private Sub Action_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
-        If e.KeyCode = Keys.F1 Then
-            Show_Btn.PerformClick()
-            e.Handled = True
-        End If
 
         If e.KeyCode = Keys.F2 Then
             Add_Btn.PerformClick()
@@ -55,7 +67,6 @@ Public Class InventorySol
         Add_Btn.Enabled = False
         Update_Btn.Enabled = False
         Delete_Btn.Enabled = False
-        Show_Btn.Enabled = False
     End Sub
 
     Private Sub enable_add_edit_delete()
@@ -66,35 +77,27 @@ Public Class InventorySol
         Add_Btn.Enabled = True
         Update_Btn.Enabled = True
         Delete_Btn.Enabled = True
-        Show_Btn.Enabled = True
         Undo_Btn.Enabled = True
     End Sub
 
-    Private Sub Show_Btn_Click(sender As System.Object, e As System.EventArgs) Handles Show_Btn.Click
+    Private Function GetProductID() As Integer
+        Using conn As New SqlConnection(connection)
+            conn.Open()
 
-        enable_add_edit_delete()
-        Dim brand As String = brandCbBox.Text
-        Dim category As String = categoryCbBox.Text
+            Dim query As String = "SELECT ISNULL(MAX(ProductID),100) FROM MobileInv"
 
-        Try
-            NavBox.Enabled = True
+            Using cmd As New SqlCommand(query, conn)
+                Return CInt(cmd.ExecuteScalar())
+            End Using
 
-            If brand.Trim() = "" OrElse category = "" Then
-                Me.MobileInvTableAdapter.Fill(Me.MobileInvDS.MobileInv)
-            Else
-                Me.MobileInvTableAdapter.FillBy_BrandNCategory(Me.MobileInvDS.MobileInv, brand, category)
-            End If
-
-            RefreshRowIndx()
-        Catch ex As Exception
-            MessageBox.Show("Error: " & ex.Message, "Error Alert!", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        End Try
-
-    End Sub
+        End Using
+    End Function
 
     Private Sub Add_Btn_Click(sender As System.Object, e As System.EventArgs) Handles Add_Btn.Click
         disable_add_edit_delete()
-        Me.MobileInvBindingSource.AddNew()
+
+        'Dim productID As Integer = GetProductID()
+        'MobileInv_DGV.Rows(MobileInv_DGV.Rows.Count - 1).Cells("dgv_productID").Value = productID
 
         MobileInv_DGV.EditMode = DataGridViewEditMode.EditOnKeystrokeOrF2
     End Sub
@@ -160,38 +163,202 @@ Public Class InventorySol
         e.ThrowException = False
 
         MessageBox.Show("Enter a valid input!", "Mobile Form", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+
     End Sub
 
-    Private Function CellValidation() As Boolean
-        Dim rowIndx As Integer = MobileInv_DGV.CurrentCell.RowIndex
+    Private Function InvItem_Exist(productID As Integer)
 
-        Dim purchasePrice As Decimal = CDec(MobileInv_DGV.Rows(rowIndx).Cells("dgv_purchase_price").Value)
-        Dim salePrice As Decimal = CDec(MobileInv_DGV.Rows(rowIndx).Cells("dgv_sale_price").Value)
+        Using conn As New SqlConnection(connection)
+            conn.Open()
 
-        If purchasePrice < 0 Then
-            MessageBox.Show("Purchase Price must be a valid integer", "Mobile - Inventory Solution", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Return False
-        ElseIf salePrice < 0 Then
-            MessageBox.Show("Sale Price must be a valid integer", "Mobile - Inventory Solution", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Return False
-        ElseIf purchasePrice > salePrice Then
-            MessageBox.Show("Sale Price must be greater than Purchase Price", "Mobile - Inventory Solution", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Return False
-        End If
+            Dim query As String = "SELECT COUNT(*) FROM MobileInv WHERE ProductID = @find"
 
-        Return True
+            Using cmd As New SqlCommand(query, conn)
+                cmd.Parameters.Add("@find", SqlDbType.Int).Value = productID
+                Return CInt(cmd.ExecuteScalar())
+            End Using
+
+        End Using
+
+    End Function
+
+    Private Function IsBlank(value As Object) As Boolean
+
+        Return value Is Nothing OrElse
+               value Is DBNull.Value OrElse
+               String.IsNullOrWhiteSpace(value.ToString())
+
     End Function
 
     Private Sub Save_Btn_Click(sender As System.Object, e As System.EventArgs) Handles Save_Btn.Click
         Try
-            'If Not IsInputValid() Then Exit Sub
-            If Not CellValidation() Then Exit Sub
+            Dim rowIndx As Integer = MobileInv_DGV.CurrentCell.RowIndex
 
-            enable_add_edit_delete()
+            If MobileInv_DGV.CurrentCell Is Nothing Then Exit Sub
+            If rowIndx < 0 Then Exit Sub
 
-            Me.Validate()
-            Me.MobileInvBindingSource.EndEdit()
-            Me.MobileInvTableAdapter.Update(Me.MobileInvDS.MobileInv)
+            'Dim idVal As Object = MobileInv_DGV.Rows(rowIndx).Cells("dgv_product_id").Value
+            Dim productVal As Object = MobileInv_DGV.Rows(rowIndx).Cells("dgv_product").Value
+            Dim categoryVal As String = MobileInv_DGV.Rows(rowIndx).Cells("dgv_category").Value
+            Dim brandVal As String = MobileInv_DGV.Rows(rowIndx).Cells("dgv_brand").Value
+            Dim modelVal As Object = MobileInv_DGV.Rows(rowIndx).Cells("dgv_model").Value
+            Dim colorVal As Object = MobileInv_DGV.Rows(rowIndx).Cells("dgv_color").Value
+            Dim storageVal As Object = MobileInv_DGV.Rows(rowIndx).Cells("dgv_storage").Value
+            Dim unitVal As Object = MobileInv_DGV.Rows(rowIndx).Cells("dgv_unit").Value
+            Dim ramVal As Object = MobileInv_DGV.Rows(rowIndx).Cells("dgv_Ram").Value
+            Dim purchaseVal As Object = MobileInv_DGV.Rows(rowIndx).Cells("dgv_purchase_price").Value
+            Dim saleVal As Object = MobileInv_DGV.Rows(rowIndx).Cells("dgv_sale_price").Value
+            'Dim taxVal As Object = MobileInv_DGV.Rows(rowIndx).Cells("dgv_tax_rate").Value
+            'Dim reorderVal As Object = MobileInv_DGV.Rows(rowIndx).Cells("dgv_reorder_level").Value
+            Dim warrantyVal As Object = MobileInv_DGV.Rows(rowIndx).Cells("dgv_warranty_months").Value
+            Dim activeVal As Object = MobileInv_DGV.Rows(rowIndx).Cells("dgv_isactive").Value
+
+            'If IsBlank(idVal) Then
+            'MessageBox.Show("Enter a valid product id.", "MobileInv",
+            '               MessageBoxButtons.OK, MessageBoxIcon.Information)
+            'Exit Sub
+            'End If
+
+            If IsBlank(productVal) Then
+                MessageBox.Show("Enter a valid product name.", "MobileInv",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Exit Sub
+            End If
+
+            If IsBlank(categoryVal) Then
+                MessageBox.Show("Enter a valid category name.", "MobileInv",
+                MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Exit Sub
+            End If
+
+            If IsBlank(brandVal) Then
+                MessageBox.Show("Enter a valid brand name.", "MobileInv",
+                MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Exit Sub
+            End If
+
+            If IsBlank(categoryVal) Then
+                MessageBox.Show("Enter a valid category name.", "MobileInv",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Exit Sub
+            End If
+
+            If IsBlank(modelVal) Then
+                MessageBox.Show("Enter a valid model name.", "MobileInv",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Exit Sub
+            End If
+
+            If IsBlank(colorVal) Then
+                MessageBox.Show("Enter a valid color.", "MobileInv",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Exit Sub
+            End If
+
+            If IsBlank(storageVal) Then
+                MessageBox.Show("Enter a valid storage value.", "MobileInv",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Exit Sub
+            End If
+
+            If IsBlank(unitVal) Then
+                MessageBox.Show("Enter a valid unit.", "MobileInv",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Exit Sub
+            End If
+
+            If IsBlank(ramVal) Then
+                MessageBox.Show("Enter a valid RAM value.", "MobileInv",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Exit Sub
+            End If
+
+            If IsBlank(purchaseVal) Then
+                MessageBox.Show("Enter a valid purchase price.", "MobileInv",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Exit Sub
+            End If
+
+            If IsBlank(saleVal) Then
+                MessageBox.Show("Enter a valid sale price.", "MobileInv",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Exit Sub
+            End If
+
+            'If IsBlank(taxVal) Then
+            '    MessageBox.Show("Enter a valid tax rate.", "MobileInv",
+            '                    MessageBoxButtons.OK, MessageBoxIcon.Information)
+            '    Exit Sub
+            'End If
+
+            'If IsBlank(reorderVal) Then
+            '    MessageBox.Show("Enter a valid reorder level.", "MobileInv",
+            '                    MessageBoxButtons.OK, MessageBoxIcon.Information)
+            '    Exit Sub
+            'End If
+
+            If IsBlank(warrantyVal) Then
+                MessageBox.Show("Enter a valid warranty period.", "MobileInv",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Exit Sub
+            End If
+
+            If IsBlank(activeVal) Then
+                MessageBox.Show("Select the active status.", "MobileInv",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Exit Sub
+            End If
+
+            'Dim productID As Integer = Convert.ToInt32(idVal)
+            Dim product As String = Convert.ToString(productVal).Trim()
+            Dim model As String = Convert.ToString(modelVal).Trim()
+            Dim color As String = Convert.ToString(colorVal).Trim()
+            Dim storage As String = Convert.ToString(storageVal).Trim()
+            Dim unit As String = Convert.ToString(unitVal).Trim()
+            Dim ram As String = Convert.ToString(ramVal).Trim()
+
+            Dim purchasePrice As Decimal = Convert.ToDecimal(purchaseVal)
+            Dim salePrice As Decimal = Convert.ToDecimal(saleVal)
+            'Dim taxRate As Decimal = Convert.ToDecimal(taxVal)
+
+            'Dim reorderLevel As Integer = Convert.ToInt32(reorderVal)
+            Dim warrantyMonths As Integer = Convert.ToInt32(warrantyVal)
+
+            Dim isActive As Boolean = Convert.ToBoolean(activeVal)
+
+            Using conn As New SqlConnection(connection)
+                conn.Open()
+
+                'Dim itemExist As Integer = InvItem_Exist(ID)
+
+                Dim insertQuery As String = "INSERT INTO MobileInv " &
+               "([Product], [Category], [Brand], [Model], [Color], [Storage], [RAM], [Unit], [PurchasePrice], " &
+               "[SalePrice], [WarrantyMonths], [IsActive]) " &
+               "VALUES (@Product, @Category, @Brand, @Model, @Color, @Storage, @RAM, @Unit, @PurchasePrice, @SalePrice, " &
+               "@WarrantyMonths, @IsActive); SELECT CAST(SCOPE_IDENTITY() AS INT);"
+
+                'If itemExist = 0 Then
+                Using cmd As New SqlCommand(insertQuery, conn)
+                    'cmd.Parameters.Add("@ProductID", SqlDbType.Int  ).Value = productID
+                    cmd.Parameters.Add("@Product", SqlDbType.NVarChar).Value = product
+                    cmd.Parameters.Add("@Category", SqlDbType.NVarChar).Value = categoryVal
+                    cmd.Parameters.Add("@Brand", SqlDbType.NVarChar).Value = brandVal
+                    cmd.Parameters.Add("@Model", SqlDbType.NVarChar).Value = model
+                    cmd.Parameters.Add("@Color", SqlDbType.NVarChar).Value = color
+                    cmd.Parameters.Add("@Storage", SqlDbType.NVarChar).Value = storage
+                    cmd.Parameters.Add("@RAM", SqlDbType.NVarChar).Value = ram
+                    cmd.Parameters.Add("@Unit", SqlDbType.NVarChar).Value = unit
+                    cmd.Parameters.Add("@PurchasePrice", SqlDbType.Decimal).Value = purchasePrice
+                    cmd.Parameters.Add("@SalePrice", SqlDbType.Decimal).Value = salePrice
+                    'cmd.Parameters.Add("@ReorderLevel", SqlDbType.Int).Value = reorderLevel
+                    cmd.Parameters.Add("@WarrantyMonths", SqlDbType.Int).Value = warrantyMonths
+                    'cmd.Parameters.Add("@TaxRate", SqlDbType.Int).Value = taxRate
+                    cmd.Parameters.Add("@IsActive", SqlDbType.Int).Value = isActive
+
+                    cmd.ExecuteNonQuery()
+                End Using
+                'End If
+            End Using
 
             MessageBox.Show("Saved successfully!", "Mobile - Inventory Solution", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
@@ -267,7 +434,6 @@ Public Class InventorySol
     End Sub
 
     Private Sub MobileDGV_SelectionChanged(sender As Object, e As EventArgs) Handles MobileInv_DGV.SelectionChanged
-
         RefreshRowIndx()
     End Sub
 
@@ -291,4 +457,5 @@ Public Class InventorySol
         Me.MobileInvBindingSource.MoveFirst()
         RefreshRowIndx()
     End Sub
+  
 End Class

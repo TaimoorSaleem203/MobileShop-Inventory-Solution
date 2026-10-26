@@ -589,8 +589,7 @@ Partial Public Class MobileInvDS
             Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnProductID}, true))
             Me.columnProduct.MaxLength = 120
             Me.columnProductID.AutoIncrement = true
-            Me.columnProductID.AutoIncrementSeed = -1
-            Me.columnProductID.AutoIncrementStep = -1
+            Me.columnProductID.AutoIncrementSeed = 101
             Me.columnProductID.AllowDBNull = false
             Me.columnProductID.ReadOnly = true
             Me.columnProductID.Unique = true

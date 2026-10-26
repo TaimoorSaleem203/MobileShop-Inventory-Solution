@@ -117,11 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="MobileInvBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>138, 17</value>
+  <metadata name="ProductLabel.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
   </metadata>
-  <metadata name="MobileInvDS.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
+  <metadata name="CategoryLabel.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <metadata name="BrandLabel.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <metadata name="PurchasePriceLabel.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <metadata name="SalePriceLabel.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <metadata name="IsActiveLabel.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Save_Btn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -185,22 +197,6 @@
         AT2F7FfMv2K9tsYOLZuhVPoL6kEOK5l4LswAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="Show_Btn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAJBSURBVFhH7Ze7
-        axVBFIdvEmIgGrQUTCHBB6IoEkghJChYBEUDWvgAK1EUSaGlnYJoIQn5C0QsgnYiauOjEwJpFKzUwkIR
-        rBQUEtTx+82euWzC3d1zs7dQyAcf3Dn3zJkTZnbuprHKf0MI4TS+xPkSd1juBHbHiZ2AYnvwN1YxbPn3
-        cRZ7YoG6UOgsesg3IDrTBEXOx3LVLG9A1G+CAnUaEPWaYHLdBsTKm2DiNtyPg7gLT+Aj/IV5yhoQtZrY
-        iUdRjay12AH8jIkRi1/GBwVOKMcNE0bxDeb5ibdwDW7GrygmbVpnoOA4LsTS2T3wDr/FUcZj7MHjcRTC
-        d5zEERwuMF5WlZC4Dr+geIabLN6NOpSpsUvYhW/jqJr5uEAVJJ7J8uMer7dwE2LX4rdsj41vZ8NK3A1M
-        ZfnhjoWWQFyHUmhrdBbOxVE17gZuZvnhroWWQFyPo1ADvaj91cFs5VNMuBs4leXHLdhg4SbErsdvQ3ht
-        oULIyV9k7gb68FOcEsJzHLS4DuEFXERxEXUIX+CHAtNjKtwNHMF00sUffI961BK6DfUYHosjH9UNkJRf
-        XH/9q+xjkx94A3stfy8eLHEaE+UNkJBfXBdNn8W34GEcw36LbcQhh1cxUdwAXx7CVotvxX2oYtvxJD5E
-        bUu7lDagdz7xBOPigs/en2MPpQ3oWb6CzcUF4/YfoxzMqTV/eYGPqHE73sPEihrwvpR6mLOyfpi0Gz2v
-        5R5mrGx7MFEnX7ddq39IPM7hDA5YyVX+BRqNvyjn777ORwY/AAAAAElFTkSuQmCC
-</value>
-  </data>
   <data name="Update_Btn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -216,6 +212,24 @@
         o4/wAAAAAElFTkSuQmCC
 </value>
   </data>
+  <metadata name="dgv_productID.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="dgv_product.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="dgv_category.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="dgv_brand.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="MobileInvBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>138, 17</value>
+  </metadata>
+  <metadata name="MobileInvDS.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <metadata name="MobileInvTableAdapter.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>323, 17</value>
   </metadata>

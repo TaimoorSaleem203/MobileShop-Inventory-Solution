@@ -23,17 +23,23 @@ Partial Class Main
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.MenuStrip = New System.Windows.Forms.MenuStrip()
-        Me.ProductMI = New System.Windows.Forms.ToolStripMenuItem()
-        Me.PartyMI = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SaleListMI = New System.Windows.Forms.ToolStripMenuItem()
+        Me.UtilityMI = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ProductList = New System.Windows.Forms.ToolStripMenuItem()
+        Me.VendorList = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CustomerList = New System.Windows.Forms.ToolStripMenuItem()
+        Me.EntryMI = New System.Windows.Forms.ToolStripMenuItem()
         Me.UserMI = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SaleInv = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SaleReturnInv = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PurchaseInv = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PurchaseReturnInv = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip.SuspendLayout()
         Me.SuspendLayout()
         '
         'MenuStrip
         '
         Me.MenuStrip.BackColor = System.Drawing.SystemColors.Highlight
-        Me.MenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ProductMI, Me.PartyMI, Me.SaleListMI, Me.UserMI})
+        Me.MenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UtilityMI, Me.EntryMI, Me.UserMI})
         Me.MenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip.Name = "MenuStrip"
         Me.MenuStrip.Padding = New System.Windows.Forms.Padding(7, 2, 0, 2)
@@ -41,29 +47,47 @@ Partial Class Main
         Me.MenuStrip.TabIndex = 0
         Me.MenuStrip.Text = "MenuStrip1"
         '
-        'ProductMI
+        'UtilityMI
         '
-        Me.ProductMI.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ProductMI.ForeColor = System.Drawing.Color.White
-        Me.ProductMI.Name = "ProductMI"
-        Me.ProductMI.Size = New System.Drawing.Size(92, 21)
-        Me.ProductMI.Text = "Product List"
+        Me.UtilityMI.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ProductList, Me.VendorList, Me.CustomerList})
+        Me.UtilityMI.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.UtilityMI.ForeColor = System.Drawing.Color.White
+        Me.UtilityMI.Name = "UtilityMI"
+        Me.UtilityMI.Size = New System.Drawing.Size(55, 21)
+        Me.UtilityMI.Text = "Utility"
         '
-        'PartyMI
+        'ProductList
         '
-        Me.PartyMI.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
-        Me.PartyMI.ForeColor = System.Drawing.Color.White
-        Me.PartyMI.Name = "PartyMI"
-        Me.PartyMI.Size = New System.Drawing.Size(76, 21)
-        Me.PartyMI.Text = "Party List"
+        Me.ProductList.BackColor = System.Drawing.Color.White
+        Me.ProductList.ForeColor = System.Drawing.Color.Black
+        Me.ProductList.Name = "ProductList"
+        Me.ProductList.Size = New System.Drawing.Size(159, 22)
+        Me.ProductList.Text = "Product List"
         '
-        'SaleListMI
+        'VendorList
         '
-        Me.SaleListMI.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
-        Me.SaleListMI.ForeColor = System.Drawing.Color.White
-        Me.SaleListMI.Name = "SaleListMI"
-        Me.SaleListMI.Size = New System.Drawing.Size(68, 21)
-        Me.SaleListMI.Text = "Sale List"
+        Me.VendorList.BackColor = System.Drawing.Color.White
+        Me.VendorList.ForeColor = System.Drawing.Color.Black
+        Me.VendorList.Name = "VendorList"
+        Me.VendorList.Size = New System.Drawing.Size(159, 22)
+        Me.VendorList.Text = "Vendor List"
+        '
+        'CustomerList
+        '
+        Me.CustomerList.BackColor = System.Drawing.Color.White
+        Me.CustomerList.ForeColor = System.Drawing.Color.Black
+        Me.CustomerList.Name = "CustomerList"
+        Me.CustomerList.Size = New System.Drawing.Size(159, 22)
+        Me.CustomerList.Text = "Customer List"
+        '
+        'EntryMI
+        '
+        Me.EntryMI.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaleInv, Me.SaleReturnInv, Me.PurchaseInv, Me.PurchaseReturnInv})
+        Me.EntryMI.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
+        Me.EntryMI.ForeColor = System.Drawing.Color.White
+        Me.EntryMI.Name = "EntryMI"
+        Me.EntryMI.Size = New System.Drawing.Size(53, 21)
+        Me.EntryMI.Text = "Entry"
         '
         'UserMI
         '
@@ -72,6 +96,32 @@ Partial Class Main
         Me.UserMI.Name = "UserMI"
         Me.UserMI.Size = New System.Drawing.Size(132, 21)
         Me.UserMI.Text = "User Management"
+        '
+        'SaleInv
+        '
+        Me.SaleInv.BackColor = System.Drawing.Color.White
+        Me.SaleInv.Name = "SaleInv"
+        Me.SaleInv.Size = New System.Drawing.Size(223, 22)
+        Me.SaleInv.Text = "Sale Invoice"
+        '
+        'SaleReturnInv
+        '
+        Me.SaleReturnInv.Name = "SaleReturnInv"
+        Me.SaleReturnInv.Size = New System.Drawing.Size(223, 22)
+        Me.SaleReturnInv.Text = "Sale Return Invoice"
+        '
+        'PurchaseInv
+        '
+        Me.PurchaseInv.BackColor = System.Drawing.Color.White
+        Me.PurchaseInv.Name = "PurchaseInv"
+        Me.PurchaseInv.Size = New System.Drawing.Size(223, 22)
+        Me.PurchaseInv.Text = "Purchase Invoice"
+        '
+        'PurchaseReturnInv
+        '
+        Me.PurchaseReturnInv.Name = "PurchaseReturnInv"
+        Me.PurchaseReturnInv.Size = New System.Drawing.Size(223, 22)
+        Me.PurchaseReturnInv.Text = "Purchase Return Invoice"
         '
         'Main
         '
@@ -95,8 +145,14 @@ Partial Class Main
 
     End Sub
     Friend WithEvents MenuStrip As System.Windows.Forms.MenuStrip
-    Friend WithEvents ProductMI As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents PartyMI As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents UtilityMI As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents UserMI As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents SaleListMI As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents EntryMI As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ProductList As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents VendorList As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents CustomerList As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents SaleInv As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents SaleReturnInv As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents PurchaseInv As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents PurchaseReturnInv As System.Windows.Forms.ToolStripMenuItem
 End Class

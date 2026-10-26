@@ -5,9 +5,9 @@ Public Class SaleList
     Dim connection As String = My.Settings.MobileShopConnectionString
     Dim entryNo As Integer
 
-    Dim rdr As SqlDataReader = Nothing 'Reads records returned by a SQL query, one row at a time.
-    Dim adpt As SqlDataAdapter 'Transfers data between SQL Server and in-memory data objects such as a DataTable or DataSet.
-    Dim cmd As SqlCommand = Nothing  'Represents a SQL statement or stored procedure to execute against a SQL Server database
+    'Dim rdr As SqlDataReader = Nothing 'Reads records returned by a SQL query, one row at a time.
+    'Dim adpt As SqlDataAdapter 'Transfers data between SQL Server and in-memory data objects such as a DataTable or DataSet.
+    'Dim cmd As SqlCommand = Nothing  'Represents a SQL statement or stored procedure to execute against a SQL Server database
 
 #Region "CRUD Region"
     Private Sub SaleListAdd()
@@ -519,15 +519,6 @@ Public Class SaleList
                 Exit Sub
             End If
 
-            For Each row As DataGridViewRow In MobileSaleList_DGV.Rows
-                If row Is Nothing OrElse row.IsNewRow Then Continue For
-
-                If Len(row.Cells("dgv_qty_rate").Value.ToString) = 0 Then
-                    MessageBox.Show("Qty Length: " & Len(row.Cells("dgv_qty_rate").Value.ToString), "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                    Exit Sub
-                End If
-            Next
-
             enable_add_edit_delete()
             Me.SaleListSave()
             clearEntries()
@@ -564,6 +555,7 @@ Public Class SaleList
 
             MobileSaleList_DGV.Rows.RemoveAt(rowIndx)
             MobileSaleItem_Amt(entryNo)
+            calculateGSTAmt(rowIndx)
         End If
     End Sub
 
@@ -600,11 +592,10 @@ Public Class SaleList
     Private Sub firstBtn_Click(sender As System.Object, e As System.EventArgs) Handles firstBtn.Click
         ShowEntry(GetFirstEntryNo())
     End Sub
-
 #End Region
 
 #Region "KeyPress Region"
-    Private Sub GSTTextBox_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs) Handles GSTTextBox.KeyPress
+    Private Sub GSTTextBox_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs) Handles GSTTextBox.KeyPress, FTaxTextBox.KeyPress
         If Not Char.IsDigit(e.KeyChar) AndAlso Not Char.IsControl(e.KeyChar) Then
             e.Handled = True
         End If
@@ -1055,8 +1046,11 @@ Public Class SaleList
     Private Sub MobileSaleItem_Amt(entryNo As Integer)
 
         Try
-
             Dim total As Decimal = 0D
+            Dim netTotal As Decimal = 0D
+
+            Dim GSTAmt As Decimal = 0D
+            Dim FTAXAmt As Decimal = 0D
 
             For Each row As DataGridViewRow In MobileSaleList_DGV.Rows
 
@@ -1094,8 +1088,8 @@ Public Class SaleList
 
                 End If
 
-                Dim rate As Decimal
-                Dim amount As Decimal
+                Dim rate As Decimal = 0D
+                Dim amount As Decimal = 0D
 
                 If rateValue Is Nothing OrElse
                    rateValue Is DBNull.Value OrElse
@@ -1107,6 +1101,7 @@ Public Class SaleList
                 End If
 
                 amount = qty * rate
+
                 row.Cells("dgv_amt_rate").Value = amount
 
                 If entryValue Is Nothing OrElse
@@ -1133,8 +1128,13 @@ Public Class SaleList
 
             Next
 
+            GSTAmt = Convert.ToDecimal(valueBox_1.Text)
+            FTAXAmt = Convert.ToDecimal(valueBox_2.Text)
+
             totalAmtBox.Text =
                 total.ToString("N2")
+
+            netAmtBox.Text = (total + GSTAmt + FTAXAmt).ToString("N2")
 
         Catch ex As Exception
 
@@ -1174,17 +1174,9 @@ Public Class SaleList
         Dim AMT As Decimal = 0D
         Dim TOTAL As Decimal = 0D
 
-        If Not Decimal.TryParse(amtVal, AMT) Then
-            Exit Sub
-        End If
-
-        If Not Decimal.TryParse(GSTTextBox.Text, GST) Then
-            Exit Sub
-        End If
-
-        If Not Decimal.TryParse(FTaxTextBox.Text, FTAX) Then
-            Exit Sub
-        End If
+        Decimal.TryParse(amtVal, AMT)
+        Decimal.TryParse(GSTTextBox.Text, GST)
+        Decimal.TryParse(FTaxTextBox.Text, FTAX)
 
         Dim gstVal As Decimal = AMT * (GST / 100)
         Dim taxVal As Decimal = Convert.ToDecimal(totalAmtBox.Text) * (FTAX / 100D)
@@ -1248,7 +1240,7 @@ Public Class SaleList
 #End Region
 
 #Region "TextBox Region"
-    Private Sub GSTTextBox_TextChanged(sender As System.Object, e As System.EventArgs) Handles GSTTextBox.TextChanged
+    Private Sub GSTTextBox_TextChanged(sender As System.Object, e As System.EventArgs) Handles GSTTextBox.TextChanged, FTaxTextBox.TextChanged
 
         If MobileSaleList_DGV.CurrentCell Is Nothing Then Exit Sub
         Dim rowIndx As Integer = MobileSaleList_DGV.CurrentCell.RowIndex
@@ -1259,6 +1251,5 @@ Public Class SaleList
         calculateGSTAmt(rowIndx)
     End Sub
 #End Region
-
 
 End Class

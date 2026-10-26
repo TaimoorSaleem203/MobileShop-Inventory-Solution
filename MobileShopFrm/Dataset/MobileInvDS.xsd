@@ -119,7 +119,7 @@ SELECT Product, ProductID, Category, Brand, Model, Color, Storage, Unit, RAM, Pu
               <Mapping SourceColumn="IsActive" DataSetColumn="IsActive" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="MobileShopConnectionString (MySettings)" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="CountQuery" Modifier="Public" Name="CountQuery" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="CountQuery">
+              <DbSource ConnectionRef="MobileShopConnectionString (MySettings)" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="CountQuery" Modifier="Public" Name="CountQuery" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="CountQuery">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT        COUNT(*) AS TOTAL_COUNT
@@ -128,7 +128,7 @@ FROM            MobileInv</CommandText>
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="MobileShopConnectionString (MySettings)" DbObjectName="MobileShop.dbo.MobileInv" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="FillBy_BrandNCategory" GenerateMethods="Fill" GenerateShortCommands="true" GeneratorSourceName="FillBy_BrandNCategory" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="FillBy_BrandNCategory">
+              <DbSource ConnectionRef="MobileShopConnectionString (MySettings)" DbObjectName="MobileShop.dbo.MobileInv" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="FillBy_BrandNCategory" GenerateMethods="Fill" GenerateShortCommands="true" GeneratorSourceName="FillBy_BrandNCategory" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="FillBy_BrandNCategory">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT        Product, ProductID, Category, Brand, Model, Color, Storage, Unit, RAM, PurchasePrice, SalePrice, TaxRate, ReorderLevel, WarrantyMonths, IsActive
@@ -150,7 +150,7 @@ FROM            MobileInv WHERE Brand = @Brand AND Category = @Category</Command
   <xs:element name="MobileInvDS" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="MobileInvDS" msprop:Generator_UserDSName="MobileInvDS">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="MobileInv" msprop:Generator_TableClassName="MobileInvDataTable" msprop:Generator_TableVarName="tableMobileInv" msprop:Generator_RowChangedName="MobileInvRowChanged" msprop:Generator_TablePropName="MobileInv" msprop:Generator_RowDeletingName="MobileInvRowDeleting" msprop:Generator_RowChangingName="MobileInvRowChanging" msprop:Generator_RowEvHandlerName="MobileInvRowChangeEventHandler" msprop:Generator_RowDeletedName="MobileInvRowDeleted" msprop:Generator_RowClassName="MobileInvRow" msprop:Generator_UserTableName="MobileInv" msprop:Generator_RowEvArgName="MobileInvRowChangeEvent">
+        <xs:element name="MobileInv" msprop:Generator_TableClassName="MobileInvDataTable" msprop:Generator_TableVarName="tableMobileInv" msprop:Generator_TablePropName="MobileInv" msprop:Generator_RowDeletingName="MobileInvRowDeleting" msprop:Generator_RowChangingName="MobileInvRowChanging" msprop:Generator_RowEvHandlerName="MobileInvRowChangeEventHandler" msprop:Generator_RowDeletedName="MobileInvRowDeleted" msprop:Generator_UserTableName="MobileInv" msprop:Generator_RowChangedName="MobileInvRowChanged" msprop:Generator_RowEvArgName="MobileInvRowChangeEvent" msprop:Generator_RowClassName="MobileInvRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Product" msprop:Generator_ColumnVarNameInTable="columnProduct" msprop:Generator_ColumnPropNameInRow="Product" msprop:Generator_ColumnPropNameInTable="ProductColumn" msprop:Generator_UserColumnName="Product" minOccurs="0">
@@ -160,7 +160,7 @@ FROM            MobileInv WHERE Brand = @Brand AND Category = @Category</Command
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="ProductID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnProductID" msprop:Generator_ColumnPropNameInRow="ProductID" msprop:Generator_ColumnPropNameInTable="ProductIDColumn" msprop:Generator_UserColumnName="ProductID" type="xs:int" />
+              <xs:element name="ProductID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="101" msprop:Generator_ColumnVarNameInTable="columnProductID" msprop:Generator_ColumnPropNameInRow="ProductID" msprop:Generator_ColumnPropNameInTable="ProductIDColumn" msprop:Generator_UserColumnName="ProductID" type="xs:int" />
               <xs:element name="Category" msprop:Generator_ColumnVarNameInTable="columnCategory" msprop:Generator_ColumnPropNameInRow="Category" msprop:Generator_ColumnPropNameInTable="CategoryColumn" msprop:Generator_UserColumnName="Category" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
