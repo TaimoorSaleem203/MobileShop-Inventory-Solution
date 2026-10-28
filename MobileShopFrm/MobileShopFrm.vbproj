@@ -111,6 +111,12 @@
       <DependentUpon>MobileInv.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="MobileInvEntry.Designer.vb">
+      <DependentUpon>MobileInvEntry.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MobileInvEntry.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MobileMain.Designer.vb">
       <DependentUpon>MobileMain.vb</DependentUpon>
     </Compile>
@@ -160,6 +166,9 @@
   <ItemGroup>
     <EmbeddedResource Include="MobileInv.resx">
       <DependentUpon>MobileInv.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MobileInvEntry.resx">
+      <DependentUpon>MobileInvEntry.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MobileMain.resx">
       <DependentUpon>MobileMain.vb</DependentUpon>

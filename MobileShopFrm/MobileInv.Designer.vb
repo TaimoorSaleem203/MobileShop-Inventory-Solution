@@ -24,24 +24,13 @@ Partial Class InventorySol
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim ProductLabel As System.Windows.Forms.Label
-        Dim CategoryLabel As System.Windows.Forms.Label
         Dim BrandLabel As System.Windows.Forms.Label
-        Dim PurchasePriceLabel As System.Windows.Forms.Label
-        Dim SalePriceLabel As System.Windows.Forms.Label
-        Dim IsActiveLabel As System.Windows.Forms.Label
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(InventorySol))
+        Dim CategoryLabel As System.Windows.Forms.Label
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Me.ShapeContainer1 = New Microsoft.VisualBasic.PowerPacks.ShapeContainer()
-        Me.RectangleShape1 = New Microsoft.VisualBasic.PowerPacks.RectangleShape()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Save_Btn = New System.Windows.Forms.Button()
-        Me.Add_Btn = New System.Windows.Forms.Button()
-        Me.Undo_Btn = New System.Windows.Forms.Button()
-        Me.Delete_Btn = New System.Windows.Forms.Button()
-        Me.Update_Btn = New System.Windows.Forms.Button()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(InventorySol))
         Me.NavBox = New System.Windows.Forms.GroupBox()
         Me.ToCount = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
@@ -51,16 +40,6 @@ Partial Class InventorySol
         Me.MovePrevBtn = New System.Windows.Forms.Button()
         Me.MoveFirstBtn = New System.Windows.Forms.Button()
         Me.MobileInv_DGV = New System.Windows.Forms.DataGridView()
-        Me.ProductTextBox = New System.Windows.Forms.TextBox()
-        Me.CategoryTextBox = New System.Windows.Forms.TextBox()
-        Me.BrandTextBox = New System.Windows.Forms.TextBox()
-        Me.PurchasePriceTextBox = New System.Windows.Forms.TextBox()
-        Me.SalePriceTextBox = New System.Windows.Forms.TextBox()
-        Me.IsActiveCheckBox = New System.Windows.Forms.CheckBox()
-        Me.MobileInvBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.MobileInvDS = New MobileShopFrm.MobileInvDS()
-        Me.MobileInvTableAdapter = New MobileShopFrm.MobileInvDSTableAdapters.MobileInvTableAdapter()
-        Me.TableAdapterManager = New MobileShopFrm.MobileInvDSTableAdapters.TableAdapterManager()
         Me.dgv_productID = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dgv_product = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dgv_category = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -73,13 +52,25 @@ Partial Class InventorySol
         Me.dgv_purchase_price = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dgv_sale_price = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dgv_warranty_months = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dgv_isactive = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgv_isactive = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.MobileInvBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.MobileInvDS = New MobileShopFrm.MobileInvDS()
+        Me.ProductTextBox = New System.Windows.Forms.TextBox()
+        Me.CategoryTextBox = New System.Windows.Forms.TextBox()
+        Me.BrandTextBox = New System.Windows.Forms.TextBox()
+        Me.MobileInvTableAdapter = New MobileShopFrm.MobileInvDSTableAdapters.MobileInvTableAdapter()
+        Me.TableAdapterManager = New MobileShopFrm.MobileInvDSTableAdapters.TableAdapterManager()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Undo_Btn = New System.Windows.Forms.Button()
+        Me.Delete_Btn = New System.Windows.Forms.Button()
+        Me.Save_Btn = New System.Windows.Forms.Button()
+        Me.Update_Btn = New System.Windows.Forms.Button()
+        Me.Add_Btn = New System.Windows.Forms.Button()
+        Me.ShapeContainer1 = New Microsoft.VisualBasic.PowerPacks.ShapeContainer()
+        Me.RectangleShape1 = New Microsoft.VisualBasic.PowerPacks.RectangleShape()
         ProductLabel = New System.Windows.Forms.Label()
-        CategoryLabel = New System.Windows.Forms.Label()
         BrandLabel = New System.Windows.Forms.Label()
-        PurchasePriceLabel = New System.Windows.Forms.Label()
-        SalePriceLabel = New System.Windows.Forms.Label()
-        IsActiveLabel = New System.Windows.Forms.Label()
+        CategoryLabel = New System.Windows.Forms.Label()
         Me.NavBox.SuspendLayout()
         CType(Me.MobileInv_DGV, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.MobileInvBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -91,187 +82,33 @@ Partial Class InventorySol
         ProductLabel.AutoSize = True
         ProductLabel.Font = New System.Drawing.Font("Segoe UI Semibold", 10.0!, System.Drawing.FontStyle.Bold)
         ProductLabel.ForeColor = System.Drawing.Color.Black
-        ProductLabel.Location = New System.Drawing.Point(9, 64)
+        ProductLabel.Location = New System.Drawing.Point(9, 65)
         ProductLabel.Name = "ProductLabel"
         ProductLabel.Size = New System.Drawing.Size(61, 19)
         ProductLabel.TabIndex = 0
         ProductLabel.Text = "Product:"
-        '
-        'CategoryLabel
-        '
-        CategoryLabel.AutoSize = True
-        CategoryLabel.Font = New System.Drawing.Font("Segoe UI Semibold", 10.0!, System.Drawing.FontStyle.Bold)
-        CategoryLabel.ForeColor = System.Drawing.Color.Black
-        CategoryLabel.Location = New System.Drawing.Point(233, 64)
-        CategoryLabel.Name = "CategoryLabel"
-        CategoryLabel.Size = New System.Drawing.Size(69, 19)
-        CategoryLabel.TabIndex = 2
-        CategoryLabel.Text = "Category:"
         '
         'BrandLabel
         '
         BrandLabel.AutoSize = True
         BrandLabel.Font = New System.Drawing.Font("Segoe UI Semibold", 10.0!, System.Drawing.FontStyle.Bold)
         BrandLabel.ForeColor = System.Drawing.Color.Black
-        BrandLabel.Location = New System.Drawing.Point(400, 64)
+        BrandLabel.Location = New System.Drawing.Point(400, 63)
         BrandLabel.Name = "BrandLabel"
         BrandLabel.Size = New System.Drawing.Size(48, 19)
         BrandLabel.TabIndex = 4
         BrandLabel.Text = "Brand:"
         '
-        'PurchasePriceLabel
+        'CategoryLabel
         '
-        PurchasePriceLabel.AutoSize = True
-        PurchasePriceLabel.Font = New System.Drawing.Font("Segoe UI Semibold", 10.0!, System.Drawing.FontStyle.Bold)
-        PurchasePriceLabel.ForeColor = System.Drawing.Color.Black
-        PurchasePriceLabel.Location = New System.Drawing.Point(567, 64)
-        PurchasePriceLabel.Name = "PurchasePriceLabel"
-        PurchasePriceLabel.Size = New System.Drawing.Size(103, 19)
-        PurchasePriceLabel.TabIndex = 0
-        PurchasePriceLabel.Text = "Purchase Price:"
-        '
-        'SalePriceLabel
-        '
-        SalePriceLabel.AutoSize = True
-        SalePriceLabel.Font = New System.Drawing.Font("Segoe UI Semibold", 10.0!, System.Drawing.FontStyle.Bold)
-        SalePriceLabel.ForeColor = System.Drawing.Color.Black
-        SalePriceLabel.Location = New System.Drawing.Point(734, 64)
-        SalePriceLabel.Name = "SalePriceLabel"
-        SalePriceLabel.Size = New System.Drawing.Size(73, 19)
-        SalePriceLabel.TabIndex = 0
-        SalePriceLabel.Text = "Sale Price:"
-        '
-        'IsActiveLabel
-        '
-        IsActiveLabel.AutoSize = True
-        IsActiveLabel.Font = New System.Drawing.Font("Segoe UI Semibold", 10.0!, System.Drawing.FontStyle.Bold)
-        IsActiveLabel.ForeColor = System.Drawing.Color.Black
-        IsActiveLabel.Location = New System.Drawing.Point(901, 64)
-        IsActiveLabel.Name = "IsActiveLabel"
-        IsActiveLabel.Size = New System.Drawing.Size(51, 19)
-        IsActiveLabel.TabIndex = 0
-        IsActiveLabel.Text = "Active:"
-        '
-        'ShapeContainer1
-        '
-        Me.ShapeContainer1.Location = New System.Drawing.Point(0, 0)
-        Me.ShapeContainer1.Margin = New System.Windows.Forms.Padding(0)
-        Me.ShapeContainer1.Name = "ShapeContainer1"
-        Me.ShapeContainer1.Shapes.AddRange(New Microsoft.VisualBasic.PowerPacks.Shape() {Me.RectangleShape1})
-        Me.ShapeContainer1.Size = New System.Drawing.Size(1194, 671)
-        Me.ShapeContainer1.TabIndex = 0
-        Me.ShapeContainer1.TabStop = False
-        '
-        'RectangleShape1
-        '
-        Me.RectangleShape1.BorderColor = System.Drawing.Color.Transparent
-        Me.RectangleShape1.FillColor = System.Drawing.SystemColors.MenuHighlight
-        Me.RectangleShape1.FillStyle = Microsoft.VisualBasic.PowerPacks.FillStyle.Solid
-        Me.RectangleShape1.Location = New System.Drawing.Point(0, 0)
-        Me.RectangleShape1.Name = "RectangleShape1"
-        Me.RectangleShape1.Size = New System.Drawing.Size(1373, 48)
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.BackColor = System.Drawing.SystemColors.MenuHighlight
-        Me.Label1.Font = New System.Drawing.Font("Segoe UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(178, Byte))
-        Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(22, 9)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(181, 25)
-        Me.Label1.TabIndex = 1
-        Me.Label1.Text = "PRODUCT MASTER"
-        '
-        'Save_Btn
-        '
-        Me.Save_Btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Save_Btn.BackColor = System.Drawing.Color.DarkCyan
-        Me.Save_Btn.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Save_Btn.FlatAppearance.BorderSize = 0
-        Me.Save_Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Save_Btn.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(178, Byte))
-        Me.Save_Btn.ForeColor = System.Drawing.Color.White
-        Me.Save_Btn.Image = CType(resources.GetObject("Save_Btn.Image"), System.Drawing.Image)
-        Me.Save_Btn.Location = New System.Drawing.Point(844, 0)
-        Me.Save_Btn.Name = "Save_Btn"
-        Me.Save_Btn.Size = New System.Drawing.Size(84, 48)
-        Me.Save_Btn.TabIndex = 5
-        Me.Save_Btn.Text = "F4"
-        Me.Save_Btn.TextAlign = System.Drawing.ContentAlignment.BottomLeft
-        Me.Save_Btn.UseVisualStyleBackColor = False
-        '
-        'Add_Btn
-        '
-        Me.Add_Btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Add_Btn.BackColor = System.Drawing.SystemColors.MenuHighlight
-        Me.Add_Btn.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Add_Btn.FlatAppearance.BorderSize = 0
-        Me.Add_Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Add_Btn.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(178, Byte))
-        Me.Add_Btn.ForeColor = System.Drawing.Color.White
-        Me.Add_Btn.Image = CType(resources.GetObject("Add_Btn.Image"), System.Drawing.Image)
-        Me.Add_Btn.Location = New System.Drawing.Point(673, 0)
-        Me.Add_Btn.Name = "Add_Btn"
-        Me.Add_Btn.Size = New System.Drawing.Size(84, 48)
-        Me.Add_Btn.TabIndex = 10
-        Me.Add_Btn.Text = "F2"
-        Me.Add_Btn.TextAlign = System.Drawing.ContentAlignment.BottomLeft
-        Me.Add_Btn.UseVisualStyleBackColor = False
-        '
-        'Undo_Btn
-        '
-        Me.Undo_Btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Undo_Btn.BackColor = System.Drawing.Color.DimGray
-        Me.Undo_Btn.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Undo_Btn.FlatAppearance.BorderSize = 0
-        Me.Undo_Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Undo_Btn.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
-        Me.Undo_Btn.ForeColor = System.Drawing.Color.White
-        Me.Undo_Btn.Image = CType(resources.GetObject("Undo_Btn.Image"), System.Drawing.Image)
-        Me.Undo_Btn.Location = New System.Drawing.Point(1009, 0)
-        Me.Undo_Btn.Name = "Undo_Btn"
-        Me.Undo_Btn.Size = New System.Drawing.Size(84, 48)
-        Me.Undo_Btn.TabIndex = 8
-        Me.Undo_Btn.Text = "F6"
-        Me.Undo_Btn.TextAlign = System.Drawing.ContentAlignment.BottomLeft
-        Me.Undo_Btn.UseVisualStyleBackColor = False
-        '
-        'Delete_Btn
-        '
-        Me.Delete_Btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Delete_Btn.BackColor = System.Drawing.Color.Brown
-        Me.Delete_Btn.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Delete_Btn.FlatAppearance.BorderSize = 0
-        Me.Delete_Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Delete_Btn.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
-        Me.Delete_Btn.ForeColor = System.Drawing.Color.White
-        Me.Delete_Btn.Image = CType(resources.GetObject("Delete_Btn.Image"), System.Drawing.Image)
-        Me.Delete_Btn.Location = New System.Drawing.Point(925, 0)
-        Me.Delete_Btn.Name = "Delete_Btn"
-        Me.Delete_Btn.Size = New System.Drawing.Size(84, 48)
-        Me.Delete_Btn.TabIndex = 7
-        Me.Delete_Btn.Text = "F5"
-        Me.Delete_Btn.TextAlign = System.Drawing.ContentAlignment.BottomLeft
-        Me.Delete_Btn.UseVisualStyleBackColor = False
-        '
-        'Update_Btn
-        '
-        Me.Update_Btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Update_Btn.BackColor = System.Drawing.Color.LightSeaGreen
-        Me.Update_Btn.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Update_Btn.FlatAppearance.BorderSize = 0
-        Me.Update_Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Update_Btn.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
-        Me.Update_Btn.ForeColor = System.Drawing.Color.White
-        Me.Update_Btn.Image = CType(resources.GetObject("Update_Btn.Image"), System.Drawing.Image)
-        Me.Update_Btn.Location = New System.Drawing.Point(763, 0)
-        Me.Update_Btn.Name = "Update_Btn"
-        Me.Update_Btn.Size = New System.Drawing.Size(84, 48)
-        Me.Update_Btn.TabIndex = 6
-        Me.Update_Btn.Text = "F3"
-        Me.Update_Btn.TextAlign = System.Drawing.ContentAlignment.BottomLeft
-        Me.Update_Btn.UseVisualStyleBackColor = False
+        CategoryLabel.AutoSize = True
+        CategoryLabel.Font = New System.Drawing.Font("Segoe UI Semibold", 10.0!, System.Drawing.FontStyle.Bold)
+        CategoryLabel.ForeColor = System.Drawing.Color.Black
+        CategoryLabel.Location = New System.Drawing.Point(233, 65)
+        CategoryLabel.Name = "CategoryLabel"
+        CategoryLabel.Size = New System.Drawing.Size(69, 19)
+        CategoryLabel.TabIndex = 2
+        CategoryLabel.Text = "Category:"
         '
         'NavBox
         '
@@ -412,98 +249,13 @@ Partial Class InventorySol
         Me.MobileInv_DGV.DefaultCellStyle = DataGridViewCellStyle3
         Me.MobileInv_DGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
         Me.MobileInv_DGV.EnableHeadersVisualStyles = False
-        Me.MobileInv_DGV.Location = New System.Drawing.Point(12, 127)
+        Me.MobileInv_DGV.Location = New System.Drawing.Point(12, 132)
         Me.MobileInv_DGV.Name = "MobileInv_DGV"
         Me.MobileInv_DGV.RowHeadersVisible = False
         DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
         Me.MobileInv_DGV.RowsDefaultCellStyle = DataGridViewCellStyle4
-        Me.MobileInv_DGV.Size = New System.Drawing.Size(1170, 532)
+        Me.MobileInv_DGV.Size = New System.Drawing.Size(1170, 527)
         Me.MobileInv_DGV.TabIndex = 0
-        '
-        'ProductTextBox
-        '
-        Me.ProductTextBox.BackColor = System.Drawing.Color.White
-        Me.ProductTextBox.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.MobileInvBindingSource, "Product", True))
-        Me.ProductTextBox.Font = New System.Drawing.Font("Segoe UI Semibold", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.ProductTextBox.Location = New System.Drawing.Point(13, 86)
-        Me.ProductTextBox.Name = "ProductTextBox"
-        Me.ProductTextBox.ReadOnly = True
-        Me.ProductTextBox.Size = New System.Drawing.Size(204, 25)
-        Me.ProductTextBox.TabIndex = 1
-        '
-        'CategoryTextBox
-        '
-        Me.CategoryTextBox.BackColor = System.Drawing.Color.White
-        Me.CategoryTextBox.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.MobileInvBindingSource, "Category", True))
-        Me.CategoryTextBox.Font = New System.Drawing.Font("Segoe UI Semibold", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.CategoryTextBox.Location = New System.Drawing.Point(237, 86)
-        Me.CategoryTextBox.Name = "CategoryTextBox"
-        Me.CategoryTextBox.ReadOnly = True
-        Me.CategoryTextBox.Size = New System.Drawing.Size(143, 25)
-        Me.CategoryTextBox.TabIndex = 3
-        '
-        'BrandTextBox
-        '
-        Me.BrandTextBox.BackColor = System.Drawing.Color.White
-        Me.BrandTextBox.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.MobileInvBindingSource, "Brand", True))
-        Me.BrandTextBox.Font = New System.Drawing.Font("Segoe UI Semibold", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.BrandTextBox.Location = New System.Drawing.Point(404, 86)
-        Me.BrandTextBox.Name = "BrandTextBox"
-        Me.BrandTextBox.ReadOnly = True
-        Me.BrandTextBox.Size = New System.Drawing.Size(143, 25)
-        Me.BrandTextBox.TabIndex = 5
-        '
-        'PurchasePriceTextBox
-        '
-        Me.PurchasePriceTextBox.BackColor = System.Drawing.Color.White
-        Me.PurchasePriceTextBox.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.MobileInvBindingSource, "PurchasePrice", True))
-        Me.PurchasePriceTextBox.Font = New System.Drawing.Font("Segoe UI Semibold", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.PurchasePriceTextBox.Location = New System.Drawing.Point(571, 86)
-        Me.PurchasePriceTextBox.Name = "PurchasePriceTextBox"
-        Me.PurchasePriceTextBox.ReadOnly = True
-        Me.PurchasePriceTextBox.Size = New System.Drawing.Size(143, 25)
-        Me.PurchasePriceTextBox.TabIndex = 1
-        '
-        'SalePriceTextBox
-        '
-        Me.SalePriceTextBox.BackColor = System.Drawing.Color.White
-        Me.SalePriceTextBox.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.MobileInvBindingSource, "SalePrice", True))
-        Me.SalePriceTextBox.Font = New System.Drawing.Font("Segoe UI Semibold", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.SalePriceTextBox.Location = New System.Drawing.Point(738, 86)
-        Me.SalePriceTextBox.Name = "SalePriceTextBox"
-        Me.SalePriceTextBox.ReadOnly = True
-        Me.SalePriceTextBox.Size = New System.Drawing.Size(143, 25)
-        Me.SalePriceTextBox.TabIndex = 1
-        '
-        'IsActiveCheckBox
-        '
-        Me.IsActiveCheckBox.DataBindings.Add(New System.Windows.Forms.Binding("CheckState", Me.MobileInvBindingSource, "IsActive", True))
-        Me.IsActiveCheckBox.Font = New System.Drawing.Font("Segoe UI Semibold", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.IsActiveCheckBox.Location = New System.Drawing.Point(905, 86)
-        Me.IsActiveCheckBox.Name = "IsActiveCheckBox"
-        Me.IsActiveCheckBox.Size = New System.Drawing.Size(23, 24)
-        Me.IsActiveCheckBox.TabIndex = 1
-        Me.IsActiveCheckBox.UseVisualStyleBackColor = True
-        '
-        'MobileInvBindingSource
-        '
-        Me.MobileInvBindingSource.DataMember = "MobileInv"
-        Me.MobileInvBindingSource.DataSource = Me.MobileInvDS
-        '
-        'MobileInvDS
-        '
-        Me.MobileInvDS.DataSetName = "MobileInvDS"
-        Me.MobileInvDS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
-        'MobileInvTableAdapter
-        '
-        Me.MobileInvTableAdapter.ClearBeforeFill = True
-        '
-        'TableAdapterManager
-        '
-        Me.TableAdapterManager.BackupDataSetBeforeUpdate = False
-        Me.TableAdapterManager.MobileInvTableAdapter = Me.MobileInvTableAdapter
-        Me.TableAdapterManager.UpdateOrder = MobileShopFrm.MobileInvDSTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete
         '
         'dgv_productID
         '
@@ -517,21 +269,21 @@ Partial Class InventorySol
         '
         Me.dgv_product.DataPropertyName = "Product"
         Me.dgv_product.HeaderText = "Product"
-        Me.dgv_product.MinimumWidth = 140
+        Me.dgv_product.MinimumWidth = 160
         Me.dgv_product.Name = "dgv_product"
         '
         'dgv_category
         '
         Me.dgv_category.DataPropertyName = "Category"
         Me.dgv_category.HeaderText = "Category"
-        Me.dgv_category.MinimumWidth = 120
+        Me.dgv_category.MinimumWidth = 100
         Me.dgv_category.Name = "dgv_category"
         '
         'dgv_model
         '
         Me.dgv_model.DataPropertyName = "Model"
         Me.dgv_model.HeaderText = "Model"
-        Me.dgv_model.MinimumWidth = 120
+        Me.dgv_model.MinimumWidth = 100
         Me.dgv_model.Name = "dgv_model"
         '
         'dgv_brand
@@ -569,7 +321,7 @@ Partial Class InventorySol
         Me.dgv_unit.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.dgv_unit.HeaderText = "Unit"
         Me.dgv_unit.Items.AddRange(New Object() {"Piece", "Box", "Pack", "Pair"})
-        Me.dgv_unit.MinimumWidth = 80
+        Me.dgv_unit.MinimumWidth = 70
         Me.dgv_unit.Name = "dgv_unit"
         Me.dgv_unit.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
         Me.dgv_unit.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
@@ -589,14 +341,14 @@ Partial Class InventorySol
         '
         Me.dgv_purchase_price.DataPropertyName = "PurchasePrice"
         Me.dgv_purchase_price.HeaderText = "PurchasePrice"
-        Me.dgv_purchase_price.MinimumWidth = 80
+        Me.dgv_purchase_price.MinimumWidth = 100
         Me.dgv_purchase_price.Name = "dgv_purchase_price"
         '
         'dgv_sale_price
         '
         Me.dgv_sale_price.DataPropertyName = "SalePrice"
         Me.dgv_sale_price.HeaderText = "SalePrice"
-        Me.dgv_sale_price.MinimumWidth = 80
+        Me.dgv_sale_price.MinimumWidth = 100
         Me.dgv_sale_price.Name = "dgv_sale_price"
         '
         'dgv_warranty_months
@@ -610,9 +362,185 @@ Partial Class InventorySol
         'dgv_isactive
         '
         Me.dgv_isactive.DataPropertyName = "IsActive"
-        Me.dgv_isactive.HeaderText = "IsActive"
+        Me.dgv_isactive.HeaderText = "Active"
         Me.dgv_isactive.MinimumWidth = 50
         Me.dgv_isactive.Name = "dgv_isactive"
+        Me.dgv_isactive.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgv_isactive.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        '
+        'MobileInvBindingSource
+        '
+        Me.MobileInvBindingSource.DataMember = "MobileInv"
+        Me.MobileInvBindingSource.DataSource = Me.MobileInvDS
+        '
+        'MobileInvDS
+        '
+        Me.MobileInvDS.DataSetName = "MobileInvDS"
+        Me.MobileInvDS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        '
+        'ProductTextBox
+        '
+        Me.ProductTextBox.BackColor = System.Drawing.Color.White
+        Me.ProductTextBox.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.MobileInvBindingSource, "Product", True))
+        Me.ProductTextBox.Font = New System.Drawing.Font("Segoe UI Semibold", 10.0!, System.Drawing.FontStyle.Bold)
+        Me.ProductTextBox.Location = New System.Drawing.Point(13, 91)
+        Me.ProductTextBox.Name = "ProductTextBox"
+        Me.ProductTextBox.ReadOnly = True
+        Me.ProductTextBox.Size = New System.Drawing.Size(204, 25)
+        Me.ProductTextBox.TabIndex = 1
+        '
+        'CategoryTextBox
+        '
+        Me.CategoryTextBox.BackColor = System.Drawing.Color.White
+        Me.CategoryTextBox.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.MobileInvBindingSource, "Category", True))
+        Me.CategoryTextBox.Font = New System.Drawing.Font("Segoe UI Semibold", 10.0!, System.Drawing.FontStyle.Bold)
+        Me.CategoryTextBox.Location = New System.Drawing.Point(237, 91)
+        Me.CategoryTextBox.Name = "CategoryTextBox"
+        Me.CategoryTextBox.ReadOnly = True
+        Me.CategoryTextBox.Size = New System.Drawing.Size(143, 25)
+        Me.CategoryTextBox.TabIndex = 3
+        '
+        'BrandTextBox
+        '
+        Me.BrandTextBox.BackColor = System.Drawing.Color.White
+        Me.BrandTextBox.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.MobileInvBindingSource, "Brand", True))
+        Me.BrandTextBox.Font = New System.Drawing.Font("Segoe UI Semibold", 10.0!, System.Drawing.FontStyle.Bold)
+        Me.BrandTextBox.Location = New System.Drawing.Point(404, 91)
+        Me.BrandTextBox.Name = "BrandTextBox"
+        Me.BrandTextBox.ReadOnly = True
+        Me.BrandTextBox.Size = New System.Drawing.Size(143, 25)
+        Me.BrandTextBox.TabIndex = 5
+        '
+        'MobileInvTableAdapter
+        '
+        Me.MobileInvTableAdapter.ClearBeforeFill = True
+        '
+        'TableAdapterManager
+        '
+        Me.TableAdapterManager.BackupDataSetBeforeUpdate = False
+        Me.TableAdapterManager.MobileInvTableAdapter = Me.MobileInvTableAdapter
+        Me.TableAdapterManager.UpdateOrder = MobileShopFrm.MobileInvDSTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Label1.Font = New System.Drawing.Font("Segoe UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(178, Byte))
+        Me.Label1.ForeColor = System.Drawing.Color.White
+        Me.Label1.Location = New System.Drawing.Point(22, 9)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(181, 25)
+        Me.Label1.TabIndex = 1
+        Me.Label1.Text = "PRODUCT MASTER"
+        '
+        'Undo_Btn
+        '
+        Me.Undo_Btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Undo_Btn.BackColor = System.Drawing.Color.DimGray
+        Me.Undo_Btn.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Undo_Btn.FlatAppearance.BorderSize = 0
+        Me.Undo_Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Undo_Btn.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
+        Me.Undo_Btn.ForeColor = System.Drawing.Color.White
+        Me.Undo_Btn.Image = CType(resources.GetObject("Undo_Btn.Image"), System.Drawing.Image)
+        Me.Undo_Btn.Location = New System.Drawing.Point(1012, 0)
+        Me.Undo_Btn.Name = "Undo_Btn"
+        Me.Undo_Btn.Size = New System.Drawing.Size(84, 48)
+        Me.Undo_Btn.TabIndex = 8
+        Me.Undo_Btn.Text = "F6"
+        Me.Undo_Btn.TextAlign = System.Drawing.ContentAlignment.BottomLeft
+        Me.Undo_Btn.UseVisualStyleBackColor = False
+        '
+        'Delete_Btn
+        '
+        Me.Delete_Btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Delete_Btn.BackColor = System.Drawing.Color.Brown
+        Me.Delete_Btn.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Delete_Btn.FlatAppearance.BorderSize = 0
+        Me.Delete_Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Delete_Btn.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
+        Me.Delete_Btn.ForeColor = System.Drawing.Color.White
+        Me.Delete_Btn.Image = CType(resources.GetObject("Delete_Btn.Image"), System.Drawing.Image)
+        Me.Delete_Btn.Location = New System.Drawing.Point(928, 0)
+        Me.Delete_Btn.Name = "Delete_Btn"
+        Me.Delete_Btn.Size = New System.Drawing.Size(84, 48)
+        Me.Delete_Btn.TabIndex = 7
+        Me.Delete_Btn.Text = "F5"
+        Me.Delete_Btn.TextAlign = System.Drawing.ContentAlignment.BottomLeft
+        Me.Delete_Btn.UseVisualStyleBackColor = False
+        '
+        'Save_Btn
+        '
+        Me.Save_Btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Save_Btn.BackColor = System.Drawing.Color.DarkCyan
+        Me.Save_Btn.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Save_Btn.FlatAppearance.BorderSize = 0
+        Me.Save_Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Save_Btn.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(178, Byte))
+        Me.Save_Btn.ForeColor = System.Drawing.Color.White
+        Me.Save_Btn.Image = CType(resources.GetObject("Save_Btn.Image"), System.Drawing.Image)
+        Me.Save_Btn.Location = New System.Drawing.Point(844, 0)
+        Me.Save_Btn.Name = "Save_Btn"
+        Me.Save_Btn.Size = New System.Drawing.Size(84, 48)
+        Me.Save_Btn.TabIndex = 5
+        Me.Save_Btn.Text = "F4"
+        Me.Save_Btn.TextAlign = System.Drawing.ContentAlignment.BottomLeft
+        Me.Save_Btn.UseVisualStyleBackColor = False
+        '
+        'Update_Btn
+        '
+        Me.Update_Btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Update_Btn.BackColor = System.Drawing.Color.LightSeaGreen
+        Me.Update_Btn.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Update_Btn.FlatAppearance.BorderSize = 0
+        Me.Update_Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Update_Btn.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
+        Me.Update_Btn.ForeColor = System.Drawing.Color.White
+        Me.Update_Btn.Image = CType(resources.GetObject("Update_Btn.Image"), System.Drawing.Image)
+        Me.Update_Btn.Location = New System.Drawing.Point(760, 0)
+        Me.Update_Btn.Name = "Update_Btn"
+        Me.Update_Btn.Size = New System.Drawing.Size(84, 48)
+        Me.Update_Btn.TabIndex = 6
+        Me.Update_Btn.Text = "F3"
+        Me.Update_Btn.TextAlign = System.Drawing.ContentAlignment.BottomLeft
+        Me.Update_Btn.UseVisualStyleBackColor = False
+        '
+        'Add_Btn
+        '
+        Me.Add_Btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Add_Btn.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Add_Btn.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Add_Btn.FlatAppearance.BorderSize = 0
+        Me.Add_Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Add_Btn.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(178, Byte))
+        Me.Add_Btn.ForeColor = System.Drawing.Color.White
+        Me.Add_Btn.Image = CType(resources.GetObject("Add_Btn.Image"), System.Drawing.Image)
+        Me.Add_Btn.Location = New System.Drawing.Point(675, 0)
+        Me.Add_Btn.Name = "Add_Btn"
+        Me.Add_Btn.Size = New System.Drawing.Size(84, 48)
+        Me.Add_Btn.TabIndex = 10
+        Me.Add_Btn.Text = "F2"
+        Me.Add_Btn.TextAlign = System.Drawing.ContentAlignment.BottomLeft
+        Me.Add_Btn.UseVisualStyleBackColor = False
+        '
+        'ShapeContainer1
+        '
+        Me.ShapeContainer1.Location = New System.Drawing.Point(0, 0)
+        Me.ShapeContainer1.Margin = New System.Windows.Forms.Padding(0)
+        Me.ShapeContainer1.Name = "ShapeContainer1"
+        Me.ShapeContainer1.Shapes.AddRange(New Microsoft.VisualBasic.PowerPacks.Shape() {Me.RectangleShape1})
+        Me.ShapeContainer1.Size = New System.Drawing.Size(1194, 671)
+        Me.ShapeContainer1.TabIndex = 0
+        Me.ShapeContainer1.TabStop = False
+        '
+        'RectangleShape1
+        '
+        Me.RectangleShape1.BorderColor = System.Drawing.Color.Transparent
+        Me.RectangleShape1.FillColor = System.Drawing.SystemColors.MenuHighlight
+        Me.RectangleShape1.FillStyle = Microsoft.VisualBasic.PowerPacks.FillStyle.Solid
+        Me.RectangleShape1.Location = New System.Drawing.Point(0, -2)
+        Me.RectangleShape1.Name = "RectangleShape1"
+        Me.RectangleShape1.Size = New System.Drawing.Size(1373, 50)
         '
         'InventorySol
         '
@@ -620,12 +548,6 @@ Partial Class InventorySol
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.Snow
         Me.ClientSize = New System.Drawing.Size(1194, 671)
-        Me.Controls.Add(IsActiveLabel)
-        Me.Controls.Add(Me.IsActiveCheckBox)
-        Me.Controls.Add(SalePriceLabel)
-        Me.Controls.Add(Me.SalePriceTextBox)
-        Me.Controls.Add(PurchasePriceLabel)
-        Me.Controls.Add(Me.PurchasePriceTextBox)
         Me.Controls.Add(BrandLabel)
         Me.Controls.Add(Me.BrandTextBox)
         Me.Controls.Add(CategoryLabel)
@@ -649,6 +571,7 @@ Partial Class InventorySol
         Me.MinimumSize = New System.Drawing.Size(1200, 700)
         Me.Name = "InventorySol"
         Me.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Mobile - Product List"
         Me.NavBox.ResumeLayout(False)
@@ -660,18 +583,10 @@ Partial Class InventorySol
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents ShapeContainer1 As Microsoft.VisualBasic.PowerPacks.ShapeContainer
-    Friend WithEvents RectangleShape1 As Microsoft.VisualBasic.PowerPacks.RectangleShape
-    Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents Undo_Btn As System.Windows.Forms.Button
-    Friend WithEvents Delete_Btn As System.Windows.Forms.Button
-    Friend WithEvents Update_Btn As System.Windows.Forms.Button
-    Friend WithEvents Save_Btn As System.Windows.Forms.Button
     Friend WithEvents MobileInvDS As MobileShopFrm.MobileInvDS
     Friend WithEvents MobileInvBindingSource As System.Windows.Forms.BindingSource
     Friend WithEvents MobileInvTableAdapter As MobileShopFrm.MobileInvDSTableAdapters.MobileInvTableAdapter
     Friend WithEvents TableAdapterManager As MobileShopFrm.MobileInvDSTableAdapters.TableAdapterManager
-    Friend WithEvents Add_Btn As System.Windows.Forms.Button
     Friend WithEvents NavBox As System.Windows.Forms.GroupBox
     Friend WithEvents MoveFirstBtn As System.Windows.Forms.Button
     Friend WithEvents moveLastBtn As System.Windows.Forms.Button
@@ -684,9 +599,6 @@ Partial Class InventorySol
     Friend WithEvents ProductTextBox As System.Windows.Forms.TextBox
     Friend WithEvents CategoryTextBox As System.Windows.Forms.TextBox
     Friend WithEvents BrandTextBox As System.Windows.Forms.TextBox
-    Friend WithEvents PurchasePriceTextBox As System.Windows.Forms.TextBox
-    Friend WithEvents SalePriceTextBox As System.Windows.Forms.TextBox
-    Friend WithEvents IsActiveCheckBox As System.Windows.Forms.CheckBox
     Friend WithEvents dgv_productID As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents dgv_product As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents dgv_category As System.Windows.Forms.DataGridViewTextBoxColumn
@@ -699,6 +611,14 @@ Partial Class InventorySol
     Friend WithEvents dgv_purchase_price As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents dgv_sale_price As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents dgv_warranty_months As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgv_isactive As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgv_isactive As System.Windows.Forms.DataGridViewCheckBoxColumn
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents Undo_Btn As System.Windows.Forms.Button
+    Friend WithEvents Delete_Btn As System.Windows.Forms.Button
+    Friend WithEvents Save_Btn As System.Windows.Forms.Button
+    Friend WithEvents Update_Btn As System.Windows.Forms.Button
+    Friend WithEvents Add_Btn As System.Windows.Forms.Button
+    Friend WithEvents ShapeContainer1 As Microsoft.VisualBasic.PowerPacks.ShapeContainer
+    Friend WithEvents RectangleShape1 As Microsoft.VisualBasic.PowerPacks.RectangleShape
 
 End Class

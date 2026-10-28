@@ -5,10 +5,6 @@ Public Class SaleList
     Dim connection As String = My.Settings.MobileShopConnectionString
     Dim entryNo As Integer
 
-    'Dim rdr As SqlDataReader = Nothing 'Reads records returned by a SQL query, one row at a time.
-    'Dim adpt As SqlDataAdapter 'Transfers data between SQL Server and in-memory data objects such as a DataTable or DataSet.
-    'Dim cmd As SqlCommand = Nothing  'Represents a SQL statement or stored procedure to execute against a SQL Server database
-
 #Region "CRUD Region"
     Private Sub SaleListAdd()
 
