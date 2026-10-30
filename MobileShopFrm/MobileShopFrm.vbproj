@@ -117,6 +117,12 @@
     <Compile Include="MobileInvEntry.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="MobileInvFind.Designer.vb">
+      <DependentUpon>MobileInvFind.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MobileInvFind.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MobileMain.Designer.vb">
       <DependentUpon>MobileMain.vb</DependentUpon>
     </Compile>
@@ -169,6 +175,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MobileInvEntry.resx">
       <DependentUpon>MobileInvEntry.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MobileInvFind.resx">
+      <DependentUpon>MobileInvFind.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MobileMain.resx">
       <DependentUpon>MobileMain.vb</DependentUpon>

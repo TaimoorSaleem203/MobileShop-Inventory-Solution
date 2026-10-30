@@ -28,22 +28,26 @@ Partial Class Main
         Me.VendorList = New System.Windows.Forms.ToolStripMenuItem()
         Me.CustomerList = New System.Windows.Forms.ToolStripMenuItem()
         Me.EntryMI = New System.Windows.Forms.ToolStripMenuItem()
-        Me.UserMI = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaleInv = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaleReturnInv = New System.Windows.Forms.ToolStripMenuItem()
         Me.PurchaseInv = New System.Windows.Forms.ToolStripMenuItem()
         Me.PurchaseReturnInv = New System.Windows.Forms.ToolStripMenuItem()
+        Me.UserMI = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip.SuspendLayout()
         Me.SuspendLayout()
         '
         'MenuStrip
         '
+        Me.MenuStrip.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.MenuStrip.AutoSize = False
         Me.MenuStrip.BackColor = System.Drawing.SystemColors.Highlight
+        Me.MenuStrip.Dock = System.Windows.Forms.DockStyle.None
         Me.MenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UtilityMI, Me.EntryMI, Me.UserMI})
         Me.MenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip.Name = "MenuStrip"
         Me.MenuStrip.Padding = New System.Windows.Forms.Padding(7, 2, 0, 2)
-        Me.MenuStrip.Size = New System.Drawing.Size(1194, 25)
+        Me.MenuStrip.Size = New System.Drawing.Size(1300, 25)
         Me.MenuStrip.TabIndex = 0
         Me.MenuStrip.Text = "MenuStrip1"
         '
@@ -89,14 +93,6 @@ Partial Class Main
         Me.EntryMI.Size = New System.Drawing.Size(53, 21)
         Me.EntryMI.Text = "Entry"
         '
-        'UserMI
-        '
-        Me.UserMI.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
-        Me.UserMI.ForeColor = System.Drawing.Color.White
-        Me.UserMI.Name = "UserMI"
-        Me.UserMI.Size = New System.Drawing.Size(132, 21)
-        Me.UserMI.Text = "User Management"
-        '
         'SaleInv
         '
         Me.SaleInv.BackColor = System.Drawing.Color.White
@@ -123,6 +119,14 @@ Partial Class Main
         Me.PurchaseReturnInv.Size = New System.Drawing.Size(223, 22)
         Me.PurchaseReturnInv.Text = "Purchase Return Invoice"
         '
+        'UserMI
+        '
+        Me.UserMI.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
+        Me.UserMI.ForeColor = System.Drawing.Color.White
+        Me.UserMI.Name = "UserMI"
+        Me.UserMI.Size = New System.Drawing.Size(69, 21)
+        Me.UserMI.Text = "Settings"
+        '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -132,6 +136,7 @@ Partial Class Main
         Me.ClientSize = New System.Drawing.Size(1194, 711)
         Me.Controls.Add(Me.MenuStrip)
         Me.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.IsMdiContainer = True
         Me.MainMenuStrip = Me.MenuStrip
         Me.Name = "Main"
@@ -141,7 +146,6 @@ Partial Class Main
         Me.MenuStrip.ResumeLayout(False)
         Me.MenuStrip.PerformLayout()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
     Friend WithEvents MenuStrip As System.Windows.Forms.MenuStrip

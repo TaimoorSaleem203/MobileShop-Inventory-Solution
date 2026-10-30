@@ -42,20 +42,20 @@ Partial Class InvEntry
         Me.MobileInvTableAdapter = New MobileShopFrm.MobileInvDSTableAdapters.MobileInvTableAdapter()
         Me.TableAdapterManager = New MobileShopFrm.MobileInvDSTableAdapters.TableAdapterManager()
         Me.MobileInvBindingNavigator = New System.Windows.Forms.BindingNavigator(Me.components)
-        Me.newItemBtn = New System.Windows.Forms.ToolStripButton()
         Me.BindingNavigatorCountItem = New System.Windows.Forms.ToolStripLabel()
-        Me.deleteItemBtn = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.BindingNavigatorMoveFirstItem = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.BindingNavigatorMovePreviousItem = New System.Windows.Forms.ToolStripButton()
         Me.BindingNavigatorPositionItem = New System.Windows.Forms.ToolStripTextBox()
         Me.BindingNavigatorMoveNextItem = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
         Me.BindingNavigatorMoveLastItem = New System.Windows.Forms.ToolStripButton()
         Me.BindingNavigatorSeparator2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.newItemBtn = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
         Me.saveItemBtn = New System.Windows.Forms.ToolStripButton()
+        Me.showItemBtn = New System.Windows.Forms.ToolStripButton()
         Me.ProductTextBox = New System.Windows.Forms.TextBox()
         Me.ProductIDTextBox = New System.Windows.Forms.TextBox()
         Me.CategoryTextBox = New System.Windows.Forms.TextBox()
@@ -253,14 +253,14 @@ Partial Class InvEntry
         '
         'MobileInvBindingNavigator
         '
-        Me.MobileInvBindingNavigator.AddNewItem = Me.newItemBtn
+        Me.MobileInvBindingNavigator.AddNewItem = Nothing
         Me.MobileInvBindingNavigator.AutoSize = False
         Me.MobileInvBindingNavigator.BackColor = System.Drawing.SystemColors.MenuHighlight
         Me.MobileInvBindingNavigator.BindingSource = Me.MobileInvBindingSource
         Me.MobileInvBindingNavigator.CountItem = Me.BindingNavigatorCountItem
-        Me.MobileInvBindingNavigator.DeleteItem = Me.deleteItemBtn
+        Me.MobileInvBindingNavigator.DeleteItem = Nothing
         Me.MobileInvBindingNavigator.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.MobileInvBindingNavigator.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BindingNavigatorMoveFirstItem, Me.ToolStripSeparator1, Me.BindingNavigatorMovePreviousItem, Me.BindingNavigatorPositionItem, Me.BindingNavigatorCountItem, Me.BindingNavigatorMoveNextItem, Me.ToolStripSeparator2, Me.BindingNavigatorMoveLastItem, Me.BindingNavigatorSeparator2, Me.newItemBtn, Me.ToolStripSeparator3, Me.deleteItemBtn, Me.ToolStripSeparator4, Me.saveItemBtn})
+        Me.MobileInvBindingNavigator.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripSeparator2, Me.BindingNavigatorMoveFirstItem, Me.ToolStripSeparator1, Me.BindingNavigatorMovePreviousItem, Me.BindingNavigatorPositionItem, Me.BindingNavigatorCountItem, Me.BindingNavigatorMoveNextItem, Me.ToolStripSeparator5, Me.BindingNavigatorMoveLastItem, Me.BindingNavigatorSeparator2, Me.newItemBtn, Me.ToolStripSeparator3, Me.saveItemBtn, Me.showItemBtn})
         Me.MobileInvBindingNavigator.Location = New System.Drawing.Point(0, 0)
         Me.MobileInvBindingNavigator.MoveFirstItem = Me.BindingNavigatorMoveFirstItem
         Me.MobileInvBindingNavigator.MoveLastItem = Me.BindingNavigatorMoveLastItem
@@ -268,20 +268,9 @@ Partial Class InvEntry
         Me.MobileInvBindingNavigator.MovePreviousItem = Me.BindingNavigatorMovePreviousItem
         Me.MobileInvBindingNavigator.Name = "MobileInvBindingNavigator"
         Me.MobileInvBindingNavigator.PositionItem = Me.BindingNavigatorPositionItem
-        Me.MobileInvBindingNavigator.Size = New System.Drawing.Size(619, 40)
+        Me.MobileInvBindingNavigator.Size = New System.Drawing.Size(619, 46)
         Me.MobileInvBindingNavigator.TabIndex = 0
         Me.MobileInvBindingNavigator.Text = "BindingNavigator1"
-        '
-        'newItemBtn
-        '
-        Me.newItemBtn.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.newItemBtn.ForeColor = System.Drawing.Color.Snow
-        Me.newItemBtn.Image = CType(resources.GetObject("newItemBtn.Image"), System.Drawing.Image)
-        Me.newItemBtn.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.newItemBtn.Name = "newItemBtn"
-        Me.newItemBtn.RightToLeftAutoMirrorImage = True
-        Me.newItemBtn.Size = New System.Drawing.Size(59, 37)
-        Me.newItemBtn.Text = "New"
         '
         'BindingNavigatorCountItem
         '
@@ -289,20 +278,15 @@ Partial Class InvEntry
         Me.BindingNavigatorCountItem.ForeColor = System.Drawing.Color.Snow
         Me.BindingNavigatorCountItem.LinkColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.BindingNavigatorCountItem.Name = "BindingNavigatorCountItem"
-        Me.BindingNavigatorCountItem.Size = New System.Drawing.Size(36, 37)
+        Me.BindingNavigatorCountItem.Size = New System.Drawing.Size(36, 43)
         Me.BindingNavigatorCountItem.Text = "of {0}"
         Me.BindingNavigatorCountItem.ToolTipText = "Total number of items"
         '
-        'deleteItemBtn
+        'ToolStripSeparator2
         '
-        Me.deleteItemBtn.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.deleteItemBtn.ForeColor = System.Drawing.Color.Snow
-        Me.deleteItemBtn.Image = CType(resources.GetObject("deleteItemBtn.Image"), System.Drawing.Image)
-        Me.deleteItemBtn.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.deleteItemBtn.Name = "deleteItemBtn"
-        Me.deleteItemBtn.RightToLeftAutoMirrorImage = True
-        Me.deleteItemBtn.Size = New System.Drawing.Size(69, 37)
-        Me.deleteItemBtn.Text = "Delete"
+        Me.ToolStripSeparator2.ForeColor = System.Drawing.Color.Snow
+        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(6, 46)
         '
         'BindingNavigatorMoveFirstItem
         '
@@ -312,7 +296,7 @@ Partial Class InvEntry
         Me.BindingNavigatorMoveFirstItem.Image = CType(resources.GetObject("BindingNavigatorMoveFirstItem.Image"), System.Drawing.Image)
         Me.BindingNavigatorMoveFirstItem.Name = "BindingNavigatorMoveFirstItem"
         Me.BindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = True
-        Me.BindingNavigatorMoveFirstItem.Size = New System.Drawing.Size(31, 37)
+        Me.BindingNavigatorMoveFirstItem.Size = New System.Drawing.Size(31, 43)
         Me.BindingNavigatorMoveFirstItem.Text = "Top"
         Me.BindingNavigatorMoveFirstItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         '
@@ -320,7 +304,7 @@ Partial Class InvEntry
         '
         Me.ToolStripSeparator1.ForeColor = System.Drawing.Color.Snow
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 40)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 46)
         '
         'BindingNavigatorMovePreviousItem
         '
@@ -330,7 +314,7 @@ Partial Class InvEntry
         Me.BindingNavigatorMovePreviousItem.Image = CType(resources.GetObject("BindingNavigatorMovePreviousItem.Image"), System.Drawing.Image)
         Me.BindingNavigatorMovePreviousItem.Name = "BindingNavigatorMovePreviousItem"
         Me.BindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = True
-        Me.BindingNavigatorMovePreviousItem.Size = New System.Drawing.Size(36, 37)
+        Me.BindingNavigatorMovePreviousItem.Size = New System.Drawing.Size(36, 43)
         Me.BindingNavigatorMovePreviousItem.Text = "Back"
         Me.BindingNavigatorMovePreviousItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         '
@@ -353,15 +337,15 @@ Partial Class InvEntry
         Me.BindingNavigatorMoveNextItem.Image = CType(resources.GetObject("BindingNavigatorMoveNextItem.Image"), System.Drawing.Image)
         Me.BindingNavigatorMoveNextItem.Name = "BindingNavigatorMoveNextItem"
         Me.BindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = True
-        Me.BindingNavigatorMoveNextItem.Size = New System.Drawing.Size(36, 37)
+        Me.BindingNavigatorMoveNextItem.Size = New System.Drawing.Size(36, 43)
         Me.BindingNavigatorMoveNextItem.Text = "Next"
         Me.BindingNavigatorMoveNextItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         '
-        'ToolStripSeparator2
+        'ToolStripSeparator5
         '
-        Me.ToolStripSeparator2.ForeColor = System.Drawing.Color.Snow
-        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(6, 40)
+        Me.ToolStripSeparator5.ForeColor = System.Drawing.Color.Snow
+        Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
+        Me.ToolStripSeparator5.Size = New System.Drawing.Size(6, 46)
         '
         'BindingNavigatorMoveLastItem
         '
@@ -371,7 +355,7 @@ Partial Class InvEntry
         Me.BindingNavigatorMoveLastItem.Image = CType(resources.GetObject("BindingNavigatorMoveLastItem.Image"), System.Drawing.Image)
         Me.BindingNavigatorMoveLastItem.Name = "BindingNavigatorMoveLastItem"
         Me.BindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = True
-        Me.BindingNavigatorMoveLastItem.Size = New System.Drawing.Size(32, 37)
+        Me.BindingNavigatorMoveLastItem.Size = New System.Drawing.Size(32, 43)
         Me.BindingNavigatorMoveLastItem.Text = "Last"
         Me.BindingNavigatorMoveLastItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         '
@@ -379,29 +363,51 @@ Partial Class InvEntry
         '
         Me.BindingNavigatorSeparator2.ForeColor = System.Drawing.Color.Snow
         Me.BindingNavigatorSeparator2.Name = "BindingNavigatorSeparator2"
-        Me.BindingNavigatorSeparator2.Size = New System.Drawing.Size(6, 40)
+        Me.BindingNavigatorSeparator2.Size = New System.Drawing.Size(6, 46)
+        '
+        'newItemBtn
+        '
+        Me.newItemBtn.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.newItemBtn.ForeColor = System.Drawing.Color.White
+        Me.newItemBtn.Image = CType(resources.GetObject("newItemBtn.Image"), System.Drawing.Image)
+        Me.newItemBtn.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.newItemBtn.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.newItemBtn.Name = "newItemBtn"
+        Me.newItemBtn.Size = New System.Drawing.Size(35, 43)
+        Me.newItemBtn.Text = "New"
+        Me.newItemBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         '
         'ToolStripSeparator3
         '
-        Me.ToolStripSeparator3.ForeColor = System.Drawing.Color.Snow
         Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
-        Me.ToolStripSeparator3.Size = New System.Drawing.Size(6, 40)
-        '
-        'ToolStripSeparator4
-        '
-        Me.ToolStripSeparator4.ForeColor = System.Drawing.Color.Snow
-        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
-        Me.ToolStripSeparator4.Size = New System.Drawing.Size(6, 40)
+        Me.ToolStripSeparator3.Size = New System.Drawing.Size(6, 46)
         '
         'saveItemBtn
         '
-        Me.saveItemBtn.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.saveItemBtn.ForeColor = System.Drawing.Color.Snow
+        Me.saveItemBtn.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.saveItemBtn.ForeColor = System.Drawing.Color.White
         Me.saveItemBtn.Image = CType(resources.GetObject("saveItemBtn.Image"), System.Drawing.Image)
         Me.saveItemBtn.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.saveItemBtn.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.saveItemBtn.Name = "saveItemBtn"
-        Me.saveItemBtn.Size = New System.Drawing.Size(60, 37)
+        Me.saveItemBtn.Size = New System.Drawing.Size(36, 43)
         Me.saveItemBtn.Text = "Save"
+        Me.saveItemBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        '
+        'showItemBtn
+        '
+        Me.showItemBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.showItemBtn.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.showItemBtn.ForeColor = System.Drawing.Color.White
+        Me.showItemBtn.Image = CType(resources.GetObject("showItemBtn.Image"), System.Drawing.Image)
+        Me.showItemBtn.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.showItemBtn.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.showItemBtn.MergeAction = System.Windows.Forms.MergeAction.Insert
+        Me.showItemBtn.Name = "showItemBtn"
+        Me.showItemBtn.Size = New System.Drawing.Size(58, 43)
+        Me.showItemBtn.Text = "Show All"
+        Me.showItemBtn.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal
+        Me.showItemBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         '
         'ProductTextBox
         '
@@ -416,6 +422,7 @@ Partial Class InvEntry
         '
         Me.ProductIDTextBox.BackColor = System.Drawing.Color.White
         Me.ProductIDTextBox.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.MobileInvBindingSource, "ProductID", True))
+        Me.ProductIDTextBox.Enabled = False
         Me.ProductIDTextBox.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
         Me.ProductIDTextBox.Location = New System.Drawing.Point(101, 74)
         Me.ProductIDTextBox.Name = "ProductIDTextBox"
@@ -587,15 +594,12 @@ Partial Class InvEntry
     Friend WithEvents MobileInvTableAdapter As MobileShopFrm.MobileInvDSTableAdapters.MobileInvTableAdapter
     Friend WithEvents TableAdapterManager As MobileShopFrm.MobileInvDSTableAdapters.TableAdapterManager
     Friend WithEvents MobileInvBindingNavigator As System.Windows.Forms.BindingNavigator
-    Friend WithEvents newItemBtn As System.Windows.Forms.ToolStripButton
     Friend WithEvents BindingNavigatorCountItem As System.Windows.Forms.ToolStripLabel
-    Friend WithEvents deleteItemBtn As System.Windows.Forms.ToolStripButton
     Friend WithEvents BindingNavigatorMoveFirstItem As System.Windows.Forms.ToolStripButton
     Friend WithEvents BindingNavigatorMovePreviousItem As System.Windows.Forms.ToolStripButton
     Friend WithEvents BindingNavigatorPositionItem As System.Windows.Forms.ToolStripTextBox
     Friend WithEvents BindingNavigatorMoveNextItem As System.Windows.Forms.ToolStripButton
     Friend WithEvents BindingNavigatorMoveLastItem As System.Windows.Forms.ToolStripButton
-    Friend WithEvents saveItemBtn As System.Windows.Forms.ToolStripButton
     Friend WithEvents ProductTextBox As System.Windows.Forms.TextBox
     Friend WithEvents ProductIDTextBox As System.Windows.Forms.TextBox
     Friend WithEvents CategoryTextBox As System.Windows.Forms.TextBox
@@ -610,8 +614,11 @@ Partial Class InvEntry
     Friend WithEvents WarrantyMonthsTextBox As System.Windows.Forms.TextBox
     Friend WithEvents IsActiveCheckBox As System.Windows.Forms.CheckBox
     Friend WithEvents BindingNavigatorSeparator2 As System.Windows.Forms.ToolStripSeparator
-    Friend WithEvents ToolStripSeparator3 As System.Windows.Forms.ToolStripSeparator
-    Friend WithEvents ToolStripSeparator4 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ToolStripSeparator1 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ToolStripSeparator2 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents newItemBtn As System.Windows.Forms.ToolStripButton
+    Friend WithEvents ToolStripSeparator3 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents saveItemBtn As System.Windows.Forms.ToolStripButton
+    Friend WithEvents ToolStripSeparator5 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents showItemBtn As System.Windows.Forms.ToolStripButton
 End Class

@@ -151,6 +151,7 @@ Partial Class SaleList
         '
         'GSTLabel
         '
+        GSTLabel.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         GSTLabel.AutoSize = True
         GSTLabel.ForeColor = System.Drawing.Color.DimGray
         GSTLabel.Location = New System.Drawing.Point(620, 30)
@@ -161,6 +162,7 @@ Partial Class SaleList
         '
         'FTaxLabel
         '
+        FTaxLabel.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         FTaxLabel.AutoSize = True
         FTaxLabel.ForeColor = System.Drawing.Color.DimGray
         FTaxLabel.Location = New System.Drawing.Point(620, 85)
@@ -171,6 +173,7 @@ Partial Class SaleList
         '
         'valueLbl_1
         '
+        valueLbl_1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         valueLbl_1.AutoSize = True
         valueLbl_1.ForeColor = System.Drawing.Color.DimGray
         valueLbl_1.Location = New System.Drawing.Point(771, 30)
@@ -181,6 +184,7 @@ Partial Class SaleList
         '
         'valueLbl_2
         '
+        valueLbl_2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         valueLbl_2.AutoSize = True
         valueLbl_2.ForeColor = System.Drawing.Color.DimGray
         valueLbl_2.Location = New System.Drawing.Point(771, 85)
@@ -191,6 +195,7 @@ Partial Class SaleList
         '
         'RectangleShape1
         '
+        Me.RectangleShape1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.RectangleShape1.BorderColor = System.Drawing.Color.Transparent
         Me.RectangleShape1.FillColor = System.Drawing.SystemColors.MenuHighlight
         Me.RectangleShape1.FillStyle = Microsoft.VisualBasic.PowerPacks.FillStyle.Solid
@@ -204,7 +209,7 @@ Partial Class SaleList
         Me.Label1.BackColor = System.Drawing.SystemColors.MenuHighlight
         Me.Label1.Font = New System.Drawing.Font("Segoe UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(178, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(24, 9)
+        Me.Label1.Location = New System.Drawing.Point(8, 9)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(136, 25)
         Me.Label1.TabIndex = 2
@@ -288,7 +293,7 @@ Partial Class SaleList
         Me.InfoBox.Controls.Add(Me.DateTimePicker)
         Me.InfoBox.Controls.Add(RemarksLabel)
         Me.InfoBox.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.InfoBox.Location = New System.Drawing.Point(29, 51)
+        Me.InfoBox.Location = New System.Drawing.Point(29, 69)
         Me.InfoBox.Name = "InfoBox"
         Me.InfoBox.Size = New System.Drawing.Size(932, 145)
         Me.InfoBox.TabIndex = 8
@@ -297,6 +302,7 @@ Partial Class SaleList
         '
         'FTaxTextBox
         '
+        Me.FTaxTextBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.FTaxTextBox.BackColor = System.Drawing.Color.White
         Me.FTaxTextBox.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.MobileSaleListBindingSource, "FTax", True))
         Me.FTaxTextBox.Location = New System.Drawing.Point(623, 104)
@@ -306,6 +312,7 @@ Partial Class SaleList
         '
         'valueBox_2
         '
+        Me.valueBox_2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.valueBox_2.BackColor = System.Drawing.Color.White
         Me.valueBox_2.Location = New System.Drawing.Point(774, 104)
         Me.valueBox_2.Name = "valueBox_2"
@@ -315,6 +322,7 @@ Partial Class SaleList
         '
         'valueBox_1
         '
+        Me.valueBox_1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.valueBox_1.BackColor = System.Drawing.Color.White
         Me.valueBox_1.Location = New System.Drawing.Point(774, 50)
         Me.valueBox_1.Name = "valueBox_1"
@@ -324,6 +332,7 @@ Partial Class SaleList
         '
         'GSTTextBox
         '
+        Me.GSTTextBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GSTTextBox.BackColor = System.Drawing.Color.White
         Me.GSTTextBox.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.MobileSaleItemBindingSource1, "GST", True))
         Me.GSTTextBox.Location = New System.Drawing.Point(623, 50)
@@ -438,6 +447,9 @@ Partial Class SaleList
         DataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.PeachPuff
         DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
         Me.MobileSaleList_DGV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        Me.MobileSaleList_DGV.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.MobileSaleList_DGV.AutoGenerateColumns = False
         Me.MobileSaleList_DGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.MobileSaleList_DGV.BackgroundColor = System.Drawing.Color.WhiteSmoke
@@ -464,13 +476,13 @@ Partial Class SaleList
         Me.MobileSaleList_DGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
         Me.MobileSaleList_DGV.EnableHeadersVisualStyles = False
         Me.MobileSaleList_DGV.GridColor = System.Drawing.Color.Silver
-        Me.MobileSaleList_DGV.Location = New System.Drawing.Point(29, 202)
+        Me.MobileSaleList_DGV.Location = New System.Drawing.Point(29, 230)
         Me.MobileSaleList_DGV.Name = "MobileSaleList_DGV"
         Me.MobileSaleList_DGV.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
         Me.MobileSaleList_DGV.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
         DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
         Me.MobileSaleList_DGV.RowsDefaultCellStyle = DataGridViewCellStyle4
-        Me.MobileSaleList_DGV.Size = New System.Drawing.Size(931, 344)
+        Me.MobileSaleList_DGV.Size = New System.Drawing.Size(931, 299)
         Me.MobileSaleList_DGV.TabIndex = 16
         '
         'dgv_idno
@@ -555,9 +567,10 @@ Partial Class SaleList
         '
         'totalAmtBox
         '
+        Me.totalAmtBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.totalAmtBox.BackColor = System.Drawing.Color.White
         Me.totalAmtBox.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
-        Me.totalAmtBox.Location = New System.Drawing.Point(849, 547)
+        Me.totalAmtBox.Location = New System.Drawing.Point(849, 534)
         Me.totalAmtBox.Name = "totalAmtBox"
         Me.totalAmtBox.ReadOnly = True
         Me.totalAmtBox.Size = New System.Drawing.Size(111, 25)
@@ -566,9 +579,10 @@ Partial Class SaleList
         '
         'netAmtBox
         '
+        Me.netAmtBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.netAmtBox.BackColor = System.Drawing.Color.White
         Me.netAmtBox.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
-        Me.netAmtBox.Location = New System.Drawing.Point(849, 574)
+        Me.netAmtBox.Location = New System.Drawing.Point(849, 561)
         Me.netAmtBox.Name = "netAmtBox"
         Me.netAmtBox.ReadOnly = True
         Me.netAmtBox.Size = New System.Drawing.Size(111, 25)
@@ -577,9 +591,10 @@ Partial Class SaleList
         '
         'Label2
         '
+        Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
-        Me.Label2.Location = New System.Drawing.Point(773, 550)
+        Me.Label2.Location = New System.Drawing.Point(773, 537)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(70, 17)
         Me.Label2.TabIndex = 20
@@ -587,9 +602,10 @@ Partial Class SaleList
         '
         'Label3
         '
+        Me.Label3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold)
-        Me.Label3.Location = New System.Drawing.Point(780, 577)
+        Me.Label3.Location = New System.Drawing.Point(780, 564)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(63, 17)
         Me.Label3.TabIndex = 21
@@ -678,6 +694,7 @@ Partial Class SaleList
         '
         'navBox
         '
+        Me.navBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.navBox.BackColor = System.Drawing.Color.Transparent
         Me.navBox.Controls.Add(Me.Label5)
         Me.navBox.Controls.Add(Me.currEntryLbl)
@@ -686,7 +703,7 @@ Partial Class SaleList
         Me.navBox.Controls.Add(Me.lastBtn)
         Me.navBox.Controls.Add(Me.prevBtn)
         Me.navBox.Controls.Add(Me.nextBtn)
-        Me.navBox.Location = New System.Drawing.Point(29, 547)
+        Me.navBox.Location = New System.Drawing.Point(29, 536)
         Me.navBox.Name = "navBox"
         Me.navBox.Size = New System.Drawing.Size(184, 50)
         Me.navBox.TabIndex = 29
@@ -722,6 +739,7 @@ Partial Class SaleList
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Snow
         Me.ClientSize = New System.Drawing.Size(1004, 609)
+        Me.ControlBox = False
         Me.Controls.Add(Me.navBox)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
@@ -738,14 +756,12 @@ Partial Class SaleList
         Me.Controls.Add(Me.InfoBox)
         Me.Controls.Add(Me.ShapeContainer1)
         Me.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.MinimumSize = New System.Drawing.Size(1000, 600)
         Me.Name = "SaleList"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Mobile - Sale List"
         CType(Me.MobileSaleItemBindingSource1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.MobileSaleDS, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.MobileSaleListBindingSource, System.ComponentModel.ISupportInitialize).EndInit()

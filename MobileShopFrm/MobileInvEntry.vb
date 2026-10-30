@@ -1,30 +1,42 @@
 ﻿Imports System.Data.SqlClient
 
 Public Class InvEntry
-
     Dim connection As String = My.Settings.MobileShopConnectionString
+    Public PRODUCT_ID As Integer
+    Public BTN_NAME As String
 
     Private Sub InvEntry_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
-        ProductIDTextBox.Text = GetProductID()
+        If BTN_NAME = "Update_Btn" Then
+            InventoryItem_DataLoad(PRODUCT_ID)
+        End If
     End Sub
 
-    Private Function GetProductID() As Integer
-
+    Private Sub InventoryItem_DataLoad(Optional productID As Integer = 0)
         Using conn As New SqlConnection(connection)
             conn.Open()
 
-            Dim query As String = "SELECT ISNULL(MAX(ProductID),100) + 1 AS MAX_ID FROM MobileInv"
+            Dim dataQuery As String = "SELECT [ProductID],[Product],[Category],[Brand],[Model],[Color],[Storage],[RAM]" &
+                ",[Unit],[PurchasePrice],[SalePrice],[WarrantyMonths],[IsActive] FROM [MobileShop].[dbo].[MobileInv] WHERE (@find = 0 OR [ProductID] = @find)"
 
-            Using cmd As New SqlCommand(query, conn)
-                Return CInt(cmd.ExecuteScalar())
+            Dim invTable As New DataTable()
+
+            Using cmd As New SqlCommand(dataQuery, conn)
+                cmd.Parameters.Add("@find", SqlDbType.Int).Value = productID
+
+                Using adp As New SqlDataAdapter(cmd)
+                    adp.Fill(invTable)
+                End Using
+
+                MobileInvBindingSource.DataSource = invTable
             End Using
 
         End Using
-
-    End Function
+    End Sub
 
     Private Sub clearEntries()
         ProductIDTextBox.Text = ""
+        ProductIDTextBox.Enabled = False
+
         ProductTextBox.Text = ""
         CategoryTextBox.Text = ""
         BrandTextBox.Text = ""
@@ -39,8 +51,84 @@ Public Class InvEntry
         IsActiveCheckBox.Checked = False
     End Sub
 
+    Private Sub newItemBtn_Click(sender As System.Object, e As System.EventArgs) Handles newItemBtn.Click
+        clearEntries()
+    End Sub
+
     Private Sub saveItemBtn_Click(sender As System.Object, e As System.EventArgs) Handles saveItemBtn.Click
         Try
+            If String.IsNullOrWhiteSpace(ProductTextBox.Text) Then
+                MessageBox.Show("Enter a valid product name.", "Mobile - Product Entry", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                ProductTextBox.Focus()
+                Exit Sub
+            End If
+
+            If String.IsNullOrWhiteSpace(CategoryTextBox.Text) Then
+                MessageBox.Show("Enter a valid category name.", "Mobile - Product Entry", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                CategoryTextBox.Focus()
+                Exit Sub
+            End If
+
+            If String.IsNullOrWhiteSpace(BrandTextBox.Text) Then
+                MessageBox.Show("Enter a valid brand name.", "Mobile - Product Entry", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                BrandTextBox.Focus()
+                Exit Sub
+            End If
+
+            If String.IsNullOrWhiteSpace(ModelTextBox.Text) Then
+                MessageBox.Show("Enter a valid model name.", "Mobile - Product Entry", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                ModelTextBox.Focus()
+                Exit Sub
+            End If
+
+            If String.IsNullOrWhiteSpace(ColorComboBox.Text) Then
+                MessageBox.Show("Enter a valid color.", "Mobile - Product Entry", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                ColorComboBox.Focus()
+                Exit Sub
+            End If
+
+            If String.IsNullOrWhiteSpace(StorageComboBox.Text) Then
+                MessageBox.Show("Enter a valid storage value.", "Mobile - Product Entry", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                StorageComboBox.Focus()
+                Exit Sub
+            End If
+
+            If String.IsNullOrWhiteSpace(UnitComboBox.Text) Then
+                MessageBox.Show("Enter a valid unit.", "Mobile - Product Entry", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                UnitComboBox.Focus()
+                Exit Sub
+            End If
+
+            If String.IsNullOrWhiteSpace(RAMComboBox.Text) Then
+                MessageBox.Show("Enter a valid RAM value.", "Mobile - Product Entry", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                RAMComboBox.Focus()
+                Exit Sub
+            End If
+
+            If String.IsNullOrWhiteSpace(WarrantyMonthsTextBox.Text) Then
+                MessageBox.Show("Enter a valid warranty period.", "Mobile - Product Entry", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                WarrantyMonthsTextBox.Focus()
+                Exit Sub
+            End If
+
+            If String.IsNullOrWhiteSpace(PurchasePriceTextBox.Text) Then
+                MessageBox.Show("Enter a valid purchase price.", "Mobile - Product Entry", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                PurchasePriceTextBox.Focus()
+                Exit Sub
+            End If
+
+            If String.IsNullOrWhiteSpace(SalePriceTextBox.Text) Then
+                MessageBox.Show("Enter a valid sale price.", "Mobile - Product Entry", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                SalePriceTextBox.Focus()
+                Exit Sub
+            End If
+
+            If Val(PurchasePriceTextBox.Text) > Val(SalePriceTextBox.Text) Then
+                MessageBox.Show("Sale price must be greater or equal to Purchase Price.", "Mobile - Product Entry", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                SalePriceTextBox.Focus()
+                Exit Sub
+            End If
+
             Using conn As New SqlConnection(connection)
 
                 conn.Open()
@@ -48,7 +136,6 @@ Public Class InvEntry
                 Using transaction As SqlTransaction = conn.BeginTransaction()
 
                     Try
-                        Dim productIDVal As Integer = CInt(ProductIDTextBox.Text)
                         Dim productVal As String = CStr(ProductTextBox.Text)
                         Dim categoryVal As String = CStr(CategoryTextBox.Text)
                         Dim brandVal As String = CStr(BrandTextBox.Text)
@@ -62,73 +149,7 @@ Public Class InvEntry
                         Dim saleVal As Decimal = CDec(SalePriceTextBox.Text)
                         Dim active As Integer = CInt(If(IsActiveCheckBox.Checked, 1, 0))
 
-                        If String.IsNullOrWhiteSpace(productVal) Then
-                            MessageBox.Show("Enter a valid product name.")
-                            transaction.Rollback()
-                            Exit Sub
-                        End If
-
-                        If String.IsNullOrWhiteSpace(categoryVal) Then
-                            MessageBox.Show("Enter a valid category name.")
-                            transaction.Rollback()
-                            Exit Sub
-                        End If
-
-                        If String.IsNullOrWhiteSpace(brandVal) Then
-                            MessageBox.Show("Enter a valid brand name.")
-                            transaction.Rollback()
-                            Exit Sub
-                        End If
-
-                        If String.IsNullOrWhiteSpace(modelVal) Then
-                            MessageBox.Show("Enter a valid model name.")
-                            transaction.Rollback()
-                            Exit Sub
-                        End If
-
-                        If String.IsNullOrWhiteSpace(colorVal) Then
-                            MessageBox.Show("Enter a valid color.")
-                            transaction.Rollback()
-                            Exit Sub
-                        End If
-
-                        If String.IsNullOrWhiteSpace(storageVal) Then
-                            MessageBox.Show("Enter a valid storage value.")
-                            transaction.Rollback()
-                            Exit Sub
-                        End If
-
-                        If String.IsNullOrWhiteSpace(unitVal) Then
-                            MessageBox.Show("Enter a valid unit.")
-                            transaction.Rollback()
-                            Exit Sub
-                        End If
-
-                        If String.IsNullOrWhiteSpace(ramVal) Then
-                            MessageBox.Show("Enter a valid RAM value.")
-                            transaction.Rollback()
-                            Exit Sub
-                        End If
-
-                        If String.IsNullOrWhiteSpace(purchaseVal) Then
-                            MessageBox.Show("Enter a valid purchase price.")
-                            transaction.Rollback()
-                            Exit Sub
-                        End If
-
-                        If String.IsNullOrWhiteSpace(saleVal) Then
-                            MessageBox.Show("Enter a valid sale price.")
-                            transaction.Rollback()
-                            Exit Sub
-                        End If
-
-                        If String.IsNullOrWhiteSpace(warrantyVal) Then
-                            MessageBox.Show("Enter a valid warranty period.")
-                            transaction.Rollback()
-                            Exit Sub
-                        End If
-
-                        If String.IsNullOrWhiteSpace(productIDVal.ToString()) Then
+                        If String.IsNullOrWhiteSpace(ProductIDTextBox.Text) Then
 
                             Dim insertQuery As String =
                                 "INSERT INTO MobileInv " &
@@ -160,11 +181,12 @@ Public Class InvEntry
                                 cmd.Parameters.Add("@WarrantyMonths", SqlDbType.Int).Value = warrantyVal
                                 cmd.Parameters.Add("@IsActive", SqlDbType.Bit).Value = active
 
-
+                                ProductIDTextBox.Text = Val(cmd.ExecuteScalar())
                             End Using
 
-
                         Else
+
+                            Dim productIDVal As Integer = Val(ProductIDTextBox.Text)
 
                             Dim updateQuery As String =
                                 "UPDATE MobileInv SET " &
@@ -188,6 +210,7 @@ Public Class InvEntry
                                 conn,
                                 transaction)
 
+                                cmd.Parameters.Add("@ProductID", SqlDbType.NVarChar, 120).Value = productIDVal
                                 cmd.Parameters.Add("@Product", SqlDbType.NVarChar, 120).Value = productVal
                                 cmd.Parameters.Add("@Category", SqlDbType.NVarChar, 120).Value = categoryVal
                                 cmd.Parameters.Add("@Brand", SqlDbType.NVarChar, 120).Value = brandVal
@@ -200,9 +223,6 @@ Public Class InvEntry
                                 cmd.Parameters.Add("@SalePrice", SqlDbType.Decimal).Value = saleVal
                                 cmd.Parameters.Add("@WarrantyMonths", SqlDbType.Int).Value = warrantyVal
                                 cmd.Parameters.Add("@IsActive", SqlDbType.Bit).Value = active
-                                cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value =
-                                    productIDVal
-
 
                                 cmd.ExecuteNonQuery()
 
@@ -220,6 +240,7 @@ Public Class InvEntry
                         )
 
                         clearEntries()
+                        Me.DialogResult = DialogResult.OK
                     Catch
 
                         transaction.Rollback()
@@ -230,6 +251,7 @@ Public Class InvEntry
                 End Using
 
             End Using
+
         Catch ex As Exception
 
             MessageBox.Show(
@@ -240,5 +262,11 @@ Public Class InvEntry
             )
 
         End Try
+
     End Sub
+
+    Private Sub showItemBtn_Click(sender As System.Object, e As System.EventArgs) Handles showItemBtn.Click
+        InventoryItem_DataLoad()
+    End Sub
+
 End Class

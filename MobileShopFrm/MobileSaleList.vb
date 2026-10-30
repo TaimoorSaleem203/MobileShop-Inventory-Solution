@@ -610,7 +610,7 @@ Public Class SaleList
         enable_add_edit_delete()
     End Sub
 
-    Private Sub SaleItem_DataLoad(entryNo As Integer)
+    Private Sub SaleItem_DataLoad(Optional entryNo As Integer = 0)
         Try
 
             Using conn As New SqlConnection(connection)
@@ -630,7 +630,7 @@ Public Class SaleList
                 "FROM MobileSaleItem AS SaleItem " &
                 "INNER JOIN MobileSaleList AS SaleList " &
                 "ON SaleItem.EntryNo = SaleList.EntryNo " &
-                "WHERE SaleList.EntryNo = @EntryNo"
+                "WHERE (@EntryNo = 0 OR SaleList.EntryNo = @EntryNo)"
 
                 Using cmd As New SqlCommand(query, conn)
 
@@ -643,6 +643,7 @@ Public Class SaleList
                     End Using
 
                     MobileSaleList_DGV.DataSource = saleItemTbl
+
                 End Using
             End Using
 
